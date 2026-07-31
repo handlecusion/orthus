@@ -1,0 +1,573 @@
+@import "tailwindcss";
+/* BlockNote editor styles are imported inside the BlockNoteEditor client
+   component (not here) so this global sheet keeps valid @import ordering. */
+
+/* ---------------------------------------------------------------------------
+   대리.ai — Ojosama design tokens (from DESIGN.md).
+   Light productivity board: low-contrast chrome, compact density, restrained
+   color. Every downstream layer (Tailwind utility, raw class, inline style)
+   pulls from the same `var(--…)` source of truth defined here.
+   --------------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --color-app-canvas: #f5f5f6;
+  --color-sidebar: #e6e7e8;
+  --color-sidebar-active: #d4d5d7;
+  --color-panel: #fbfbfc;
+  --color-card: #ffffff;
+  --color-modal: #ffffff;
+  --color-popover-dark: #1f2023;
+
+  /* Borders */
+  --color-divider: #dedfe1;
+  --color-divider-soft: #ececee;
+  --color-toolbar-border: #d4d5d8;
+  --color-toolbar-hover: #f2f2f3;
+
+  /* Text */
+  --color-text-strong: #303133;
+  --color-text-body: #4b4c4f;
+  --color-text-muted: #737477;
+  --color-text-faint: #a0a1a4;
+
+  /* Accents */
+  --color-progress: #57bf78;
+  --color-attention: #ef7f62;
+
+  /* Brand accent — the single interactive color: selection / active / links /
+     one primary action. Coral (--color-attention) is now urgency-only, green
+     (--color-progress) is done/presence. Defined here + in @theme + in the dark
+     block (all three, or baked utilities freeze at light indigo). */
+  --color-accent: #4a63d6;
+  --color-accent-fill: #4a63d6;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: #edf0fc;
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 38%, transparent);
+
+  /* Channel palette — used sparingly on badges/dots, never on chrome */
+  --channel-blue: #5d9bd8;
+  --channel-amber: #efc47b;
+  --channel-mint: #62c4ba;
+  --channel-violet: #9b68d6;
+  --channel-pink: #d36be9;
+  --channel-slate: #9fb4bf;
+
+  /* Semantic feedback — quiet light fills */
+  --color-pass-fg: #1f7a4d;
+  --color-pass-bg: #e8f6ee;
+  --color-fail-fg: #b42318;
+  --color-fail-bg: #fdeceb;
+  --color-warn-fg: #9a5b00;
+  --color-warn-bg: #fdf3e7;
+
+  /* Typography */
+  --font-ui: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --text-micro: 8px;
+  --text-badge: 10px;
+  --text-meta: 11px;
+  --text-card-subtask: 12.5px;
+  --text-body-sm: 13px;
+  --text-body: 14px;
+  --text-nav: 17px;
+  --text-day-heading: 20px;
+  --text-modal-title: 24px;
+
+  /* Spacing — 4px base, compact density */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-18: 18px;
+  --space-24: 24px;
+  --space-28: 28px;
+  --space-36: 36px;
+
+  /* Radius */
+  --radius-nav: 6px;
+  --radius-card: 6px;
+  --radius-toolbar: 6px;
+  --radius-modal: 10px;
+  --radius-popover: 7px;
+  --radius-circle: 999px;
+
+  /* Elevation */
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-toolbar: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-modal: 0 18px 55px rgba(0, 0, 0, 0.18);
+  --shadow-popover: 0 20px 48px rgba(0, 0, 0, 0.32);
+
+  /* App-shell widths */
+  --sidebar-width: 236px;
+  --day-column-width: 270px;
+  --backlog-width: 326px;
+  --integration-rail-width: 56px;
+  --mobile-nav-height: 62px;
+  --mobile-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---------------------------------------------------------------------------
+   Tailwind v4 token bridge.
+   Components use plain Tailwind utilities (`bg-card`, `text-strong`,
+   `border-divider`, etc.) and this @theme block is how Tailwind v4 picks up
+   the token names. All values mirror the :root vars above so the token system
+   has a single source of truth.
+   --------------------------------------------------------------------------- */
+@theme {
+  /* Surfaces */
+  --color-canvas: #f5f5f6;
+  --color-sidebar: #e6e7e8;
+  --color-sidebar-active: #d4d5d7;
+  --color-panel: #fbfbfc;
+  --color-card: #ffffff;
+  --color-modal: #ffffff;
+  --color-popover: #1f2023;
+
+  /* Borders */
+  --color-divider: #dedfe1;
+  --color-divider-soft: #ececee;
+  --color-toolbar-border: #d4d5d8;
+  --color-toolbar-hover: #f2f2f3;
+
+  /* Text */
+  --color-strong: #303133;
+  --color-body: #4b4c4f;
+  --color-muted: #737477;
+  --color-faint: #a0a1a4;
+
+  /* Accents */
+  --color-progress: #57bf78;
+  --color-attention: #ef7f62;
+
+  /* Brand accent (short-name mirror so bg-accent / text-accent exist and the
+     static-light Chip tone="accent" renders). */
+  --color-accent: #4a63d6;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: #edf0fc;
+  --color-accent-fill: #4a63d6;
+
+  /* Channels */
+  --color-channel-blue: #5d9bd8;
+  --color-channel-amber: #efc47b;
+  --color-channel-mint: #62c4ba;
+  --color-channel-violet: #9b68d6;
+  --color-channel-pink: #d36be9;
+  --color-channel-slate: #9fb4bf;
+
+  /* Node kind fills — KG graph 노드 종류(라벨) 색. fill 전용이며 stroke는 상태만
+     나른다(anchor/충돌/개인 halo). 라이트는 채널 원색을 그대로 써 5색 상호 구분을
+     최대화한다(rel 선과 hue가 겹쳐도 form=채운 원 vs 선으로 구분). amber는 다크
+     warn-fg 혼동 소지가 있어 미배정(예비색). */
+  --color-node-wikipage: #62c4ba; /* mint — 위키 문서 */
+  --color-node-knowledge: #9b68d6; /* violet — 위키 주장/소스(지식 근거) */
+  --color-node-document: #9fb4bf; /* slate — 원문 문서 */
+  --color-node-structured: #d36be9; /* pink — 표 데이터 */
+  --color-node-entity: #5d9bd8; /* blue — 개체(예약색, personal halo=blue와 무충돌) */
+
+  /* Fonts */
+  --font-ui: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-sometype-mono), ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
+
+  /* Type scale */
+  --text-micro: 8px;
+  --text-badge: 10px;
+  --text-meta: 11px;
+  --text-card-subtask: 12.5px;
+  --text-body-sm: 13px;
+  --text-body: 14px;
+  --text-nav: 17px;
+  --text-day-heading: 20px;
+  --text-modal-title: 24px;
+
+  /* Radii */
+  --radius-card: 6px;
+  --radius-nav: 6px;
+  --radius-toolbar: 6px;
+  --radius-modal: 10px;
+  --radius-popover: 7px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-toolbar: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-modal: 0 18px 55px rgba(0, 0, 0, 0.18);
+  --shadow-popover: 0 20px 48px rgba(0, 0, 0, 0.32);
+}
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------------------------
+   Dark theme override.
+   The `:root` block above carries LIGHT token values as the default. Setting
+   `data-theme="dark"` on <html> flips the structural surface/text/feedback
+   tokens via cascade — every component that reads `var(--color-*)` inline or
+   through a custom class re-renders against the dark palette without touching
+   JSX. The Tailwind v4 `@theme` block above bakes a fixed light palette into
+   utility classes like `bg-card`; those do NOT flip here (v1 limitation —
+   chrome surfaces use inline `var(--color-*)` and do flip).
+
+   Dark palette is a neutral charcoal stack (no blue or purple cast) tuned for
+   WCAG AA ≥4.5:1 body text against `--color-card`. Semantic fills are dim
+   tinted backgrounds with high-luminance foreground so badges read at a
+   glance without lighting up the chrome.
+   --------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Surfaces — charcoal stack, lifted from canvas → card → modal */
+  --color-app-canvas: #1a1b1e;
+  --color-sidebar: #16171a;
+  --color-sidebar-active: #2a2b2f;
+  --color-panel: #1e1f23;
+  --color-card: #26272b;
+  --color-modal: #2a2b30;
+  --color-popover-dark: #0f1012;
+
+  /* Borders — quiet, low-contrast hairlines */
+  --color-divider: #35363b;
+  --color-divider-soft: #2c2d31;
+  --color-toolbar-border: #3a3b40;
+  --color-toolbar-hover: #2e2f34;
+
+  /* Text — strong: AA on #26272b; body: AA on #26272b; muted/faint: secondary */
+  --color-text-strong: #f0f0f1;
+  --color-text-body: #d0d1d4;
+  --color-text-muted: #9a9b9f;
+  --color-text-faint: #6a6b6f;
+
+  /* Tailwind @theme utility namespace parity. Utilities resolve the short
+     names (`.text-strong { color: var(--color-strong) }`, `bg-canvas` →
+     `var(--color-canvas)`), NOT the structural `--color-text-*` names. Override
+     them here too so utility-styled text/surfaces flip in dark like the inline
+     `var(--color-*)` consumers do. */
+  --color-strong: #f0f0f1;
+  --color-body: #d0d1d4;
+  --color-muted: #9a9b9f;
+  --color-faint: #6a6b6f;
+  --color-canvas: #1a1b1e;
+  --color-popover: #0f1012;
+
+  /* Brand accent — re-declared in BOTH namespaces (structural + short-name) so
+     inline var() consumers AND baked bg-accent/text-accent utilities flip.
+     Lifted indigo reads AA as text on card #26272b; mid-indigo fill keeps a
+     white label legible. */
+  --color-accent: #8b9cf5;
+  --color-accent-fill: #4257c9;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 18%, var(--color-card));
+  --color-accent-border: color-mix(in srgb, var(--color-accent) 42%, transparent);
+
+  /* Semantic feedback — high-luminance fg over dim tinted bg */
+  --color-pass-fg: #4ade80;
+  --color-pass-bg: #0f2e1c;
+  --color-fail-fg: #f87171;
+  --color-fail-bg: #2d1212;
+  --color-warn-fg: #fbbf24;
+  --color-warn-bg: #2d1e08;
+
+  /* Node kind fills — 다크 손튜닝. 다크 블록은 --color-channel-*를 재정의하지 않으므로
+     채널 원색을 단일 color-mix로 tint하면 #26272b(card) 위 대비/상호 구분이 무너진다.
+     테마 전용 값으로 명도를 올려 card 대비 + 5색 상호 구분을 확보한다(slate는 채도를
+     낮춰 entity blue와 분리). amber 미사용(warn-fg 혼동 회피). */
+  --color-node-wikipage: #4ec9bd; /* mint(teal) — 위키 문서 */
+  --color-node-knowledge: #b58be6; /* violet(lifted) — 위키 주장/소스 */
+  --color-node-document: #8fa8b5; /* slate(muted blue-gray) — 원문 문서 */
+  --color-node-structured: #e07ff0; /* pink(magenta lifted) — 표 데이터 */
+  --color-node-entity: #5ea6ea; /* blue(lifted) — 개체 */
+
+  /* Semantic derivations(:root 참조)은 전부 var() 파생이라 위 다크 값이 그대로
+     흘러들어온다 — 여기서 재선언하지 않는다. */
+
+  /* Elevation — stronger drops over dark canvas so cards still feel lifted */
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.45);
+  --shadow-card-hover: 0 2px 4px rgba(0, 0, 0, 0.4),
+    0 6px 16px rgba(0, 0, 0, 0.5);
+  --shadow-toolbar: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 18px 55px rgba(0, 0, 0, 0.6);
+  --shadow-popover: 0 20px 48px rgba(0, 0, 0, 0.7);
+}
+
+/* App shell fills 100vw × 100vh; body never scrolls. Inner panels scroll. */
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-app-canvas);
+  color: var(--color-text-body);
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  line-height: 1.35;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Single product font. Hierarchy comes from weight + size, not a second face. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-ui);
+  color: var(--color-text-strong);
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+/* Quiet, neutral focus ring — chrome shouldn't shout. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-text-strong);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-text-strong) 14%, transparent);
+}
+
+/* Thin, quiet scrollbars to match the lightweight aesthetic. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-divider) transparent;
+}
+
+/* Keep the BlockNote editor visually flush with our canvas. */
+.bn-container,
+.bn-editor {
+  background: transparent;
+}
+.bn-editor {
+  padding-inline: 0 !important;
+}
+
+/* Mobile shell contracts: content owns scrolling; chrome stays compact. */
+@media (max-width: 759px) {
+  :root {
+    --mobile-nav-height: 58px;
+  }
+
+  .orthus-page-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .orthus-page-title {
+    font-size: 17px;
+    line-height: 1.15;
+  }
+
+  .orthus-page-subtitle {
+    display: none;
+  }
+
+  .orthus-page-actions {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-bottom: 1px;
+    scrollbar-width: none;
+  }
+
+  .orthus-page-actions::-webkit-scrollbar,
+  .orthus-toolbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .orthus-toolbar {
+    width: max-content;
+    max-width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .orthus-toolbar-button {
+    min-height: 38px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .company-board-mobile-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--color-divider);
+    background: var(--color-app-canvas);
+    padding: 8px 12px;
+    scrollbar-width: none;
+  }
+
+  .company-board-mobile-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .company-board-mobile-tabs button {
+    display: inline-flex;
+    min-height: 34px;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--color-toolbar-border);
+    border-radius: 6px;
+    background: var(--color-card);
+    color: var(--color-text-muted);
+    padding: 0 10px;
+    font-size: var(--text-body-sm);
+    font-weight: 700;
+  }
+
+  .company-board-mobile-tabs button.active {
+    background: var(--color-sidebar-active);
+    color: var(--color-text-strong);
+  }
+
+  .company-board-scroll {
+    display: block;
+    padding: 12px;
+    overflow-x: hidden;
+  }
+
+  .company-board-column {
+    display: none;
+    width: 100% !important;
+  }
+
+  .company-board-column.is-active-mobile {
+    display: flex;
+  }
+
+  .project-db-row {
+    display: grid;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    row-gap: 6px;
+  }
+
+  .project-db-row > span:nth-child(2),
+  .project-db-row > span:nth-child(3),
+  .project-db-row > span:nth-child(4) {
+    width: auto;
+  }
+
+  .project-db-row > span:nth-child(4) {
+    grid-column: 1 / -1;
+  }
+
+  .connector-card-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 760px) {
+  .company-board-mobile-tabs {
+    display: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .orthus-toolbar-button,
+  .connector-card-actions button,
+  .company-board-mobile-tabs button,
+  input:not([type="checkbox"]):not([type="radio"]),
+  select {
+    min-height: 40px;
+  }
+}
+
+/* peek 본문 BlockNote(RichBodyEditor): peek 폭에 맞춘 컴팩트 패딩/투명 배경 */
+.peek-rich-body .bn-editor {
+  padding-inline: 28px 4px;
+  background: transparent;
+}
+.peek-rich-body,
+.peek-rich-body .bn-container {
+  background: transparent;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   공용 체크박스 — 내 보드 체크박스 스타일(초록 원형)로 디자인 시스템 통일.
+   미완료: 회색 원 + 옅은 체크 / 완료: 초록 원 + 흰 체크. 취소선 없음.
+   적용: 계획·회고, Agent Work, 파트너사 등 네이티브 input[type=checkbox].
+   ─────────────────────────────────────────────────────────────────────────── */
+.orthus-check {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid var(--color-divider, #dedfe1);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: none;
+}
+
+.orthus-check::after {
+  content: "";
+  width: 6px;
+  height: 3.5px;
+  border-left: 2px solid var(--color-divider);
+  border-bottom: 2px solid var(--color-divider);
+  background: transparent;
+  transform: rotate(-45deg) scale(0.9);
+}
+
+.orthus-check:hover {
+  border-color: var(--color-progress);
+}
+
+.orthus-check:checked {
+  border-color: var(--color-progress);
+  background: var(--color-progress);
+}
+
+.orthus-check:checked::after {
+  border-left-color: #ffffff;
+  border-bottom-color: #ffffff;
+  transform: rotate(-45deg) scale(1);
+}
+
+/* 그 외 네이티브 체크박스(에디터 체크리스트 등)도 최소한 초록 톤으로 통일. */
+input[type="checkbox"]:not(.orthus-check) {
+  accent-color: var(--color-progress);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ListRow hover 액션 — 데스크톱은 hover/focus로만 노출(레이아웃 시프트 없음),
+   터치(coarse pointer)에서는 hover가 없으므로 항상 노출한다.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media (pointer: coarse) {
+  .orthus-row-actions {
+    opacity: 1 !important;
+  }
+}

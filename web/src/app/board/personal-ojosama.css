@@ -1,0 +1,6075 @@
+.personal-ojosama-root,
+.task-popup-layer,
+.task-drag-preview {
+  --canvas: #fbfbfc;
+  --panel: #ffffff;
+  --panel-muted: #f5f5f6;
+  --line: #dedfe1;
+  --line-soft: #ececee;
+  --text: #303133;
+  --muted: #737477;
+  --faint: #a0a1a4;
+  --green: #57bf78;
+  --green-soft: rgba(87, 191, 120, 0.16);
+  /* 공유 인디고 액센트 — 대시보드 리디자인과 harmonize(P4 보드 섬 파리티).
+     green은 태스크/완료 정체성으로 유지하고, indigo는 commit/primary 액션 전용. */
+  --accent: #4a63d6;
+  --accent-soft: rgba(74, 99, 214, 0.14);
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.08);
+  font-family: var(--font-ui);
+}
+
+.personal-ojosama-root {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--canvas);
+  color: var(--text);
+}
+
+.personal-ojosama-root button,
+.personal-ojosama-root input,
+.personal-ojosama-root select,
+.personal-ojosama-root textarea,
+.task-popup-layer button,
+.task-popup-layer input,
+.task-popup-layer select,
+.task-popup-layer textarea {
+  font: inherit;
+}
+
+.personal-ojosama-root button,
+.task-popup-layer button {
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.personal-ojosama-root button:disabled,
+.task-popup-layer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.personal-ojosama-root .board-area {
+  display: grid;
+  grid-template-rows: 54px minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--canvas);
+}
+
+.personal-ojosama-root .board-toolbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 54px;
+  border-bottom: 1px solid var(--line-soft);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0 16px;
+}
+
+.personal-ojosama-root .toolbar-left,
+.personal-ojosama-root .toolbar-right,
+.personal-ojosama-root .date-nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.personal-ojosama-root .date-nav {
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.personal-ojosama-root .toolbar-button {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  color: #696a6d;
+  padding: 6px 10px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .toolbar-button:hover,
+.personal-ojosama-root .toolbar-button.active,
+.personal-ojosama-root .toolbar-button.date-label {
+  border-color: #bfc0c3;
+  background: #f4f4f5;
+  color: #3f4042;
+}
+
+.personal-ojosama-root .toolbar-button.icon-only {
+  width: 32px;
+  padding: 0;
+}
+
+.personal-ojosama-root .toolbar-button.date-label {
+  min-width: 76px;
+}
+
+/* 스케줄 토글은 데스크톱에선 toolbar-right의 Schedule 버튼이 담당하므로 숨기고,
+   toolbar-right가 사라지는 모바일(≤980px)에서만 Today 옆에 노출한다. */
+.personal-ojosama-root .schedule-mobile-toggle {
+  display: none;
+}
+
+.personal-ojosama-root .filter-control {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.personal-ojosama-root .filter-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 7px);
+  left: 0;
+  display: grid;
+  width: 184px;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fffdfb;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+  padding: 10px;
+}
+
+.personal-ojosama-root .filter-menu-group {
+  display: grid;
+  gap: 4px;
+}
+
+.personal-ojosama-root .filter-menu-group + .filter-menu-group {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 8px;
+}
+
+.personal-ojosama-root .filter-menu-group span {
+  color: #8b8c8f;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .filter-menu-group button {
+  display: flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: flex-start;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #555659;
+  padding: 4px 7px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .filter-menu-group button:hover,
+.personal-ojosama-root .filter-menu-group button.active {
+  background: #eeeeef;
+  color: #303133;
+}
+
+.personal-ojosama-root .mock-status {
+  overflow: hidden;
+  max-width: 260px;
+  border-radius: 999px;
+  background: #eef3f0;
+  color: #5a7a65;
+  padding: 7px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .toolbar-backlog-strip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 332px;
+  height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 1px solid var(--line-soft);
+  background: inherit;
+  padding: 0 14px;
+}
+
+.personal-ojosama-root .toolbar-backlog-strip button {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: #737477;
+  padding: 0;
+}
+
+.personal-ojosama-root .mobile-column-tabs {
+  display: none;
+}
+
+.personal-ojosama-root .personal-board-error {
+  position: absolute;
+  z-index: 30;
+  top: 64px;
+  left: 16px;
+  right: 350px;
+}
+
+.personal-ojosama-root .home-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 332px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.personal-ojosama-root .home-shell.panel-hidden {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.personal-ojosama-root .home-shell.backlog-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.personal-ojosama-root .day-board {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(272px, 300px);
+  align-content: start;
+  grid-auto-rows: 100%;
+  gap: 18px;
+  min-width: 0;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overflow-anchor: none;
+  padding: 24px 24px 40px 28px;
+  scroll-padding-left: 28px;
+  cursor: grab;
+}
+
+/* While grab-panning, hint with grabbing cursor and suppress text selection so
+   the drag scrolls the date window cleanly. */
+.personal-ojosama-root .day-board.panning {
+  cursor: grabbing;
+  user-select: none;
+  scroll-behavior: auto;
+}
+
+.personal-ojosama-root .day-board.panning * {
+  cursor: grabbing !important;
+}
+
+.personal-ojosama-root .day-board > .day-column {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 요일/날짜 헤더와 Add task 행은 컬럼 상단에 고정하고, 그 아래 콘텐츠(이벤트·태스크·
+   노트)만 세로 스크롤한다. 헤더/Add task는 flex shrink로 줄지 않게 고정 크기. */
+.personal-ojosama-root .day-column > .day-header,
+.personal-ojosama-root .day-column > .add-task-row {
+  flex: 0 0 auto;
+}
+
+.personal-ojosama-root .day-column-scroll {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.personal-ojosama-root .day-board.single-column {
+  grid-template-columns: minmax(246px, 360px);
+}
+
+.personal-ojosama-root .day-board,
+.personal-ojosama-root .day-column-scroll,
+.personal-ojosama-root .backlog-panel,
+.task-popup-layer .task-detail-scroll {
+  scrollbar-color: var(--line) transparent;
+  scrollbar-width: thin;
+}
+
+.personal-ojosama-root .day-column {
+  min-width: 0;
+}
+
+.personal-ojosama-root .day-column.drop-over {
+  border-radius: 8px;
+  outline: 1px solid rgba(87, 191, 120, 0.34);
+  outline-offset: 6px;
+}
+
+.personal-ojosama-root .day-header {
+  margin-bottom: 20px;
+}
+
+.personal-ojosama-root .day-header h2 {
+  margin: 0;
+  color: #393a3c;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.personal-ojosama-root .day-header p {
+  margin: 2px 0 0;
+  color: #77787b;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.personal-ojosama-root .progress-track {
+  width: min(100%, 330px);
+  height: 7px;
+  margin-top: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background:
+    linear-gradient(to right, var(--green) var(--progress, 0%), transparent var(--progress, 0%)),
+    #ebebed;
+}
+
+.personal-ojosama-root .progress-track span {
+  display: none;
+}
+
+.personal-ojosama-root .add-task-row,
+.personal-ojosama-root .fixed-event-add-row,
+.personal-ojosama-root .note-add-row,
+.personal-ojosama-root .bucket-add-row {
+  display: grid;
+  align-items: center;
+  min-height: 40px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--panel);
+  box-shadow: var(--shadow-card);
+  color: #9a9b9e;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.personal-ojosama-root .add-task-row:focus-within,
+.personal-ojosama-root .add-task-row:hover,
+.personal-ojosama-root .fixed-event-add-row:focus-within,
+.personal-ojosama-root .fixed-event-add-row:hover,
+.personal-ojosama-root .note-add-row:focus-within,
+.personal-ojosama-root .note-add-row:hover,
+.personal-ojosama-root .bucket-add-row:focus-within,
+.personal-ojosama-root .bucket-add-row:hover {
+  border-color: #d7d8db;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.personal-ojosama-root .add-task-row {
+  grid-template-columns: 28px minmax(0, 1fr) 28px;
+  gap: 6px;
+  padding: 5px 8px;
+}
+
+.personal-ojosama-root .fixed-event-add-row {
+  grid-template-columns: 24px minmax(0, 1fr) 72px 72px 92px 28px;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 5px 8px;
+}
+
+.personal-ojosama-root .add-task-row input,
+.personal-ojosama-root .add-task-row select,
+.personal-ojosama-root .add-task-row button,
+.personal-ojosama-root .fixed-event-add-row input,
+.personal-ojosama-root .fixed-event-add-row select,
+.personal-ojosama-root .fixed-event-add-row button,
+.personal-ojosama-root .bucket-add-row input,
+.personal-ojosama-root .bucket-add-row button {
+  min-width: 0;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  color: #77787b;
+  outline: none;
+  font-size: 14px;
+}
+
+.personal-ojosama-root .add-task-row input[type="text"] {
+  font-size: 15px;
+}
+
+.personal-ojosama-root .fixed-event-add-row:not(:hover):not(:focus-within) input[type="time"],
+.personal-ojosama-root .fixed-event-add-row:not(:hover):not(:focus-within) select,
+.personal-ojosama-root .fixed-event-add-row:not(:hover):not(:focus-within) button {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 추가(+) 버튼은 항상 보이고 항상 눌리게 — 이전엔 hover 전까지 pointer-events:none
+   이라 빈 컬럼에서 +가 안 먹혔다. */
+.personal-ojosama-root .add-task-row .add-task-submit {
+  color: #9a9b9e;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.personal-ojosama-root .add-task-row .add-task-submit:hover {
+  color: #555659;
+}
+
+.personal-ojosama-root .add-task-row button,
+.personal-ojosama-root .fixed-event-add-row button,
+.personal-ojosama-root .bucket-add-row button {
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+}
+
+.personal-ojosama-root .add-task-row .add-task-sort-button {
+  opacity: 1;
+  color: #9a9b9e;
+}
+
+.personal-ojosama-root .add-task-row .add-task-sort-button.active {
+  color: #555659;
+}
+
+.personal-ojosama-root .card-stack,
+.personal-ojosama-root .note-stack {
+  display: grid;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.personal-ojosama-root .task-card,
+.task-drag-preview {
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--panel);
+  box-shadow: var(--shadow-card);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.personal-ojosama-root .task-card:hover {
+  border-color: #d7d8db;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.personal-ojosama-root .task-card {
+  position: relative;
+  padding: 8px 10px;
+  animation: card-enter 220ms ease both;
+  cursor: grab;
+}
+
+.personal-ojosama-root .task-card.instant-placement {
+  animation: none;
+}
+
+.personal-ojosama-root .task-card.completed {
+  opacity: 0.54;
+}
+
+.personal-ojosama-root .task-card.dragging {
+  position: relative;
+  z-index: 20;
+  opacity: 0.18;
+  box-shadow: none;
+  cursor: grabbing;
+}
+
+.personal-ojosama-root .task-card.drop-target:not(.dragging) {
+  border-color: rgba(87, 191, 120, 0.72);
+  box-shadow:
+    inset 0 2px 0 rgba(87, 191, 120, 0.72),
+    var(--shadow-card);
+}
+
+.personal-ojosama-root .task-card input,
+.personal-ojosama-root .task-card select,
+.personal-ojosama-root .task-card button,
+.personal-ojosama-root .task-card label {
+  cursor: auto;
+}
+
+.personal-ojosama-root .task-card-top,
+.task-drag-preview .task-card-top,
+.personal-ojosama-root .task-card-meta,
+.task-drag-preview .task-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.personal-ojosama-root .task-card-top {
+  justify-content: flex-start;
+  color: #7f8082;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .task-card-top span {
+  color: #555659;
+}
+
+.personal-ojosama-root .drag-handle {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #a2a3a5;
+  opacity: 0;
+  padding: 0;
+  cursor: grab;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.personal-ojosama-root .task-archive-button {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #a0a1a4;
+  opacity: 0;
+  padding: 0;
+}
+
+.personal-ojosama-root .task-card:hover .drag-handle,
+.personal-ojosama-root .task-card:focus-within .drag-handle,
+.personal-ojosama-root .task-card:hover .task-archive-button,
+.personal-ojosama-root .task-card:focus-within .task-archive-button {
+  opacity: 1;
+}
+
+.personal-ojosama-root .task-archive-button:hover {
+  background: #eeeeef;
+  color: #555659;
+}
+
+.personal-ojosama-root .task-time-label,
+.task-drag-preview .task-time-label {
+  margin: 2px 0 4px 5px;
+  color: #77787b;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* ===== Due-date countdown chip (card + detail) =====
+   The chip appears both on cards (under .personal-ojosama-root) and inside the
+   task detail modal, which is portaled to document.body as .task-popup-layer
+   (NOT nested in .personal-ojosama-root), so every rule must cover both roots. */
+.personal-ojosama-root .task-due-chip,
+.task-popup-layer .task-due-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  max-width: calc(100% - 10px);
+  margin: 5px 0 0 5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #eef1ee;
+  color: #5f6b60;
+  font-size: 11.5px;
+  font-weight: 760;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.personal-ojosama-root .task-due-chip svg,
+.task-popup-layer .task-due-chip svg {
+  flex: 0 0 auto;
+}
+
+.personal-ojosama-root .task-due-chip span,
+.task-popup-layer .task-due-chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.personal-ojosama-root .task-due-chip.tone-overdue,
+.task-popup-layer .task-due-chip.tone-overdue {
+  background: #fde7e7;
+  color: #c0392b;
+}
+
+.personal-ojosama-root .task-due-chip.tone-today,
+.task-popup-layer .task-due-chip.tone-today {
+  background: #fbe6cf;
+  color: #b46412;
+}
+
+.personal-ojosama-root .task-due-chip.tone-soon,
+.task-popup-layer .task-due-chip.tone-soon {
+  background: #fbf2d2;
+  color: #927611;
+}
+
+.personal-ojosama-root .task-due-chip.tone-normal,
+.task-popup-layer .task-due-chip.tone-normal {
+  background: #eef1ee;
+  color: #5f6b60;
+}
+
+.personal-ojosama-root .task-due-chip.tone-done,
+.task-popup-layer .task-due-chip.tone-done {
+  background: #eeeeef;
+  color: #9a9b9e;
+}
+
+.personal-ojosama-root .task-card.completed .task-due-chip {
+  opacity: 0.6;
+}
+
+/* Chip sitting in the detail modal's due row is inline (no card-relative margin). */
+.task-popup-layer .task-detail-due-row .task-due-chip {
+  margin: 0;
+}
+
+/* Due-date editor row inside the task detail modal (portaled to .task-popup-layer). */
+.task-popup-layer .task-detail-due-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px 34px;
+}
+
+.task-popup-layer .task-detail-due-control {
+  position: relative;
+}
+
+.task-popup-layer .task-detail-due-field,
+.task-popup-layer .task-detail-due-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #e4e4e6;
+  border-radius: 9px;
+  background: #fafafa;
+  color: #343537;
+  font-size: 12.5px;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.task-popup-layer .task-detail-due-field:hover:not(:disabled),
+.task-popup-layer .task-detail-due-time:hover:not(:disabled) {
+  border-color: #cfcfd2;
+  background: #f3f3f4;
+}
+
+.task-popup-layer .task-detail-due-field.open,
+.task-popup-layer .task-detail-due-time.open {
+  border-color: #8c8d92;
+  background: #f0f0f1;
+}
+
+.task-popup-layer .task-detail-due-field.placeholder,
+.task-popup-layer .task-detail-due-time.placeholder {
+  color: #8a8b8e;
+}
+
+.task-popup-layer .task-detail-due-time:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Due date/time picker popovers (anchored under their trigger). */
+.task-popup-layer .task-due-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  background: #ffffff;
+  border: 1px solid #e2e2e4;
+  border-radius: 12px;
+  box-shadow: 0 14px 36px rgba(20, 20, 22, 0.16);
+  padding: 8px;
+}
+
+.task-popup-layer .task-due-cal {
+  width: 256px;
+}
+
+.task-popup-layer .task-due-cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 2px 8px;
+}
+
+.task-popup-layer .task-due-cal-head strong {
+  font-size: 13px;
+  font-weight: 750;
+  color: #343537;
+}
+
+.task-popup-layer .task-due-cal-head button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  color: #6a6b6e;
+  cursor: pointer;
+}
+
+.task-popup-layer .task-due-cal-head button:hover {
+  background: #f0f0f1;
+}
+
+.task-popup-layer .task-due-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.task-popup-layer .task-due-cal-w {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #9a9b9e;
+  padding: 2px 0;
+}
+
+.task-popup-layer .task-due-cal-blank {
+  height: 30px;
+}
+
+.task-popup-layer .task-due-cal-day {
+  height: 30px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: #343537;
+  cursor: pointer;
+}
+
+.task-popup-layer .task-due-cal-day:hover {
+  background: #f0f0f1;
+}
+
+.task-popup-layer .task-due-cal-day.today {
+  color: #b46412;
+  font-weight: 750;
+}
+
+.task-popup-layer .task-due-cal-day.selected,
+.task-popup-layer .task-due-cal-day.selected.today {
+  background: #343537;
+  color: #ffffff;
+  font-weight: 750;
+}
+
+.task-popup-layer .task-due-time-pop {
+  display: flex;
+  gap: 6px;
+}
+
+.task-popup-layer .task-due-time-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 66px;
+  max-height: 220px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.task-popup-layer .task-due-time-cell {
+  flex: 0 0 auto;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: #343537;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.task-popup-layer .task-due-time-cell:hover {
+  background: #f0f0f1;
+}
+
+.task-popup-layer .task-due-time-cell.selected {
+  background: #343537;
+  color: #ffffff;
+  font-weight: 750;
+}
+
+.task-popup-layer .task-detail-due-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #9a9b9e;
+  cursor: pointer;
+}
+
+.task-popup-layer .task-detail-due-clear:hover {
+  background: #f0f0f1;
+  color: #555;
+}
+
+@media (max-width: 760px) {
+  .task-popup-layer .task-detail-due-field,
+  .task-popup-layer .task-detail-due-time,
+  .task-popup-layer .task-detail-due-clear {
+    height: 44px;
+  }
+
+  .task-popup-layer .task-detail-due-clear {
+    width: 44px;
+  }
+}
+
+.personal-ojosama-root .task-card-main,
+.task-drag-preview .task-card-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0 0 5px;
+}
+
+.personal-ojosama-root .task-title,
+.task-drag-preview .task-title {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  color: #343537;
+  font-size: 15px;
+  line-height: 1.25;
+  font-weight: 680;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.personal-ojosama-root .task-card.completed .task-title {
+  color: #909194;
+}
+
+/* 보드 카드 안 텍스트는 드래그(카드 이동) 중 선택/복사되지 않게 user-select를 끈다.
+   카드 전체가 드래그 핸들이라(클릭=상세 열기, 5px 이동=카드 이동) 제목·서브태스크 텍스트를
+   잡고 끌어도 하이라이트가 생기지 않는다. 텍스트 복사는 티켓 상세/에디터에서 한다
+   ([data-card-text]는 보드 카드에만 붙어 상세 화면 텍스트 선택에는 영향이 없다). */
+.personal-ojosama-root [data-card-text] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.personal-ojosama-root .subtask-list,
+.task-drag-preview .subtask-list {
+  display: grid;
+  gap: 4px;
+  /* 체크 원을 카드 좌측(푸터 체크와 같은 열)에 맞춰 정렬 — 들여쓰기 제거. */
+  margin: 4px 0 0 0;
+}
+
+.personal-ojosama-root .subtask-list .subtask-row {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  color: #4b4c4f;
+  font-size: 13px;
+}
+
+/* 완료 토글 hitbox = 체크박스 주변 셀 한 칸뿐. 텍스트는 카드 상세로 진입한다. */
+.personal-ojosama-root .subtask-list .subtask-check {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.personal-ojosama-root .subtask-list .subtask-text {
+  min-width: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  cursor: pointer;
+}
+
+.personal-ojosama-root .subtask-list input {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  appearance: none;
+  border: 1.5px solid #5c5c62;
+  border-radius: 50%;
+  background: transparent;
+  margin: 0;
+}
+
+.personal-ojosama-root .subtask-list input::after {
+  width: 7px;
+  height: 4px;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  background: transparent;
+  content: "";
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.55);
+}
+
+.personal-ojosama-root .subtask-list input:checked {
+  border-color: var(--green);
+  background: var(--green);
+}
+
+.personal-ojosama-root .subtask-list input:checked::after {
+  opacity: 1;
+  transform: rotate(-45deg) scale(1);
+}
+
+/* 카드 서브태스크: 체크 원을 키우고, 미완료에도 옅은 회색 체크가 보이게(이미지 기준). */
+.personal-ojosama-root .subtask-list input {
+  width: 16px;
+  height: 16px;
+  border-color: #c2c3c6;
+}
+
+.personal-ojosama-root .subtask-list input::after {
+  opacity: 1;
+  border-left-color: #c2c3c6;
+  border-bottom-color: #c2c3c6;
+  transform: rotate(-45deg) scale(0.9);
+}
+
+.personal-ojosama-root .subtask-list input:checked {
+  border-color: var(--green);
+}
+
+.personal-ojosama-root .subtask-list input:checked::after {
+  border-left-color: #ffffff;
+  border-bottom-color: #ffffff;
+  transform: rotate(-45deg) scale(1);
+}
+
+.personal-ojosama-root .task-card-meta,
+.task-drag-preview .task-card-meta {
+  position: relative;
+  overflow: visible;
+  justify-content: flex-end;
+  margin-top: 5px;
+  color: #8b8c8f;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+}
+
+.personal-ojosama-root .task-card-footer-icons,
+.task-drag-preview .task-card-footer-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.personal-ojosama-root .task-card-meta .task-card-footer-check,
+.personal-ojosama-root .task-card-meta .task-card-hover-action,
+.task-drag-preview .task-card-meta .task-card-footer-check,
+.task-drag-preview .task-card-meta .task-card-hover-action {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border-radius: 50%;
+  background: transparent;
+  color: #85858b;
+  padding: 0;
+}
+
+.personal-ojosama-root .task-card-meta .task-card-footer-check,
+.task-drag-preview .task-card-meta .task-card-footer-check {
+  border: 1.5px solid #5b5b61;
+}
+
+.personal-ojosama-root .task-card-meta .task-card-footer-check,
+.personal-ojosama-root .subtask-list input,
+.task-popup-layer .task-detail-check {
+  transition: none;
+}
+
+.personal-ojosama-root .task-card-meta .task-card-footer-check.checked,
+.task-drag-preview .task-card-meta .task-card-footer-check.checked {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.personal-ojosama-root .task-card-meta .task-card-hover-action {
+  border-radius: 4px;
+  opacity: 0;
+}
+
+.personal-ojosama-root .task-card:hover .task-card-hover-action,
+.personal-ojosama-root .task-card:focus-within .task-card-hover-action,
+.task-drag-preview .task-card-hover-action.visible {
+  opacity: 1;
+}
+
+.personal-ojosama-root .channel-picker,
+.task-popup-layer .channel-picker {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+  text-transform: none;
+}
+
+.personal-ojosama-root .channel-picker.card {
+  margin-right: 7px;
+}
+
+.personal-ojosama-root .channel-trigger,
+.task-popup-layer .channel-trigger {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font: inherit;
+  font-weight: 650;
+  line-height: 1.15;
+}
+
+.personal-ojosama-root .channel-picker.card .channel-trigger {
+  max-width: 112px;
+  overflow: hidden;
+  color: #77787b;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.personal-ojosama-root .channel-trigger span,
+.task-popup-layer .channel-trigger span {
+  color: var(--channel-color);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.task-popup-layer .channel-picker.detail .channel-trigger {
+  min-height: 24px;
+  color: #d8d8dc;
+  font-size: 15px;
+}
+
+.task-popup-layer .channel-picker.detail .channel-trigger span {
+  font-size: 22px;
+}
+
+.task-popup-layer .channel-picker.interactive {
+  position: relative;
+}
+
+.personal-ojosama-root .channel-picker.interactive {
+  position: relative;
+}
+
+.task-popup-layer .channel-picker.interactive .channel-trigger {
+  cursor: pointer;
+}
+
+.personal-ojosama-root .channel-picker.interactive .channel-trigger {
+  cursor: pointer;
+}
+
+.task-popup-layer .channel-picker.interactive .channel-trigger:hover {
+  color: #ffffff;
+}
+
+.personal-ojosama-root .channel-picker.interactive .channel-trigger:hover {
+  color: #3f4043;
+}
+
+.personal-ojosama-root .channel-popover,
+.task-popup-layer .channel-popover {
+  position: fixed;
+  z-index: 420;
+  display: flex;
+  width: 392px;
+  max-height: min(520px, calc(100vh - 48px));
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #34353a;
+  border-radius: 7px;
+  background: #1f2023;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.32);
+  color: #e7e2ee;
+  padding: 14px 0 12px;
+  text-transform: none;
+  white-space: normal;
+}
+
+.personal-ojosama-root .channel-popover.card,
+.task-popup-layer .channel-popover.card {
+  top: auto;
+  left: auto;
+}
+
+.personal-ojosama-root .channel-popover.card:not(.manager-open),
+.task-popup-layer .channel-popover.card:not(.manager-open) {
+  width: 286px;
+  max-height: min(374px, calc(100vh - 48px));
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.personal-ojosama-root .channel-popover.manager-open,
+.task-popup-layer .channel-popover.manager-open {
+  width: 392px;
+  max-height: min(410px, calc(100vh - 48px));
+}
+
+.personal-ojosama-root .channel-popover.detail,
+.task-popup-layer .channel-popover.detail {
+  max-height: min(348px, calc(100vh - 48px));
+  width: 300px;
+  padding: 12px 0 10px;
+}
+
+.personal-ojosama-root .channel-popover.detail.manager-open,
+.task-popup-layer .channel-popover.detail.manager-open {
+  max-height: min(390px, calc(100vh - 48px));
+  width: 340px;
+}
+
+.personal-ojosama-root .channel-popover.card::after,
+.task-popup-layer .channel-popover.card::after {
+  position: absolute;
+  top: -8px;
+  left: var(--channel-arrow-left, 192px);
+  width: 14px;
+  height: 14px;
+  border-top: 1px solid #34353a;
+  border-left: 1px solid #34353a;
+  background: #1f2023;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.personal-ojosama-root .channel-popover.detail::after,
+.task-popup-layer .channel-popover.detail::after {
+  position: absolute;
+  top: -7px;
+  left: var(--channel-arrow-left, 24px);
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid #34353a;
+  border-left: 1px solid #34353a;
+  background: #1f2023;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.personal-ojosama-root .channel-popover.card.above::after,
+.task-popup-layer .channel-popover.card.above::after {
+  top: auto;
+  bottom: -8px;
+  border-top: 0;
+  border-right: 1px solid #34353a;
+  border-bottom: 1px solid #34353a;
+  border-left: 0;
+}
+
+.personal-ojosama-root .channel-popover-head,
+.personal-ojosama-root .channel-option,
+.personal-ojosama-root .channel-create-form button,
+.task-popup-layer .channel-popover-head,
+.task-popup-layer .channel-option,
+.task-popup-layer .channel-create-form button {
+  align-items: center;
+  border-radius: 7px;
+}
+
+.personal-ojosama-root .channel-popover-head,
+.task-popup-layer .channel-popover-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #aaaab0;
+  padding: 0 18px 9px;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.personal-ojosama-root .channel-popover.card:not(.manager-open) .channel-popover-head,
+.task-popup-layer .channel-popover.card:not(.manager-open) .channel-popover-head {
+  gap: 8px;
+  padding: 0 14px 6px;
+  font-size: 13px;
+}
+
+.personal-ojosama-root .channel-popover.detail .channel-popover-head,
+.task-popup-layer .channel-popover.detail .channel-popover-head {
+  justify-content: flex-start;
+  padding: 0 16px 7px;
+  font-size: 14px;
+}
+
+/* 개인 채널 vs 회사 프로젝트 그룹 구분 라벨 */
+.personal-ojosama-root .channel-group-label,
+.task-popup-layer .channel-group-label {
+  padding: 8px 18px 4px;
+  color: #8a8b92;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+/* 회사 프로젝트 채널 옵션 — 회사 공개임을 살짝 강조 */
+.personal-ojosama-root .channel-option.company .channel-company-tag,
+.task-popup-layer .channel-option.company .channel-company-tag {
+  justify-self: end;
+  align-self: center;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(93, 155, 216, 0.18);
+  color: #7fb2e8;
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.personal-ojosama-root .channel-manager-note,
+.task-popup-layer .channel-manager-note {
+  padding: 8px 16px 2px;
+  color: #8a8b92;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.personal-ojosama-root .channel-search,
+.task-popup-layer .channel-search {
+  width: calc(100% - 36px);
+  height: 42px;
+  border: 0;
+  border-bottom: 1px solid #303137;
+  outline: 0;
+  background: transparent;
+  color: #ececee;
+  margin: 0 18px 8px;
+  font-size: 19px;
+}
+
+.personal-ojosama-root .channel-popover.card:not(.manager-open) .channel-search,
+.task-popup-layer .channel-popover.card:not(.manager-open) .channel-search {
+  width: calc(100% - 28px);
+  height: 34px;
+  margin: 0 14px 6px;
+  font-size: 15px;
+}
+
+.personal-ojosama-root .channel-popover.detail .channel-search,
+.task-popup-layer .channel-popover.detail .channel-search {
+  width: calc(100% - 32px);
+  height: 34px;
+  margin: 0 16px 4px;
+  font-size: 16px;
+}
+
+.personal-ojosama-root .channel-search::placeholder,
+.task-popup-layer .channel-search::placeholder {
+  color: #85858b;
+}
+
+.personal-ojosama-root .channel-options,
+.personal-ojosama-root .channel-manager-list,
+.task-popup-layer .channel-options,
+.task-popup-layer .channel-manager-list {
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  max-height: none;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.personal-ojosama-root .channel-options::-webkit-scrollbar,
+.personal-ojosama-root .channel-manager-list::-webkit-scrollbar,
+.task-popup-layer .channel-options::-webkit-scrollbar,
+.task-popup-layer .channel-manager-list::-webkit-scrollbar {
+  display: none;
+}
+
+.personal-ojosama-root .channel-option,
+.task-popup-layer .channel-option {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 24px;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  background: transparent;
+  color: #e7e2ee;
+  padding: 0 18px;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 650;
+}
+
+.personal-ojosama-root .channel-popover.card:not(.manager-open) .channel-option,
+.task-popup-layer .channel-popover.card:not(.manager-open) .channel-option {
+  grid-template-columns: 28px minmax(0, 1fr) 20px;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 15px;
+}
+
+.personal-ojosama-root .channel-popover.detail .channel-option,
+.task-popup-layer .channel-popover.detail .channel-option {
+  grid-template-columns: 28px minmax(0, 1fr) 20px;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 16px;
+  font-size: 17px;
+}
+
+/* 회사 옵션은 '회사' 배지가 열을 하나 더 차지한다. 기본 3열 그리드에선 배지가
+   체크용 좁은 열로 밀려 '회/사'로 세로 접히고 체크(✓)가 다음 줄로 내려간다.
+   회사 옵션만 [# | 이름 | 배지(auto) | 체크] 4열로 확장한다(3개 크기 변형 모두). */
+.personal-ojosama-root .channel-option.company,
+.task-popup-layer .channel-option.company {
+  grid-template-columns: 36px minmax(0, 1fr) auto 24px;
+}
+
+.personal-ojosama-root .channel-popover.card:not(.manager-open) .channel-option.company,
+.task-popup-layer .channel-popover.card:not(.manager-open) .channel-option.company {
+  grid-template-columns: 28px minmax(0, 1fr) auto 20px;
+}
+
+.personal-ojosama-root .channel-popover.detail .channel-option.company,
+.task-popup-layer .channel-popover.detail .channel-option.company {
+  grid-template-columns: 28px minmax(0, 1fr) auto 20px;
+}
+
+.personal-ojosama-root .channel-popover.detail .channel-manager-row,
+.task-popup-layer .channel-popover.detail .channel-manager-row {
+  grid-template-columns: 18px minmax(0, 1fr) auto 28px 28px;
+  gap: 6px;
+  min-height: 34px;
+  font-size: 17px;
+}
+
+.personal-ojosama-root .channel-option svg,
+.task-popup-layer .channel-option svg {
+  justify-self: end;
+  color: #58bf78;
+}
+
+.personal-ojosama-root .channel-option:hover,
+.personal-ojosama-root .channel-option.selected,
+.task-popup-layer .channel-option:hover,
+.task-popup-layer .channel-option.selected {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.personal-ojosama-root .channel-manage-button,
+.task-popup-layer .channel-manage-button {
+  width: 100%;
+  min-height: 32px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: #9bd2f1;
+  margin-top: 6px;
+  padding: 8px 4px 0;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.personal-ojosama-root .channel-manage-button:hover,
+.task-popup-layer .channel-manage-button:hover {
+  color: #ffffff;
+}
+
+.personal-ojosama-root .channel-manager,
+.task-popup-layer .channel-manager {
+  display: grid;
+  gap: 8px;
+  padding: 0 18px;
+}
+
+.personal-ojosama-root .channel-manager-head,
+.task-popup-layer .channel-manager-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #ece9f2;
+}
+
+.personal-ojosama-root .channel-manager-head button,
+.task-popup-layer .channel-manager-head button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  color: #9bd2f1;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.personal-ojosama-root .channel-manager-row,
+.task-popup-layer .channel-manager-row {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto 28px 28px;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+}
+
+.personal-ojosama-root .channel-manager-row input,
+.personal-ojosama-root .channel-create-form input,
+.task-popup-layer .channel-manager-row input,
+.task-popup-layer .channel-create-form input {
+  min-width: 0;
+  border: 0;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #f3f0f7;
+  outline: 0;
+  padding: 6px 7px;
+  font-size: 13px;
+}
+
+.personal-ojosama-root .channel-color-swatches,
+.task-popup-layer .channel-color-swatches {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.personal-ojosama-root .channel-color-swatches button,
+.task-popup-layer .channel-color-swatches button {
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  padding: 0;
+}
+
+.personal-ojosama-root .channel-color-swatches button.active,
+.task-popup-layer .channel-color-swatches button.active {
+  box-shadow: 0 0 0 2px #ece9f2;
+}
+
+.personal-ojosama-root .channel-save-button,
+.task-popup-layer .channel-save-button {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 0;
+}
+
+.personal-ojosama-root .channel-delete-button,
+.task-popup-layer .channel-delete-button {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: rgba(229, 115, 115, 0.16);
+  color: #e07a7a;
+  padding: 0;
+}
+
+.personal-ojosama-root .channel-delete-button:hover,
+.task-popup-layer .channel-delete-button:hover {
+  background: rgba(229, 115, 115, 0.28);
+  color: #f1a3a3;
+}
+
+.personal-ojosama-root .channel-manager .channel-create-form,
+.task-popup-layer .channel-manager .channel-create-form {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 30px;
+  align-items: center;
+  gap: 7px;
+}
+
+.personal-ojosama-root .channel-create-form,
+.task-popup-layer .channel-create-form {
+  margin-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 6px;
+}
+
+.personal-ojosama-root .channel-create-form button,
+.task-popup-layer .channel-create-form button {
+  display: grid;
+  height: 28px;
+  place-items: center;
+  border: 1px solid #38393d;
+  border-radius: 5px;
+  background: #242528;
+  color: #e0dce7;
+  padding: 0;
+}
+
+.personal-ojosama-root .channel-create-form button:hover,
+.task-popup-layer .channel-create-form button:hover {
+  border-color: #625a70;
+  background: #303137;
+  color: #ffffff;
+}
+
+/* On the light board the channel picker uses the light surface; the dark
+   variant is kept only inside the dark task-detail modal (.task-popup-layer). */
+.personal-ojosama-root .channel-popover {
+  border-color: var(--line);
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+}
+.personal-ojosama-root .channel-popover.card::after,
+.personal-ojosama-root .channel-popover.detail::after {
+  border-color: var(--line);
+  background: var(--panel);
+}
+.personal-ojosama-root .channel-popover-head {
+  color: var(--muted);
+}
+.personal-ojosama-root .channel-search {
+  border-bottom-color: var(--line);
+  color: var(--text);
+}
+.personal-ojosama-root .channel-search::placeholder {
+  color: var(--faint);
+}
+.personal-ojosama-root .channel-option {
+  color: var(--text);
+}
+.personal-ojosama-root .channel-option:hover,
+.personal-ojosama-root .channel-option.selected {
+  background: var(--panel-muted);
+  color: var(--text);
+}
+.personal-ojosama-root .channel-option svg {
+  color: var(--green);
+}
+.personal-ojosama-root .channel-manage-button {
+  border-top-color: var(--line-soft);
+  color: #2f7fb8;
+}
+.personal-ojosama-root .channel-manage-button:hover {
+  color: var(--text);
+}
+.personal-ojosama-root .channel-manager-head {
+  color: var(--text);
+}
+.personal-ojosama-root .channel-manager-head button {
+  color: #2f7fb8;
+}
+.personal-ojosama-root .channel-manager-row input,
+.personal-ojosama-root .channel-create-form input {
+  background: var(--panel-muted);
+  color: var(--text);
+}
+.personal-ojosama-root .channel-color-swatches button {
+  border-color: rgba(0, 0, 0, 0.18);
+}
+.personal-ojosama-root .channel-color-swatches button.active {
+  box-shadow: 0 0 0 2px var(--text);
+}
+.personal-ojosama-root .channel-save-button {
+  color: var(--accent);
+}
+.personal-ojosama-root .channel-delete-button {
+  background: rgba(192, 80, 77, 0.12);
+  color: #c0504d;
+}
+.personal-ojosama-root .channel-delete-button:hover {
+  background: rgba(192, 80, 77, 0.2);
+  color: #a83c39;
+}
+.personal-ojosama-root .channel-create-form {
+  border-top-color: var(--line-soft);
+}
+.personal-ojosama-root .channel-create-form button {
+  border-color: var(--line);
+  background: var(--panel-muted);
+  color: var(--text);
+}
+.personal-ojosama-root .channel-create-form button:hover {
+  border-color: var(--muted);
+  background: var(--line-soft);
+  color: var(--text);
+}
+
+.task-drag-preview {
+  position: relative;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  border-color: rgba(195, 196, 199, 0.92);
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    0 8px 20px rgba(34, 36, 39, 0.18),
+    0 18px 42px rgba(34, 36, 39, 0.12);
+  color: #343537;
+  opacity: 0.98;
+  padding: 5px 8px;
+  pointer-events: none;
+  transform: translateY(-1px);
+  cursor: grabbing;
+}
+
+.task-drop-preview {
+  width: auto;
+  margin-right: 10px;
+  margin-left: 10px;
+  opacity: 1;
+  transform: none;
+  will-change: transform;
+}
+
+.task-drop-preview > * {
+  opacity: 0;
+}
+
+.task-drag-preview .task-card-top {
+  position: absolute;
+  inset: 7px 7px auto 8px;
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) 18px;
+  gap: 6px;
+  min-height: 17px;
+  margin: 0;
+  pointer-events: none;
+}
+
+.task-drag-preview .task-card-top svg {
+  justify-self: end;
+  color: #9a9b9e;
+}
+
+.task-drag-preview .task-card-top > span:not(.drag-preview-handle) {
+  display: none;
+}
+
+.task-drag-preview .drag-preview-handle {
+  display: grid;
+  width: 14px;
+  place-items: center;
+  color: #a0a1a4;
+  font-size: 15px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.task-drag-preview .task-time-label {
+  padding-left: 19px;
+}
+
+.task-drag-preview:not(.subtask-rich) .task-card-main {
+  padding-left: 19px;
+}
+
+.task-drag-preview .drag-preview-subtask {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  color: #333436;
+  font-size: 12.5px;
+  line-height: 1.14;
+  padding-block: 1px;
+}
+
+.task-drag-preview .drag-preview-subtask > span:first-child {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #a9aaad;
+  border-radius: 999px;
+  color: #8f9093;
+}
+
+.task-drag-preview .drag-preview-subtask > span:first-child.checked {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.task-drag-preview .drag-preview-subtask > span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-drag-preview .drag-preview-channel {
+  display: inline-flex;
+  justify-self: end;
+  align-items: center;
+  gap: 4px;
+  color: #696a6d;
+  font-size: 13px;
+}
+
+.task-drag-preview .drag-preview-channel span {
+  color: var(--task-channel-color);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.personal-ojosama-root .fixed-event-card,
+.personal-ojosama-root .personal-note-card {
+  display: grid;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: #f8f8f8;
+  box-shadow: var(--shadow-card);
+  margin-top: 7px;
+  padding: 8px 10px;
+}
+
+.personal-ojosama-root .fixed-event-card {
+  gap: 5px;
+}
+
+.personal-ojosama-root .fixed-event-time {
+  color: #77787b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .fixed-event-title-input {
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  outline: 0;
+  padding: 0;
+  overflow: hidden;
+  color: #343537;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.personal-ojosama-root .fixed-event-controls {
+  display: grid;
+  grid-template-columns: 68px 68px minmax(82px, 1fr);
+  gap: 6px;
+  height: 26px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.personal-ojosama-root .fixed-event-card:hover .fixed-event-controls,
+.personal-ojosama-root .fixed-event-card:focus-within .fixed-event-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.personal-ojosama-root .fixed-event-controls input,
+.personal-ojosama-root .fixed-event-controls select {
+  min-width: 0;
+  height: 24px;
+  border: 1px solid #e2e2e3;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #55565a;
+  padding: 0 5px;
+  font-size: 11px;
+}
+
+.personal-ojosama-root .fixed-event-card span {
+  justify-self: end;
+  color: #6695c8;
+  font-size: 12px;
+}
+
+.personal-ojosama-root .note-add-row {
+  gap: 6px;
+  margin-top: 14px;
+  padding: 8px;
+}
+
+.personal-ojosama-root .note-add-head {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) 78px;
+  align-items: center;
+  gap: 6px;
+}
+
+.personal-ojosama-root .note-add-row input,
+.personal-ojosama-root .note-add-row select,
+.personal-ojosama-root .note-add-row textarea {
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #5b5c5f;
+  outline: none;
+  font-size: 13px;
+}
+
+.personal-ojosama-root .note-add-row textarea {
+  height: 38px;
+  border-top: 1px solid var(--line-soft);
+  margin-top: 4px;
+  padding-top: 7px;
+  resize: none;
+}
+
+.personal-ojosama-root .note-add-row:not(:hover):not(:focus-within) textarea,
+.personal-ojosama-root .note-add-row:not(:hover):not(:focus-within) select,
+.personal-ojosama-root .note-add-row:not(:hover):not(:focus-within) button {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.personal-ojosama-root .note-add-row button {
+  justify-self: end;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fbfbfc;
+  color: #68696c;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .personal-note-card {
+  gap: 4px;
+}
+
+.personal-ojosama-root .personal-note-card div {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.personal-ojosama-root .personal-note-card span {
+  border-radius: 4px;
+  background: #eeeeef;
+  color: #77787b;
+  padding: 2px 5px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .personal-note-card strong {
+  overflow: hidden;
+  color: #343537;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.personal-ojosama-root .personal-note-card p {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #555659;
+  font-size: 12.5px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.personal-ojosama-root .backlog-panel {
+  min-width: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--line);
+  background: #fbfbfc;
+  padding: 14px;
+}
+
+.personal-ojosama-root .home-shell.backlog-only .backlog-panel {
+  border-left: 0;
+}
+
+/* ===== 스케줄 패널 (썬사마식 당일 타임라인) ===== */
+.personal-ojosama-root .home-shell.schedule-visible {
+  grid-template-columns: minmax(0, 1fr) 384px;
+}
+
+.personal-ojosama-root .schedule-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-left: 1px solid var(--line);
+  background: #fbfbfc;
+}
+
+.personal-ojosama-root .schedule-panel-header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--line-soft);
+  padding: 10px 12px;
+}
+
+.personal-ojosama-root .schedule-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4a4b4e;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .schedule-panel-date {
+  color: #8a8b8f;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .schedule-panel-collapse {
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: #737477;
+}
+
+.personal-ojosama-root .schedule-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 14px 28px 0;
+}
+
+.personal-ojosama-root .schedule-grid {
+  position: relative;
+  margin-left: 56px; /* 시각 라벨 거터 */
+  border-radius: 8px;
+}
+
+.personal-ojosama-root .schedule-grid.drop-over {
+  background: color-mix(in srgb, var(--accent, #57bf78) 7%, transparent);
+  outline: 1px dashed color-mix(in srgb, var(--accent, #57bf78) 45%, transparent);
+}
+
+.personal-ojosama-root .schedule-hour-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.personal-ojosama-root .schedule-hour-label {
+  position: absolute;
+  left: -56px;
+  top: -7px;
+  width: 50px;
+  text-align: right;
+  color: #a0a1a5;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .schedule-hour-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.personal-ojosama-root .schedule-now-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 2px solid var(--color-attention, #ef7f62);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.personal-ojosama-root .schedule-now-dot {
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-attention, #ef7f62);
+}
+
+.personal-ojosama-root .schedule-event-block,
+.personal-ojosama-root .schedule-task-block {
+  position: absolute;
+  left: 4px;
+  right: 6px;
+  overflow: hidden;
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.personal-ojosama-root .schedule-event-block {
+  border: 1px dashed color-mix(in srgb, var(--schedule-block-color) 55%, transparent);
+  background: color-mix(in srgb, var(--schedule-block-color) 10%, #ffffff);
+  color: #6a6b6f;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.personal-ojosama-root .schedule-task-block {
+  border: 1px solid color-mix(in srgb, var(--schedule-block-color) 55%, transparent);
+  border-left: 3px solid var(--schedule-block-color);
+  background: color-mix(in srgb, var(--schedule-block-color) 16%, #ffffff);
+  color: #34343a;
+  cursor: grab;
+  touch-action: none; /* pointer 드래그가 스크롤로 새지 않게 */
+  /* 블록 본문 드래그 = 시간 재배치(핵심 제스처)라 본문 텍스트 선택은 끈다. 제목은
+     같은 일감의 보드 카드/상세에서 복사할 수 있다. */
+  user-select: none;
+  z-index: 3;
+}
+
+.personal-ojosama-root .schedule-task-block.dragging {
+  cursor: grabbing;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  z-index: 10;
+}
+
+.personal-ojosama-root .schedule-task-block.is-source {
+  opacity: 0.4;
+}
+
+.personal-ojosama-root .schedule-task-block.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.personal-ojosama-root .schedule-block-time {
+  display: block;
+  font-weight: 800;
+  font-size: 10px;
+  opacity: 0.85;
+}
+
+.personal-ojosama-root .schedule-block-title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.personal-ojosama-root .schedule-resize-handle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 8px;
+  cursor: ns-resize;
+  touch-action: none;
+}
+
+.personal-ojosama-root .schedule-empty {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 38%;
+  text-align: center;
+  color: #a0a1a5;
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.personal-ojosama-root .backlog-filter,
+.personal-ojosama-root .backlog-view-buttons button,
+.personal-ojosama-root .backlog-header > button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  color: #737477;
+}
+
+.personal-ojosama-root .backlog-filter {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .backlog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.personal-ojosama-root .backlog-header h2 {
+  margin: 0 0 6px;
+  color: #303133;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .backlog-view-buttons {
+  display: inline-flex;
+  gap: 5px;
+}
+
+.personal-ojosama-root .backlog-view-buttons button,
+.personal-ojosama-root .backlog-header > button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  padding: 0;
+}
+
+.personal-ojosama-root .backlog-view-buttons button.active {
+  background: #eeeeef;
+  color: #303133;
+}
+
+.personal-ojosama-root .backlog-buckets,
+.personal-ojosama-root .backlog-channel-view,
+.personal-ojosama-root .backlog-insights {
+  display: grid;
+  gap: 12px;
+}
+
+.personal-ojosama-root .backlog-bucket {
+  border-radius: 8px;
+}
+
+.personal-ojosama-root .backlog-bucket.drop-over {
+  outline: 1px solid rgba(87, 191, 120, 0.4);
+  outline-offset: 4px;
+}
+
+.personal-ojosama-root .backlog-bucket-title {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 8px;
+  color: #77787b;
+}
+
+.personal-ojosama-root .backlog-bucket-title strong {
+  overflow: hidden;
+  color: #4b4c4f;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .backlog-bucket-title button {
+  display: grid;
+  height: 26px;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #8d8d94;
+  padding: 0;
+}
+
+.personal-ojosama-root .bucket-badge-button {
+  background: var(--bucket-color) !important;
+  color: #ffffff !important;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.personal-ojosama-root .bucket-add-row {
+  grid-template-columns: minmax(0, 1fr) 28px;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 5px 8px;
+}
+
+.personal-ojosama-root .bucket-task-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.personal-ojosama-root .backlog-channel-section {
+  display: grid;
+  gap: 8px;
+}
+
+.personal-ojosama-root .backlog-channel-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555659;
+}
+
+.personal-ojosama-root .backlog-channel-title span {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .backlog-channel-title small {
+  margin-left: auto;
+  color: #8b8c8f;
+}
+
+.personal-ojosama-root .backlog-empty {
+  color: #8b8c8f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .backlog-insights {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.personal-ojosama-root .backlog-stat-card {
+  display: grid;
+  gap: 2px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 10px;
+}
+
+.personal-ojosama-root .backlog-stat-card span {
+  color: #77787b;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .backlog-stat-card strong {
+  color: #303133;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.task-popup-layer {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  background: rgba(7, 6, 12, 0.72);
+  padding: 45px 24px 0;
+}
+
+.task-popup-layer.expanded {
+  padding: 12px;
+}
+
+.task-popup-layer .task-detail-popup {
+  display: grid;
+  grid-template-rows: 68px minmax(0, 1fr);
+  /* 단일 auto 컬럼이면 노트 읽기뷰처럼 max-content 가 넓은 내용이 340px 팝업 밖으로
+     넘친다(모바일 가로 스크롤). minmax(0,1fr)로 컬럼을 팝업 폭에 고정해 내용이 감싸지게. */
+  grid-template-columns: minmax(0, 1fr);
+  width: min(840px, calc(100vw - 48px));
+  height: auto;
+  max-height: min(86vh, 880px);
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: #1f2023;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+  color: #f0edf5;
+}
+
+.task-popup-layer .task-detail-popup.expanded {
+  width: calc(100vw - 24px);
+  height: calc(100dvh - 24px);
+  min-height: 0;
+  border-radius: 8px;
+}
+
+.task-popup-layer .task-detail-topbar,
+.task-popup-layer .task-detail-top-actions,
+.task-popup-layer .task-detail-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-popup-layer .task-detail-topbar {
+  justify-content: space-between;
+  border-bottom: 1px solid #303137;
+  padding: 0 24px;
+}
+
+.task-popup-layer .task-detail-channel {
+  display: grid;
+  gap: 5px;
+  min-width: 148px;
+  color: #89898e;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.task-popup-layer .task-detail-top-actions {
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  color: #818187;
+  gap: 8px;
+}
+
+.task-popup-layer .task-detail-icon-select,
+.task-popup-layer .task-detail-start,
+.task-popup-layer .task-detail-ghost-button,
+.task-popup-layer .task-detail-icon-button {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #84848a;
+  padding: 4px 6px;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.task-popup-layer .task-detail-icon-select select,
+.task-popup-layer .task-detail-icon-select input {
+  min-width: 0;
+  max-width: 92px;
+  border: 0;
+  background: transparent;
+  color: #a8a8ad;
+  outline: none;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+/* 시작–종료 시간 입력(상세 팝업). 두 time 입력이 좁아도 들어가도록 폭을 줄인다. */
+.task-popup-layer .task-detail-time-range {
+  gap: 4px;
+}
+.task-popup-layer .task-detail-time-range input {
+  max-width: 74px;
+}
+.task-popup-layer .task-detail-time-sep {
+  color: #b5b5ba;
+  font-weight: 700;
+}
+
+.task-popup-layer .task-detail-start {
+  display: grid;
+  gap: 2px;
+}
+
+.task-popup-layer .task-detail-start span {
+  color: #87878d;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.task-popup-layer .task-detail-start strong {
+  color: #f1f1f2;
+  font-size: 15px;
+}
+
+.task-popup-layer .task-detail-icon-button {
+  justify-content: center;
+  width: 34px;
+  padding: 0;
+}
+
+.task-popup-layer .task-detail-ghost-button:hover,
+.task-popup-layer .task-detail-icon-button:hover {
+  background: #292a2d;
+  color: #d7d7da;
+}
+
+.task-popup-layer .task-detail-more,
+.task-popup-layer .task-detail-priority {
+  position: relative;
+  display: inline-flex;
+}
+
+.task-popup-layer .task-detail-more-menu,
+.task-popup-layer .task-detail-priority-menu {
+  position: absolute;
+  z-index: 16;
+  top: calc(100% + 8px);
+  display: grid;
+  border: 1px solid #34353a;
+  border-radius: 7px;
+  background: #1f2023;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.34);
+  padding: 5px;
+}
+
+.task-popup-layer .task-detail-more-menu {
+  right: 0;
+  min-width: 138px;
+}
+
+.task-popup-layer .task-detail-priority-menu {
+  left: 0;
+  min-width: 116px;
+}
+
+.task-popup-layer .task-detail-more-menu button,
+.task-popup-layer .task-detail-priority-menu button {
+  min-height: 32px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #d7d7da;
+  padding: 0 8px;
+  font-size: 13px;
+}
+
+.task-popup-layer .task-detail-more-menu button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.task-popup-layer .task-detail-priority-menu button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.task-popup-layer .task-detail-more-menu button:hover,
+.task-popup-layer .task-detail-priority-menu button:hover,
+.task-popup-layer .task-detail-priority-menu button.selected {
+  background: #2c2d31;
+  color: #f2f2f3;
+}
+
+.task-popup-layer .task-detail-scroll {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.task-popup-layer .task-detail-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  padding: 32px 28px 28px;
+}
+
+.task-popup-layer .task-detail-popup.expanded .task-detail-body {
+  width: min(860px, 100%);
+  margin: 0 auto;
+}
+
+.task-popup-layer .task-detail-title-row {
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.task-popup-layer .task-detail-check {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 2px solid #7a7b81;
+  border-radius: 50%;
+  background: transparent;
+  color: #898a90;
+  margin-top: 4px;
+  padding: 0;
+}
+
+/* 체크 아이콘은 클릭 전에도 항상 보이게(완료 전엔 옅은 회색). */
+.task-popup-layer .task-detail-check svg {
+  display: block;
+}
+
+.task-popup-layer .task-detail-check:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.task-popup-layer .task-detail-check.checked {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.task-popup-layer .task-detail-check.checked svg {
+  display: block;
+}
+
+.task-popup-layer .task-detail-title {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  color: #f2f2f3;
+  outline: none;
+  padding: 0;
+  font-size: 30px;
+  font-weight: 650;
+  line-height: 1.16;
+}
+
+.task-popup-layer .task-detail-subtasks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 9px;
+  /* 본 태스크 체크 원과 같은 왼쪽 컬럼에 맞춰 정렬(들여쓰기 제거). */
+  margin-left: 0;
+}
+
+.task-popup-layer .task-detail-subtask-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+.task-popup-layer .task-detail-subtask-row {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 28px;
+}
+
+.task-popup-layer .task-detail-subtask-check {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  justify-self: center;
+  place-items: center;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  padding: 0;
+  cursor: pointer;
+}
+
+/* 체크 아이콘은 클릭 전에도 항상 보이게(완료 전엔 옅은 회색). */
+.task-popup-layer .task-detail-subtask-check svg {
+  display: block;
+}
+
+.task-popup-layer .task-detail-subtask-check:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.task-popup-layer .task-detail-subtask-check.checked {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.task-popup-layer .task-detail-subtask-check.checked svg {
+  display: block;
+}
+
+.task-popup-layer .task-detail-subtask-title {
+  min-width: 0;
+  justify-self: start;
+  max-width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border-radius: 6px;
+  cursor: text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-popup-layer .task-detail-subtask-title:hover {
+  background: var(--line-soft);
+}
+
+.task-popup-layer .task-detail-subtask-title.completed {
+  color: var(--faint);
+}
+
+/* 셀렉터 specificity를 올려(0,3,1) 원형 체크박스 규칙(.task-detail-subtask-list input, 0,2,1)을
+   확실히 덮어쓴다. 그러지 않으면 텍스트 입력이 동그라미로 보인다. */
+.task-popup-layer .task-detail-subtask-list input.task-detail-subtask-edit {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 26px;
+  appearance: auto;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  outline: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0;
+}
+
+/* 완료된 서브태스크는 글자만 옅게(취소선 없음). */
+.task-popup-layer .task-detail-subtask-list input.task-detail-subtask-edit.completed {
+  color: var(--faint);
+}
+
+.task-popup-layer .task-detail-subtask-form {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 32px;
+  color: var(--faint);
+}
+
+/* Add subtask의 + 도 체크 원과 같은 원형으로(이미지 기준). */
+.task-popup-layer .task-detail-subtask-add-icon {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  justify-self: center;
+  place-items: center;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  color: var(--faint);
+}
+
+.task-popup-layer .task-detail-subtask-form input {
+  min-width: 0;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  outline: none;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.task-popup-layer .task-detail-subtask-form input::placeholder {
+  color: var(--faint);
+}
+
+.task-popup-layer .task-detail-notes {
+  display: grid;
+  gap: 22px;
+  border-top: 1px solid #2f2f33;
+  margin: 18px 0 0 42px;
+  padding-top: 24px;
+}
+
+.task-popup-layer .task-detail-notes textarea {
+  min-height: 64px;
+  border: 0;
+  background: transparent;
+  color: #dfdfe2;
+  outline: none;
+  padding: 0;
+  resize: vertical;
+  font-size: 15px;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes status-settle {
+  from {
+    opacity: 0.2;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 980px) {
+  /* ===== 모바일 집중 모드 =====
+     폰에서는 "오늘(선택한 날짜)의 할 일 보기 + 추가/수정"만 메인으로 남기고,
+     주간 계획·주간 리뷰·백로그·필터·상태 텍스트 같은 보조 기능은 숨긴다.
+     날짜 이동은 가운데 날짜 네비게이션(‹ 날짜 › + 달력)으로만 한다. */
+  .personal-ojosama-root .board-toolbar {
+    min-height: auto;
+    justify-content: center;
+    padding: 0 12px;
+  }
+
+  /* 날짜 네비게이션을 툴바 가운데로 크게 배치. */
+  .personal-ojosama-root .toolbar-left {
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .personal-ojosama-root .toolbar-left .date-nav {
+    gap: 6px;
+  }
+
+  .personal-ojosama-root .toolbar-left .date-label {
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+
+  /* Today 옆 스케줄 토글은 toolbar-right가 숨는 이 구간에서만 노출한다. */
+  .personal-ojosama-root .schedule-mobile-toggle {
+    display: inline-flex;
+    min-height: 40px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /* 보조 기능은 폰에서 전부 숨긴다(데스크톱에선 그대로 노출). */
+  .personal-ojosama-root .toolbar-right,
+  .personal-ojosama-root .filter-control,
+  .personal-ojosama-root .mock-status,
+  .personal-ojosama-root .mobile-column-tabs {
+    display: none;
+  }
+
+  .personal-ojosama-root .home-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* schedule-visible는 미디어 밖 0,0,3 규칙(1fr 384px)이라 위 0,0,2 규칙이 못 이긴다.
+     같은 0,0,3로 명시 override해 761–980 구간(태블릿 세로)에서 보드가 384px 타임라인에
+     끼이지 않게 한다. 패널은 이 구간부터 전체 오버레이로 띄운다(백로그와 동일 모델). */
+  .personal-ojosama-root .home-shell.schedule-visible {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .personal-ojosama-root .home-shell.panel-visible .schedule-panel {
+    position: absolute;
+    z-index: 200;
+    inset: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border-left: 0;
+    background: var(--canvas);
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+
+  .personal-ojosama-root .toolbar-backlog-strip {
+    display: none;
+  }
+
+  .personal-ojosama-root .backlog-panel {
+    display: none;
+  }
+
+  .personal-ojosama-root .backlog-panel.active-mobile {
+    display: block;
+  }
+
+  .personal-ojosama-root .day-board {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-auto-rows: auto;
+    grid-template-columns: minmax(0, 1fr);
+    overflow-x: visible;
+    overflow-y: visible;
+    padding: 14px 12px 28px;
+  }
+
+  /* 모바일은 선택한(오늘) 날짜 한 컬럼만 보여준다. 베이스 규칙
+     `.day-board > .day-column`(display:flex)과 같은 특이도여야 display를 덮을 수
+     있으므로 자식 결합자를 그대로 써서 숨기고, active 컬럼만 다시 켠다. */
+  .personal-ojosama-root .day-board > .day-column {
+    display: none;
+    height: auto;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  /* 모바일은 페이지 전체가 스크롤되므로 컬럼 내부 독립 스크롤을 끈다. */
+  .personal-ojosama-root .day-column-scroll {
+    flex: 0 0 auto;
+    overflow-y: visible;
+  }
+
+  .personal-ojosama-root .day-board > .day-column.active-mobile {
+    display: flex;
+  }
+}
+
+.task-popup-layer {
+  background: rgba(8, 8, 14, 0.28);
+}
+
+.task-popup-layer .task-detail-popup {
+  grid-template-rows: 68px minmax(0, 1fr) auto;
+  height: auto;
+  max-height: min(86vh, 880px);
+  min-height: 0;
+  background: #ffffff;
+  color: #3b3c3f;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.18);
+}
+
+.task-popup-layer .task-detail-topbar {
+  border-bottom-color: #ececee;
+}
+
+.task-popup-layer .task-detail-channel {
+  color: #7b7c80;
+}
+
+.task-popup-layer .task-detail-icon-select,
+.task-popup-layer .task-detail-start,
+.task-popup-layer .task-detail-ghost-button,
+.task-popup-layer .task-detail-icon-button {
+  color: #737477;
+}
+
+.task-popup-layer .task-detail-icon-select select,
+.task-popup-layer .task-detail-icon-select input {
+  color: #4b4c4f;
+}
+
+.task-popup-layer .task-detail-start span {
+  color: #8b8c90;
+}
+
+.task-popup-layer .task-detail-start strong,
+.task-popup-layer .task-detail-title {
+  color: #303133;
+}
+
+.task-popup-layer .task-detail-ghost-button:hover,
+.task-popup-layer .task-detail-icon-button:hover {
+  background: #f2f2f3;
+  color: #303133;
+}
+
+.task-popup-layer .task-detail-scroll {
+  max-height: calc(100dvh - 90px - 68px - 118px);
+}
+
+.task-popup-layer .task-detail-body {
+  gap: 14px;
+  padding: 48px 28px 18px;
+}
+
+.task-popup-layer .task-detail-title {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.22;
+}
+
+.task-popup-layer .task-detail-subtask-list label {
+  color: #4b4c4f;
+  font-size: 15px;
+}
+
+.task-popup-layer .task-detail-subtask-form input {
+  color: #4b4c4f;
+  font-size: 15px;
+}
+
+.task-popup-layer .task-detail-subtask-form input::placeholder {
+  color: #a0a1a4;
+}
+
+/* 제목/하위작업과 Notes를 희미한 점선으로만 구분(캡처 기준 간격). */
+.task-popup-layer .task-detail-notes {
+  border-top: 1px dashed var(--line);
+  margin: 12px 0 0 42px;
+  padding-top: 22px;
+}
+
+.task-popup-layer .task-detail-notes-editable {
+  min-height: 220px;
+}
+
+.task-popup-layer .task-detail-notes textarea {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+  color: #3b3c3f;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.62;
+  white-space: pre-wrap;
+}
+
+.task-popup-layer .task-detail-notes textarea::placeholder {
+  color: #a0a1a4;
+}
+
+.task-popup-layer .task-detail-footer {
+  display: grid;
+  gap: 8px;
+  margin: 0 28px 0;
+  padding: 0 0 18px;
+  color: #737477;
+  font-size: 14px;
+}
+
+.task-popup-layer .task-detail-comment-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 28px;
+  min-height: 58px;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid #ececee;
+  border-bottom: 1px solid #ececee;
+  padding: 12px 0;
+}
+
+.task-popup-layer .task-detail-avatar {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 50%;
+  background: #e6e7e8;
+  color: #303133;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.task-popup-layer .task-detail-comment-row input {
+  min-width: 0;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  color: #303133;
+  outline: none;
+  font-size: 17px;
+}
+
+.task-popup-layer .task-detail-comment-row input::placeholder {
+  color: #a0a1a4;
+}
+
+.task-popup-layer .task-detail-comment-row button {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8b8c90;
+  padding: 0;
+}
+
+.task-popup-layer .task-detail-comment-row button:hover {
+  background: #f2f2f3;
+  color: #303133;
+}
+
+.task-popup-layer .task-detail-comments {
+  display: grid;
+  gap: 10px;
+}
+
+.task-popup-layer .task-detail-comment,
+.task-popup-layer .activity-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+.task-popup-layer .task-detail-comment strong,
+.task-popup-layer .activity-row strong {
+  color: #303133;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.task-popup-layer .task-detail-comment p {
+  margin: 2px 0 0;
+  color: #4b4c4f;
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+/* ---- 노트 읽기뷰 + 노트/댓글 링크 (URL 클릭 이동) ---- */
+/* 비편집 노트는 textarea 대신 이 div 로 렌더돼 안의 링크를 클릭할 수 있다. */
+.task-popup-layer .note-readview,
+.personal-ojosama-root .note-readview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  cursor: text;
+  outline: none;
+}
+
+.task-popup-layer .note-readview:focus-visible,
+.personal-ojosama-root .note-readview:focus-visible {
+  box-shadow: 0 0 0 2px var(--green-soft, rgba(87, 191, 120, 0.35));
+  border-radius: 6px;
+}
+
+/* 티켓 노트 읽기뷰: 경계 없는 textarea 와 같은 타이포로 맞춘다. */
+.task-popup-layer .task-detail-notes .note-readview {
+  display: block;
+  width: 100%;
+  min-height: 240px;
+  color: #3b3c3f;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.62;
+}
+
+.note-readview-placeholder {
+  color: #a0a1a4;
+}
+
+/* 노트/댓글 안의 링크 */
+.task-popup-layer .note-readview a,
+.task-popup-layer .task-detail-comment p a,
+.personal-ojosama-root .note-readview a,
+.personal-ojosama-root .objective-detail-comment-main p a {
+  color: #2f6fb3;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-word;
+}
+
+.task-popup-layer .note-readview a:hover,
+.task-popup-layer .task-detail-comment p a:hover,
+.personal-ojosama-root .note-readview a:hover,
+.personal-ojosama-root .objective-detail-comment-main p a:hover {
+  color: #235a94;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-notes .note-readview {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .note-readview-placeholder {
+  color: #6a6b6f;
+}
+
+[data-theme="dark"] .task-popup-layer .note-readview a,
+[data-theme="dark"] .task-popup-layer .task-detail-comment p a,
+[data-theme="dark"] .personal-ojosama-root .note-readview a,
+[data-theme="dark"] .personal-ojosama-root .objective-detail-comment-main p a {
+  color: #7fb2e6;
+}
+
+[data-theme="dark"] .task-popup-layer .note-readview a:hover,
+[data-theme="dark"] .task-popup-layer .task-detail-comment p a:hover,
+[data-theme="dark"] .personal-ojosama-root .note-readview a:hover,
+[data-theme="dark"] .personal-ojosama-root .objective-detail-comment-main p a:hover {
+  color: #a6cbee;
+}
+
+.task-popup-layer .task-detail-activity {
+  display: grid;
+  gap: 4px;
+  color: #737477;
+  font-size: 14px;
+}
+
+.task-popup-layer .activity-dot {
+  width: 4px;
+  height: 4px;
+  align-self: center;
+  justify-self: center;
+  border-radius: 50%;
+  background: #c8c9cc;
+}
+
+.task-popup-layer .task-detail-popup.expanded .task-detail-footer {
+  width: min(860px, 100%);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* ===== Phase 1/2: weekly planner additions ===== */
+
+/* (1C) Faded past day columns; today keeps full emphasis. */
+.personal-ojosama-root .day-column.is-past {
+  opacity: 0.55;
+}
+
+/* (Schedule replacement) Compact fixed-event + note rows inside Home day columns. */
+.personal-ojosama-root .day-event-stack {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.personal-ojosama-root .day-event-row {
+  display: grid;
+  grid-template-columns: 14px auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  border-left: 2px solid var(--channel-blue, #5d9bd8);
+  border-radius: 4px;
+  background: #f6f8fb;
+  padding: 4px 8px;
+  color: #5b5c5f;
+}
+
+.personal-ojosama-root .day-event-row svg {
+  color: #8a8b8e;
+}
+
+.personal-ojosama-root .day-event-time {
+  color: #6c6d70;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.personal-ojosama-root .day-event-title {
+  overflow: hidden;
+  color: #45464a;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+.personal-ojosama-root .day-note-stack {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.personal-ojosama-root .day-note-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  color: #6c6d70;
+  font-size: 12px;
+}
+
+.personal-ojosama-root .day-note-kind {
+  border-radius: 4px;
+  background: #eeeeef;
+  color: #77787b;
+  padding: 1px 5px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .day-note-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* (1A) Task card more-button — hover-revealed on desktop, always shown on touch. */
+.personal-ojosama-root .task-more-button {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  place-items: center;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #a0a1a4;
+  opacity: 0;
+  padding: 0;
+}
+
+.personal-ojosama-root .task-more-button + .task-archive-button {
+  margin-left: 0;
+}
+
+.personal-ojosama-root .task-card:hover .task-more-button,
+.personal-ojosama-root .task-card:focus-within .task-more-button {
+  opacity: 1;
+}
+
+.personal-ojosama-root .task-more-button:hover {
+  background: #eeeeef;
+  color: #555659;
+}
+
+/* (1A) Hidden-subtasks count chip. */
+.personal-ojosama-root .subtask-count-chip {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: var(--panel-muted);
+  color: #77787b;
+  margin: 5px 0 0 16px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* (1A) Task context menu (light popover). */
+.task-context-menu {
+  position: fixed;
+  z-index: 500;
+  display: grid;
+  min-width: 192px;
+  gap: 1px;
+  border: 1px solid var(--line, #dedfe1);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+  padding: 5px;
+}
+
+.task-context-menu button {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #45464a;
+  padding: 0 9px;
+  text-align: left;
+  font-size: 13.5px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.task-context-menu button svg {
+  color: #85868a;
+}
+
+.task-context-menu button:hover:not(:disabled) {
+  background: #f5f5f6;
+  color: #2c2d30;
+}
+
+.task-context-menu button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.task-context-menu button.danger {
+  color: #c8553a;
+}
+
+.task-context-menu button.danger svg {
+  color: #c8553a;
+}
+
+.task-context-menu button.danger:hover:not(:disabled) {
+  background: #fbece8;
+  color: #b8452e;
+}
+
+.task-context-menu-divider {
+  height: 1px;
+  margin: 4px 6px;
+  background: var(--line-soft, #ececee);
+}
+
+/* ===== (2E/2F) Weekly views — shared shell ===== */
+.personal-ojosama-root .weekly-view {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow-y: auto;
+  gap: 16px;
+  padding: 22px 24px 40px;
+}
+
+.personal-ojosama-root .weekly-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.personal-ojosama-root .weekly-header-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.personal-ojosama-root .weekly-header-titles h2 {
+  margin: 0;
+  color: #303133;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.personal-ojosama-root .weekly-header-titles span {
+  color: #8b8c8f;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.personal-ojosama-root .weekly-nav-button {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--panel);
+  color: #6c6d70;
+  padding: 0;
+}
+
+.personal-ojosama-root .weekly-nav-button:hover {
+  border-color: #bfc0c3;
+  background: #f4f4f5;
+  color: #3f4042;
+}
+
+.personal-ojosama-root .weekly-week-toggle {
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-muted);
+  padding: 3px;
+}
+
+.personal-ojosama-root .weekly-week-toggle button {
+  min-height: 32px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #6c6d70;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.personal-ojosama-root .weekly-week-toggle button.active {
+  background: var(--panel);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: #303133;
+}
+
+.personal-ojosama-root .weekly-empty {
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  padding: 28px;
+  text-align: center;
+  color: #8b8c8f;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ===== (2E) Weekly plan grid ===== */
+.personal-ojosama-root .weekly-grid-head {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+  align-items: end;
+  gap: 16px;
+  padding: 0 4px;
+}
+
+.personal-ojosama-root .weekly-grid-head-spacer {
+  color: #8b8c8f;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .weekly-day-headers {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.personal-ojosama-root .weekly-day-header {
+  display: grid;
+  gap: 1px;
+  justify-items: center;
+  padding: 4px 0;
+  color: #8b8c8f;
+}
+
+.personal-ojosama-root .weekly-day-header span {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .weekly-day-header strong {
+  color: #4b4c4f;
+  font-size: 14px;
+}
+
+.personal-ojosama-root .weekly-day-header.is-today {
+  color: var(--green);
+}
+
+.personal-ojosama-root .weekly-day-header.is-today strong {
+  color: var(--green);
+}
+
+.personal-ojosama-root .weekly-objective-list {
+  display: grid;
+  gap: 8px;
+}
+
+.personal-ojosama-root .objective-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--line-soft);
+  border-radius: 9px;
+  background: var(--panel);
+  box-shadow: var(--shadow-card);
+  padding: 10px 14px;
+}
+
+.personal-ojosama-root .objective-row.completed {
+  opacity: 0.62;
+}
+
+.personal-ojosama-root .objective-main {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 28px 28px;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.personal-ojosama-root .objective-check {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 1.5px solid #b9babd;
+  border-radius: 50%;
+  background: transparent;
+  color: transparent;
+  padding: 0;
+}
+
+.personal-ojosama-root .objective-check.checked {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.personal-ojosama-root .objective-title-block {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.personal-ojosama-root .objective-title-input {
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #343537;
+  outline: none;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.personal-ojosama-root .objective-row.completed .objective-title-input {
+  color: var(--faint);
+}
+
+/* 회사 주간계획에서 부여된 목표 배지 — 제목 위에 작게 붙는다(요일 분배·완료만 가능). */
+.personal-ojosama-root .objective-company-badge {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+  font-size: 10.5px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* 회사 부여 목표의 프로젝트(읽기전용 — ChannelPicker 대신). */
+.personal-ojosama-root .objective-company-project {
+  justify-self: start;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--faint);
+}
+
+.personal-ojosama-root .objective-open,
+.personal-ojosama-root .objective-delete {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #b0b1b4;
+  opacity: 0;
+  padding: 0;
+}
+
+.personal-ojosama-root .objective-open {
+  opacity: 1;
+}
+
+.personal-ojosama-root .objective-row:hover .objective-delete,
+.personal-ojosama-root .objective-row:hover .objective-open,
+.personal-ojosama-root .objective-row:focus-within .objective-delete {
+  opacity: 1;
+}
+
+.personal-ojosama-root .objective-open:hover {
+  background: var(--panel-muted);
+  color: #4b4c4f;
+}
+
+.personal-ojosama-root .objective-delete:hover {
+  background: #fbece8;
+  color: #c8553a;
+}
+
+.personal-ojosama-root .objective-day-cells {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.personal-ojosama-root .objective-day-cell {
+  display: grid;
+  position: relative;
+}
+
+.personal-ojosama-root .objective-day-button.editing {
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px var(--green-soft);
+}
+
+.personal-ojosama-root .objective-day-button,
+.personal-ojosama-root .objective-day-editor {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line-soft);
+  border-radius: 7px;
+  background: var(--panel-muted);
+  color: #a0a1a4;
+  padding: 0 4px;
+  font-size: 13px;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.personal-ojosama-root .objective-day-cell.filled .objective-day-button {
+  background: var(--green-soft);
+  border-color: rgba(87, 191, 120, 0.48);
+  color: #3d8a56;
+}
+
+.personal-ojosama-root .objective-day-button svg {
+  opacity: 0;
+}
+
+.personal-ojosama-root .objective-day-cell.filled .objective-day-button svg {
+  opacity: 1;
+}
+
+.personal-ojosama-root .objective-day-button:hover {
+  border-color: #c8c9cc;
+  color: #6c6d70;
+}
+
+.personal-ojosama-root .objective-day-cell.is-today .objective-day-button {
+  border-color: rgba(87, 191, 120, 0.5);
+}
+
+.personal-ojosama-root .objective-day-editor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  border-color: var(--green);
+  background: var(--panel);
+  color: #343537;
+  outline: none;
+}
+
+.personal-ojosama-root .objective-day-editor .alloc-field {
+  width: 30px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  outline: 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 650;
+  -moz-appearance: textfield;
+}
+
+.personal-ojosama-root .objective-day-editor .alloc-field::-webkit-inner-spin-button,
+.personal-ojosama-root .objective-day-editor .alloc-field::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+.personal-ojosama-root .objective-day-editor .alloc-colon {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.personal-ojosama-root .alloc-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 60;
+  min-width: 150px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+}
+
+.personal-ojosama-root .alloc-dropdown-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.personal-ojosama-root .alloc-dropdown-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.personal-ojosama-root .alloc-dropdown-current {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.personal-ojosama-root .alloc-dropdown-list {
+  display: grid;
+  padding: 4px;
+}
+
+.personal-ojosama-root .alloc-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.personal-ojosama-root .alloc-option:hover {
+  background: var(--panel-muted);
+}
+
+.personal-ojosama-root .alloc-option.selected {
+  font-weight: 650;
+}
+
+.personal-ojosama-root .alloc-option-check {
+  flex: 0 0 auto;
+  color: var(--green);
+}
+
+.personal-ojosama-root .day-objective-cards {
+  display: grid;
+  gap: 8px;
+  padding: 0 2px 8px;
+}
+
+.personal-ojosama-root .objective-card {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  box-shadow: var(--shadow-card);
+  padding: 8px 10px;
+  display: grid;
+  gap: 4px;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.personal-ojosama-root .objective-card {
+  cursor: grab;
+}
+
+.personal-ojosama-root .objective-card.dragging {
+  opacity: 0.4;
+}
+
+/* Objective drag preview lives in the DragOverlay (outside .personal-ojosama-root),
+   so it carries its own light-card styling with literal token values. */
+.objective-drag-preview {
+  width: 272px;
+  box-sizing: border-box;
+  display: grid;
+  gap: 4px;
+  border: 1px solid #dedfe1;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  padding: 8px 10px;
+  color: #303133;
+  cursor: grabbing;
+  opacity: 0.98;
+}
+.objective-drag-preview .objective-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.objective-drag-preview .objective-card-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #a0a1a4;
+  letter-spacing: 0.02em;
+}
+.objective-drag-preview .objective-card-time {
+  font-size: 12px;
+  font-weight: 650;
+  color: #737477;
+  background: #f5f5f6;
+  border-radius: 5px;
+  padding: 1px 7px;
+  font-variant-numeric: tabular-nums;
+}
+.objective-drag-preview .objective-card-title {
+  font-size: 15px;
+  font-weight: 680;
+  color: #303133;
+  line-height: 1.25;
+}
+.objective-drag-preview .objective-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.objective-drag-preview .objective-card-icon {
+  color: #7c5cff;
+}
+.objective-drag-preview .objective-card-channel {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: #737477;
+}
+
+.personal-ojosama-root .objective-card:hover {
+  border-color: #d7d8db;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.personal-ojosama-root .objective-card.completed {
+  opacity: 0.55;
+}
+
+.personal-ojosama-root .objective-card.completed .objective-card-title {
+  color: var(--faint);
+}
+
+.personal-ojosama-root .objective-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.personal-ojosama-root .objective-card-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--faint);
+  letter-spacing: 0.02em;
+}
+
+.personal-ojosama-root .objective-card-time {
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--muted);
+  background: var(--panel-muted);
+  border-radius: 5px;
+  padding: 1px 7px;
+  font-variant-numeric: tabular-nums;
+}
+
+.personal-ojosama-root .objective-card-title {
+  font-size: 15px;
+  font-weight: 680;
+  color: var(--text);
+  line-height: 1.25;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.personal-ojosama-root .objective-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.personal-ojosama-root .objective-card-icon {
+  color: #7c5cff;
+}
+
+.personal-ojosama-root .objective-card-channel {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.personal-ojosama-root .objective-card-subtasks {
+  display: grid;
+  gap: 4px;
+  margin: 2px 0;
+}
+
+.personal-ojosama-root .objective-card-subtask {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+}
+
+.personal-ojosama-root .objective-card-subtask-check {
+  display: grid;
+  width: 15px;
+  height: 15px;
+  place-items: center;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  padding: 0;
+}
+
+.personal-ojosama-root .objective-card-subtask-check svg {
+  display: none;
+}
+
+.personal-ojosama-root .objective-card-subtask-check:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.personal-ojosama-root .objective-card-subtask-check.checked {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.personal-ojosama-root .objective-card-subtask-check.checked svg {
+  display: block;
+}
+
+.personal-ojosama-root .objective-card-subtask-title {
+  min-width: 0;
+  overflow: hidden;
+  color: #4b4c4f;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.personal-ojosama-root .objective-card-subtask-title.completed {
+  color: var(--faint);
+}
+
+.personal-ojosama-root .weekly-add-objective {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid var(--line-soft);
+  border-radius: 9px;
+  background: var(--panel);
+  box-shadow: var(--shadow-card);
+  color: #9a9b9e;
+  padding: 4px 12px;
+}
+
+.personal-ojosama-root .weekly-add-objective input {
+  min-width: 0;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  color: #45464a;
+  outline: none;
+  font-size: 15px;
+}
+
+.personal-ojosama-root .weekly-add-objective button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8a8b8e;
+  padding: 0;
+}
+
+.personal-ojosama-root .weekly-add-objective button:hover {
+  background: #eeeeef;
+  color: #555659;
+}
+
+/* ===== (2F) Weekly review ===== */
+.personal-ojosama-root .review-body {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 18px;
+  min-height: 0;
+}
+
+.personal-ojosama-root .review-rail {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.personal-ojosama-root .review-card {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: var(--shadow-card);
+  padding: 14px;
+}
+
+.personal-ojosama-root .review-card-label {
+  color: #8b8c8f;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.personal-ojosama-root .review-headline {
+  color: #303133;
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.personal-ojosama-root .review-bar-chart {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: 6px;
+  height: 132px;
+}
+
+.personal-ojosama-root .review-bar-col {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  align-items: end;
+  justify-items: center;
+  gap: 4px;
+  height: 100%;
+}
+
+.personal-ojosama-root .review-bar-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.personal-ojosama-root .review-bar-fill {
+  width: 70%;
+  min-height: 3px;
+  border-radius: 4px 4px 0 0;
+  background: var(--green);
+}
+
+.personal-ojosama-root .review-bar-count {
+  color: #4b4c4f;
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.personal-ojosama-root .review-bar-label {
+  color: #9a9b9e;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .review-project-list {
+  display: grid;
+  gap: 8px;
+}
+
+.personal-ojosama-root .review-project-row {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+}
+
+.personal-ojosama-root .review-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.personal-ojosama-root .review-project-name {
+  overflow: hidden;
+  color: #4b4c4f;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.personal-ojosama-root .review-project-count {
+  color: #303133;
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.personal-ojosama-root .review-empty-line {
+  color: #9a9b9e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.personal-ojosama-root .review-day-board {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.personal-ojosama-root .review-day-column {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.personal-ojosama-root .review-day-header {
+  display: grid;
+  gap: 1px;
+}
+
+.personal-ojosama-root .review-day-header h3 {
+  margin: 0;
+  color: #45464a;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .review-day-header span {
+  color: #9a9b9e;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .review-day-tasks {
+  display: grid;
+  gap: 6px;
+}
+
+.personal-ojosama-root .review-day-empty {
+  color: #c8c9cc;
+  font-size: 14px;
+  text-align: center;
+  padding: 6px 0;
+}
+
+.personal-ojosama-root .review-task-card {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  gap: 7px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--panel);
+  box-shadow: var(--shadow-card);
+  padding: 7px 8px;
+}
+
+.personal-ojosama-root .review-task-check {
+  display: grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green);
+  color: #ffffff;
+}
+
+.personal-ojosama-root .review-task-title {
+  min-width: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  color: #343537;
+  font-size: 12.5px;
+  line-height: 1.3;
+  font-weight: 600;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.personal-ojosama-root .review-task-channel {
+  grid-column: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* ===== Mobile (<760px shell threshold) ===== */
+@media (max-width: 760px) {
+  .personal-ojosama-root .home-shell.panel-visible {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* 모바일 집중 모드: 백로그는 보조 기능이므로 숨겨서(데스크톱에선 사이드 패널 유지)
+     보드(오늘 할 일)가 항상 메인으로 보이게 한다. right_panel 선호가 backlog여도
+     보드 위를 덮는 오버레이가 뜨지 않는다. day-board는 패널 상태와 무관하게 렌더된다. */
+  .personal-ojosama-root .home-shell.panel-visible .backlog-panel {
+    display: none;
+  }
+
+  /* 스케줄 패널 모바일 전체 오버레이는 위 @media (max-width: 980px)에서 처리한다. */
+
+  .personal-ojosama-root .weekly-view {
+    padding: 16px 12px 32px;
+  }
+
+  .personal-ojosama-root .weekly-header {
+    align-items: flex-start;
+  }
+
+  .personal-ojosama-root .weekly-week-toggle button {
+    min-height: 44px;
+  }
+
+  .personal-ojosama-root .weekly-nav-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* One-column objective layout: title row stacks above the 7 day chips. */
+  .personal-ojosama-root .weekly-grid-head {
+    display: none;
+  }
+
+  .personal-ojosama-root .objective-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .personal-ojosama-root .objective-delete {
+    opacity: 1;
+  }
+
+  .personal-ojosama-root .objective-day-cells {
+    gap: 4px;
+  }
+
+  .personal-ojosama-root .objective-day-button,
+  .personal-ojosama-root .objective-day-editor {
+    min-height: 44px;
+  }
+
+  .personal-ojosama-root .objective-day-cell {
+    position: relative;
+  }
+
+  .personal-ojosama-root .objective-day-cell::before {
+    content: attr(data-weekday);
+  }
+
+  .personal-ojosama-root .weekly-add-objective {
+    min-height: 48px;
+  }
+
+  /* Review collapses to a single column; day board scrolls horizontally on its own. */
+  .personal-ojosama-root .review-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .personal-ojosama-root .review-day-board {
+    grid-template-columns: repeat(7, minmax(150px, 1fr));
+  }
+
+  /* Always show the card actions on touch (no hover). */
+  .personal-ojosama-root .task-more-button {
+    opacity: 1;
+  }
+}
+
+/* ===== Phone board polish (≤760px): tap targets, popover fit, safe area ===== */
+@media (max-width: 760px) {
+  /* Primary toolbar controls reach the 44px touch target. */
+  .personal-ojosama-root .toolbar-button {
+    min-height: 44px;
+  }
+
+  .personal-ojosama-root .toolbar-button.icon-only {
+    width: 44px;
+  }
+
+  /* Column tab pills are easy to hit and clear the home indicator. */
+  .personal-ojosama-root .mobile-column-tabs {
+    padding: 8px 12px max(8px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .personal-ojosama-root .mobile-column-tabs button {
+    min-height: 44px;
+    padding: 0 14px;
+  }
+
+  /* In-card secondary actions are always visible (no hover) and tappable. */
+  .personal-ojosama-root .task-more-button,
+  .personal-ojosama-root .task-archive-button {
+    width: 32px;
+    height: 32px;
+    opacity: 1;
+  }
+
+  /* Comfortable inline task composer on touch. */
+  .personal-ojosama-root .add-task-row input,
+  .personal-ojosama-root .add-task-row select,
+  .personal-ojosama-root .add-task-row button,
+  .personal-ojosama-root .bucket-add-row input,
+  .personal-ojosama-root .bucket-add-row button {
+    height: 40px;
+  }
+
+  /* Dropdown menus / popovers must never exceed the viewport — the board root
+     clips overflow, so an oversized menu would otherwise be cut off. */
+  .personal-ojosama-root .filter-menu,
+  .personal-ojosama-root .date-range-menu,
+  .personal-ojosama-root .channel-popover,
+  .task-popup-layer .channel-popover,
+  .personal-ojosama-root .channel-popover.card,
+  .task-popup-layer .channel-popover.card,
+  .personal-ojosama-root .channel-popover.card:not(.manager-open),
+  .task-popup-layer .channel-popover.card:not(.manager-open),
+  .personal-ojosama-root .channel-popover.detail,
+  .task-popup-layer .channel-popover.detail,
+  .personal-ojosama-root .channel-popover.manager-open,
+  .task-popup-layer .channel-popover.manager-open {
+    max-width: calc(100vw - 24px);
+  }
+
+  /* The filter menu is triggered from the right of the toolbar — anchor it to
+     the trigger's right edge so it never spills off the right on narrow phones
+     (left-anchored it overflowed by a few px at 390/360). */
+  .personal-ojosama-root .filter-menu {
+    right: 0;
+    left: auto;
+  }
+
+  /* Last card clears the home-indicator safe area. */
+  .personal-ojosama-root .day-board {
+    padding-bottom: max(28px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ---- Light weekly-objective detail modal (matches the light board) ---- */
+/* The modal is body-portaled into a .personal-ojosama-root wrapper (so the light
+   tokens + ChannelPicker light popover resolve); restore the fixed overlay layout
+   that the former .task-popup-layer wrapper provided. */
+.personal-ojosama-root:has(> .objective-detail-modal) {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  height: auto;
+  background: rgba(7, 6, 12, 0.45);
+  padding: 45px 24px 0;
+}
+
+.personal-ojosama-root .objective-detail-modal {
+  display: grid;
+  grid-template-rows: 64px minmax(0, 1fr);
+  /* 티켓 팝업과 동일: 단일 auto 컬럼이 노트 max-content 로 넘치지 않게 폭에 고정. */
+  grid-template-columns: minmax(0, 1fr);
+  width: min(640px, calc(100vw - 48px));
+  max-height: calc(100dvh - 90px);
+  margin: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  color: var(--text);
+}
+
+.personal-ojosama-root .objective-detail-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid var(--line-soft);
+  padding: 0 20px;
+}
+
+.personal-ojosama-root .objective-detail-channel {
+  display: grid;
+  gap: 5px;
+  min-width: 148px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .objective-detail-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.personal-ojosama-root .objective-detail-start {
+  display: grid;
+  gap: 2px;
+  text-align: right;
+}
+
+.personal-ojosama-root .objective-detail-start span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .objective-detail-start strong {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.personal-ojosama-root .objective-detail-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+}
+
+.personal-ojosama-root .objective-detail-icon-button:hover {
+  background: var(--panel-muted);
+  color: var(--text);
+}
+
+.personal-ojosama-root .objective-detail-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 16px;
+  overflow-y: auto;
+  padding: 22px 24px 28px;
+}
+
+.personal-ojosama-root .objective-detail-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #7c5cff;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.personal-ojosama-root .objective-detail-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.personal-ojosama-root .objective-detail-check {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  margin-top: 3px;
+  padding: 0;
+}
+
+/* 체크 아이콘은 클릭 전에도 항상 보이게(완료 전엔 옅은 회색). */
+.personal-ojosama-root .objective-detail-check svg {
+  display: block;
+}
+
+.personal-ojosama-root .objective-detail-check:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.personal-ojosama-root .objective-detail-check.checked {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.personal-ojosama-root .objective-detail-check.checked svg {
+  display: block;
+}
+
+.personal-ojosama-root .objective-detail-title {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  outline: none;
+  padding: 0;
+  font-size: 24px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.personal-ojosama-root .objective-detail-focused-day {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.personal-ojosama-root .objective-detail-focused-day-head {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.personal-ojosama-root .objective-detail-focused-day.is-today .objective-detail-focused-day-head {
+  color: var(--green);
+}
+
+.personal-ojosama-root .objective-detail-focused-day-cell {
+  position: relative;
+  min-width: 96px;
+}
+
+.personal-ojosama-root .objective-detail-day-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--panel-muted);
+  color: var(--muted);
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.personal-ojosama-root .objective-detail-day-button:hover {
+  border-color: var(--faint);
+  color: var(--text);
+}
+
+.personal-ojosama-root .objective-detail-day-button.editing {
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px var(--green-soft);
+}
+
+.personal-ojosama-root .objective-detail-focused-day.filled .objective-detail-day-button {
+  background: var(--green-soft);
+  border-color: rgba(87, 191, 120, 0.5);
+  color: var(--green);
+}
+
+.personal-ojosama-root .objective-detail-day-button svg {
+  opacity: 0;
+}
+
+.personal-ojosama-root .objective-detail-focused-day.filled .objective-detail-day-button svg {
+  opacity: 1;
+}
+
+.personal-ojosama-root .objective-detail-focused-day.is-today .objective-detail-day-button {
+  border-color: rgba(87, 191, 120, 0.5);
+}
+
+/* ----- Objective detail: subtasks / note / comments (light) ----- */
+.personal-ojosama-root .objective-detail-subtasks,
+.personal-ojosama-root .objective-detail-note,
+.personal-ojosama-root .objective-detail-comments {
+  display: grid;
+  gap: 10px;
+  border-top: 1px solid var(--line-soft);
+  padding-top: 16px;
+}
+
+/* Notes는 본문(제목/하위작업)과 희미한 점선으로만 구분하고 위아래 여백을 캡처에 맞춘다. */
+.personal-ojosama-root .objective-detail-note {
+  gap: 0;
+  border-top: 1px dashed var(--line);
+  margin-top: 6px;
+  padding-top: 22px;
+}
+
+.personal-ojosama-root .objective-detail-section-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.personal-ojosama-root .objective-detail-subtask-list {
+  display: grid;
+  gap: 8px;
+}
+
+.personal-ojosama-root .objective-detail-subtask-row {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.personal-ojosama-root .objective-detail-subtask-check {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  padding: 0;
+  cursor: pointer;
+}
+
+.personal-ojosama-root .objective-detail-subtask-check svg {
+  display: none;
+}
+
+.personal-ojosama-root .objective-detail-subtask-check:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.personal-ojosama-root .objective-detail-subtask-check.checked {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.personal-ojosama-root .objective-detail-subtask-check.checked svg {
+  display: block;
+}
+
+.personal-ojosama-root .objective-detail-subtask-title {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.personal-ojosama-root .objective-detail-subtask-day {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  border-radius: 999px;
+  background: var(--panel-muted);
+  color: var(--muted);
+  padding: 0 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.personal-ojosama-root .objective-detail-subtask-title.completed {
+  color: var(--faint);
+}
+
+.personal-ojosama-root .objective-detail-subtask-form {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 32px;
+  color: var(--faint);
+}
+
+.personal-ojosama-root .objective-detail-subtask-form input {
+  min-width: 0;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  outline: none;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.personal-ojosama-root .objective-detail-subtask-form input::placeholder {
+  color: var(--faint);
+}
+
+.personal-ojosama-root .objective-detail-note-input {
+  width: 100%;
+  min-height: 64px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  padding: 10px 12px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.personal-ojosama-root .objective-detail-note-input::placeholder {
+  color: var(--faint);
+}
+
+.personal-ojosama-root .objective-detail-note-input:focus {
+  border-color: rgba(87, 191, 120, 0.5);
+  box-shadow: 0 0 0 2px var(--green-soft);
+}
+
+.personal-ojosama-root .objective-detail-comment-thread {
+  display: grid;
+  gap: 12px;
+}
+
+.personal-ojosama-root .objective-detail-comment {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+.personal-ojosama-root .objective-detail-avatar {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--panel-muted);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.personal-ojosama-root .objective-detail-comment-main {
+  min-width: 0;
+}
+
+.personal-ojosama-root .objective-detail-comment-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.personal-ojosama-root .objective-detail-comment-head strong {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .objective-detail-comment-time {
+  color: var(--faint);
+  font-size: 11px;
+}
+
+.personal-ojosama-root .objective-detail-comment-main p {
+  margin: 3px 0 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.personal-ojosama-root .objective-detail-activity-row {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  color: var(--faint);
+  font-size: 13px;
+}
+
+.personal-ojosama-root .objective-detail-activity-dot {
+  width: 4px;
+  height: 4px;
+  justify-self: center;
+  border-radius: 50%;
+  background: var(--faint);
+}
+
+.personal-ojosama-root .objective-detail-comment-form textarea {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  padding: 9px 12px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.personal-ojosama-root .objective-detail-comment-form textarea::placeholder {
+  color: var(--faint);
+}
+
+.personal-ojosama-root .objective-detail-comment-form textarea:focus {
+  border-color: rgba(87, 191, 120, 0.5);
+  box-shadow: 0 0 0 2px var(--green-soft);
+}
+
+/* AllocationDropdown is reused as-is; its rules are scoped to .personal-ojosama-root,
+   so mirror them under .task-popup-layer for the body-portaled modal. */
+.task-popup-layer .alloc-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 60;
+  min-width: 150px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+  color: var(--text);
+}
+
+.task-popup-layer .alloc-dropdown-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.task-popup-layer .alloc-dropdown-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.task-popup-layer .alloc-dropdown-current {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.task-popup-layer .alloc-dropdown-list {
+  display: grid;
+  padding: 4px;
+}
+
+.task-popup-layer .alloc-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.task-popup-layer .alloc-option:hover {
+  background: var(--panel-muted);
+}
+
+.task-popup-layer .alloc-option.selected {
+  font-weight: 650;
+}
+
+.task-popup-layer .alloc-option-check {
+  flex: 0 0 auto;
+  color: var(--green);
+}
+
+@media (max-width: 760px) {
+  .personal-ojosama-root .objective-detail-modal {
+    width: calc(100vw - 24px);
+    max-height: calc(100dvh - 60px);
+  }
+
+  .personal-ojosama-root .objective-detail-focused-day-head {
+    font-size: 10px;
+  }
+
+  .personal-ojosama-root .objective-detail-day-button {
+    font-size: 12px;
+  }
+}
+
+/* ---- Today dropdown: date jump + "from .. to" range picker ---- */
+.personal-ojosama-root .date-menu-anchor {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.personal-ojosama-root .date-range-menu {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 7px);
+  left: 0;
+  width: 248px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fffdfb;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
+  padding: 10px;
+}
+
+.personal-ojosama-root .drm-quick {
+  display: flex;
+  gap: 6px;
+}
+
+.personal-ojosama-root .drm-quick-btn {
+  flex: 1 1 auto;
+  min-height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f6f7f8;
+  color: #444;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.personal-ojosama-root .drm-quick-btn:hover {
+  background: #eeeeef;
+}
+
+.personal-ojosama-root .drm-hint {
+  margin: 8px 2px 6px;
+  color: #8b8c8f;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.personal-ojosama-root .drm-month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.personal-ojosama-root .drm-month-nav span {
+  font-size: 13px;
+  font-weight: 800;
+  color: #333;
+}
+
+.personal-ojosama-root .drm-icon {
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #555;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.personal-ojosama-root .drm-icon:hover {
+  background: #eeeeef;
+}
+
+.personal-ojosama-root .drm-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.personal-ojosama-root .drm-weekday {
+  text-align: center;
+  color: #9a9b9e;
+  font-size: 10px;
+  font-weight: 800;
+  padding-bottom: 2px;
+}
+
+.personal-ojosama-root .drm-day {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #444;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.personal-ojosama-root .drm-day:hover {
+  background: #eef4fb;
+}
+
+.personal-ojosama-root .drm-day.muted {
+  color: #c7c8ca;
+}
+
+.personal-ojosama-root .drm-day.in-range {
+  background: #dfecf9;
+  color: #1f4f7e;
+}
+
+.personal-ojosama-root .drm-day.today {
+  box-shadow: inset 0 0 0 1.5px #5d9bd8;
+  color: #2a6aa3;
+}
+
+.personal-ojosama-root .drm-day.pick-start {
+  background: #5d9bd8;
+  color: #fff;
+}
+
+/* =============================================================================
+   Dark theme overrides (appended-only — light rules above are byte-identical).
+   Activated by [data-theme="dark"] on <html>. Strategy:
+   1. Remap the local CSS vars so anything reading var(--canvas)/--panel/etc.
+      flips automatically.
+   2. Re-target every hardcoded light SURFACE (background/border) introduced
+      above the var system, mapping by elevation:
+        canvas      #1a1b1e   (board area, weekly-empty/canvas-tinted)
+        panel-muted #1e1f23   (hover row, list bg, chip)
+        card        #26272b   (cards, drag preview, inputs on surface)
+        modal       #2a2b30   (task detail popup, context menu, popovers)
+        divider     #35363b   (border)
+        divider-soft#2c2d31   (hairline)
+   3. Light text colors that sit on those light surfaces flip to text-strong
+      (#f0f0f1) / text-body (#d0d1d4) / muted (#9a9b9f) / faint (#6a6b6f).
+   4. White text/borders sitting on saturated accents (var(--green), bucket
+      color, channel blue) are left as-is by intentional omission.
+   5. Light semantic tints (#fbece8, #eef4fb/#dfecf9) → dark tints per global
+      palette (fail-bg #2d1212; cool-blue tint via low-alpha #5d9bd8).
+   ============================================================================= */
+
+[data-theme="dark"] .personal-ojosama-root,
+[data-theme="dark"] .task-popup-layer,
+[data-theme="dark"] .task-drag-preview {
+  --canvas: #1a1b1e;
+  --panel: #26272b;
+  --panel-muted: #1e1f23;
+  --line: #35363b;
+  --line-soft: #2c2d31;
+  --text: #f0f0f1;
+  --muted: #9a9b9f;
+  --faint: #6a6b6f;
+  --green-soft: rgba(87, 191, 120, 0.22);
+  --accent: #8b9cf5;
+  --accent-soft: rgba(139, 156, 245, 0.2);
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+/* --- Toolbar ---------------------------------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .board-toolbar {
+  background: rgba(26, 27, 30, 0.72);
+}
+
+[data-theme="dark"] .personal-ojosama-root .toolbar-button {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  color: #c8c9cc;
+}
+
+[data-theme="dark"] .personal-ojosama-root .toolbar-button:hover,
+[data-theme="dark"] .personal-ojosama-root .toolbar-button.active,
+[data-theme="dark"] .personal-ojosama-root .toolbar-button.date-label {
+  border-color: #4a4b50;
+  background: #2e2f34;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .filter-menu {
+  background: #2a2b30;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .personal-ojosama-root .filter-menu-group span {
+  color: #8a8b8f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .filter-menu-group button {
+  color: #c8c9cc;
+}
+
+[data-theme="dark"] .personal-ojosama-root .filter-menu-group button:hover,
+[data-theme="dark"] .personal-ojosama-root .filter-menu-group button.active {
+  background: #2e2f34;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .mock-status {
+  background: #0f2e1c;
+  color: #75d891;
+}
+
+[data-theme="dark"] .personal-ojosama-root .toolbar-backlog-strip button {
+  color: #c8c9cc;
+}
+
+/* --- Day columns / headers / progress --------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .day-header h2 {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .day-header p {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .progress-track {
+  background:
+    linear-gradient(to right, var(--green) var(--progress, 0%), transparent var(--progress, 0%)),
+    #2c2d31;
+}
+
+/* --- Add row / cards -------------------------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .add-task-row,
+[data-theme="dark"] .personal-ojosama-root .fixed-event-add-row,
+[data-theme="dark"] .personal-ojosama-root .note-add-row,
+[data-theme="dark"] .personal-ojosama-root .bucket-add-row {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .add-task-row:focus-within,
+[data-theme="dark"] .personal-ojosama-root .add-task-row:hover,
+[data-theme="dark"] .personal-ojosama-root .fixed-event-add-row:focus-within,
+[data-theme="dark"] .personal-ojosama-root .fixed-event-add-row:hover,
+[data-theme="dark"] .personal-ojosama-root .note-add-row:focus-within,
+[data-theme="dark"] .personal-ojosama-root .note-add-row:hover,
+[data-theme="dark"] .personal-ojosama-root .bucket-add-row:focus-within,
+[data-theme="dark"] .personal-ojosama-root .bucket-add-row:hover {
+  border-color: #4a4b50;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .personal-ojosama-root .add-task-row input,
+[data-theme="dark"] .personal-ojosama-root .add-task-row select,
+[data-theme="dark"] .personal-ojosama-root .add-task-row button,
+[data-theme="dark"] .personal-ojosama-root .fixed-event-add-row input,
+[data-theme="dark"] .personal-ojosama-root .fixed-event-add-row select,
+[data-theme="dark"] .personal-ojosama-root .fixed-event-add-row button,
+[data-theme="dark"] .personal-ojosama-root .bucket-add-row input,
+[data-theme="dark"] .personal-ojosama-root .bucket-add-row button {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .add-task-row .add-task-submit {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .add-task-row .add-task-submit:hover {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .add-task-row .add-task-sort-button {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .add-task-row .add-task-sort-button.active {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-card:hover {
+  border-color: #4a4b50;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-card-top {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-card-top span {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drag-handle {
+  color: #6a6b6f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-archive-button {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-archive-button:hover {
+  background: #2e2f34;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-time-label,
+[data-theme="dark"] .task-drag-preview .task-time-label {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-title,
+[data-theme="dark"] .task-drag-preview .task-title {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-card.completed .task-title {
+  color: #6a6b6f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-due-chip,
+[data-theme="dark"] .task-popup-layer .task-due-chip {
+  background: #2f3a30;
+  color: #b6c6b7;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-due-chip.tone-overdue,
+[data-theme="dark"] .task-popup-layer .task-due-chip.tone-overdue {
+  background: #432224;
+  color: #ef9a96;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-due-chip.tone-today,
+[data-theme="dark"] .task-popup-layer .task-due-chip.tone-today {
+  background: #3f3320;
+  color: #e6b173;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-due-chip.tone-soon,
+[data-theme="dark"] .task-popup-layer .task-due-chip.tone-soon {
+  background: #3c391f;
+  color: #ddca7e;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-due-chip.tone-done,
+[data-theme="dark"] .task-popup-layer .task-due-chip.tone-done {
+  background: #2c2c2e;
+  color: #8a8b8f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-due-field,
+[data-theme="dark"] .task-popup-layer .task-detail-due-time {
+  border-color: #3a3b40;
+  background: #2a2b2e;
+  color: #e8e9ec;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-due-field:hover:not(:disabled),
+[data-theme="dark"] .task-popup-layer .task-detail-due-time:hover:not(:disabled) {
+  border-color: #4a4b50;
+  background: #303135;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-due-field.open,
+[data-theme="dark"] .task-popup-layer .task-detail-due-time.open {
+  border-color: #6a6b72;
+  background: #303135;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-due-field.placeholder,
+[data-theme="dark"] .task-popup-layer .task-detail-due-time.placeholder {
+  color: #8a8b8f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-due-clear:hover {
+  background: #34353a;
+  color: #cfd0d4;
+}
+
+[data-theme="dark"] .task-popup-layer .task-due-popover {
+  background: #242528;
+  border-color: #3a3b40;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .task-popup-layer .task-due-cal-head strong {
+  color: #e8e9ec;
+}
+
+[data-theme="dark"] .task-popup-layer .task-due-cal-head button {
+  color: #b6b7bb;
+}
+
+[data-theme="dark"] .task-popup-layer .task-due-cal-head button:hover,
+[data-theme="dark"] .task-popup-layer .task-due-cal-day:hover,
+[data-theme="dark"] .task-popup-layer .task-due-time-cell:hover {
+  background: #34353a;
+}
+
+[data-theme="dark"] .task-popup-layer .task-due-cal-w {
+  color: #8a8b8f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-due-cal-day,
+[data-theme="dark"] .task-popup-layer .task-due-time-cell {
+  color: #e8e9ec;
+}
+
+[data-theme="dark"] .task-popup-layer .task-due-cal-day.today {
+  color: #e6b173;
+}
+
+[data-theme="dark"] .task-popup-layer .task-due-cal-day.selected,
+[data-theme="dark"] .task-popup-layer .task-due-cal-day.selected.today,
+[data-theme="dark"] .task-popup-layer .task-due-time-cell.selected {
+  background: #e8e9ec;
+  color: #1d1e20;
+}
+
+[data-theme="dark"] .personal-ojosama-root .subtask-list .subtask-row {
+  color: #d0d1d4;
+}
+
+/* Empty (unchecked) subtask circles read on dark surfaces. The unchecked
+   inner-tick stays muted; checked tick stays white (on green) untouched. */
+[data-theme="dark"] .personal-ojosama-root .subtask-list input {
+  border-color: #5a5b60;
+}
+
+[data-theme="dark"] .personal-ojosama-root .subtask-list input::after {
+  border-left-color: #5a5b60;
+  border-bottom-color: #5a5b60;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-card-meta,
+[data-theme="dark"] .task-drag-preview .task-card-meta {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-card-meta .task-card-footer-check,
+[data-theme="dark"] .personal-ojosama-root .task-card-meta .task-card-hover-action,
+[data-theme="dark"] .task-drag-preview .task-card-meta .task-card-footer-check,
+[data-theme="dark"] .task-drag-preview .task-card-meta .task-card-hover-action {
+  color: #c8c9cc;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-card-meta .task-card-footer-check,
+[data-theme="dark"] .task-drag-preview .task-card-meta .task-card-footer-check {
+  border-color: #5a5b60;
+}
+
+/* --- Channel picker (board light variant) ----------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .channel-picker.card .channel-trigger {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .channel-picker.interactive .channel-trigger:hover {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .channel-popover {
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .personal-ojosama-root .channel-manage-button {
+  color: #6aa9d6;
+}
+
+[data-theme="dark"] .personal-ojosama-root .channel-manager-head button {
+  color: #6aa9d6;
+}
+
+[data-theme="dark"] .personal-ojosama-root .channel-color-swatches button {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .personal-ojosama-root .channel-save-button {
+  color: var(--accent);
+}
+
+[data-theme="dark"] .personal-ojosama-root .channel-delete-button {
+  background: rgba(229, 115, 115, 0.18);
+  color: #f87171;
+}
+
+[data-theme="dark"] .personal-ojosama-root .channel-delete-button:hover {
+  background: rgba(229, 115, 115, 0.28);
+  color: #f8a3a3;
+}
+
+/* --- Drag preview (light surface) ------------------------------------------ */
+[data-theme="dark"] .task-drag-preview {
+  border-color: #4a4b50;
+  background: #26272b;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 8px 20px rgba(0, 0, 0, 0.55),
+    0 18px 42px rgba(0, 0, 0, 0.45);
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .task-drag-preview .task-card-top svg {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-drag-preview .drag-preview-handle {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-drag-preview .drag-preview-subtask {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .task-drag-preview .drag-preview-subtask > span:first-child {
+  border-color: #5a5b60;
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-drag-preview .drag-preview-channel {
+  color: #c8c9cc;
+}
+
+/* --- Fixed-event / personal-note cards on day columns ----------------------- */
+[data-theme="dark"] .personal-ojosama-root .fixed-event-card,
+[data-theme="dark"] .personal-ojosama-root .personal-note-card {
+  background: #1e1f23;
+}
+
+[data-theme="dark"] .personal-ojosama-root .fixed-event-time {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .fixed-event-title-input {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .fixed-event-controls input,
+[data-theme="dark"] .personal-ojosama-root .fixed-event-controls select {
+  border-color: #3a3b40;
+  background: #26272b;
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .fixed-event-card span {
+  color: #6aa9d6;
+}
+
+[data-theme="dark"] .personal-ojosama-root .note-add-row input,
+[data-theme="dark"] .personal-ojosama-root .note-add-row select,
+[data-theme="dark"] .personal-ojosama-root .note-add-row textarea {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .note-add-row button {
+  background: #1e1f23;
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .personal-note-card span {
+  background: #2e2f34;
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .personal-note-card strong {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .personal-note-card p {
+  color: #d0d1d4;
+}
+
+/* --- Backlog panel ---------------------------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .backlog-panel {
+  background: #1a1b1e;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-filter,
+[data-theme="dark"] .personal-ojosama-root .backlog-view-buttons button,
+[data-theme="dark"] .personal-ojosama-root .backlog-header > button {
+  color: #c8c9cc;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-header h2 {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-view-buttons button.active {
+  background: #2e2f34;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-bucket-title {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-bucket-title strong {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-bucket-title button {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-channel-title {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-channel-title small {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-empty {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-stat-card {
+  background: #26272b;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-stat-card span {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .backlog-stat-card strong {
+  color: #f0f0f1;
+}
+
+/* --- Task detail popup (light cascade override from lines ~2313+) ----------- */
+[data-theme="dark"] .task-popup-layer {
+  background: rgba(0, 0, 0, 0.62);
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-popup {
+  background: #2a2b30;
+  color: #f0f0f1;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.65);
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-topbar {
+  border-bottom-color: #35363b;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-channel {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-icon-select,
+[data-theme="dark"] .task-popup-layer .task-detail-start,
+[data-theme="dark"] .task-popup-layer .task-detail-ghost-button,
+[data-theme="dark"] .task-popup-layer .task-detail-icon-button {
+  color: #c8c9cc;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-icon-select select,
+[data-theme="dark"] .task-popup-layer .task-detail-icon-select input {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-start span {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-start strong,
+[data-theme="dark"] .task-popup-layer .task-detail-title {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-ghost-button:hover,
+[data-theme="dark"] .task-popup-layer .task-detail-icon-button:hover {
+  background: #35363b;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-subtask-list label {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-subtask-form input {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-subtask-form input::placeholder {
+  color: #6a6b6f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-notes textarea {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-notes textarea::placeholder {
+  color: #6a6b6f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-footer {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-comment-row {
+  border-top-color: #35363b;
+  border-bottom-color: #35363b;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-avatar {
+  background: #35363b;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-comment-row input {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-comment-row input::placeholder {
+  color: #6a6b6f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-comment-row button {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-comment-row button:hover {
+  background: #35363b;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-comment strong,
+[data-theme="dark"] .task-popup-layer .activity-row strong {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-comment p {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .task-popup-layer .task-detail-activity {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-popup-layer .activity-dot {
+  background: #4a4b50;
+}
+
+/* --- Mobile column tabs ----------------------------------------------------- */
+@media (max-width: 980px) {
+  [data-theme="dark"] .personal-ojosama-root .mobile-column-tabs {
+    background: #1e1f23;
+  }
+
+  [data-theme="dark"] .personal-ojosama-root .mobile-column-tabs button {
+    background: #26272b;
+    color: #c8c9cc;
+  }
+
+  [data-theme="dark"] .personal-ojosama-root .mobile-column-tabs button.active {
+    border-color: #4a4b50;
+    background: #35363b;
+    color: #f0f0f1;
+  }
+}
+
+/* --- Weekly view (header/nav/empty/toggle) ---------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .weekly-header-titles h2 {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-header-titles span {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-nav-button {
+  color: #c8c9cc;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-nav-button:hover {
+  border-color: #4a4b50;
+  background: #2e2f34;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-week-toggle button {
+  color: #c8c9cc;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-week-toggle button.active {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-empty {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-grid-head-spacer {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-day-header {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-day-header strong {
+  color: #d0d1d4;
+}
+
+/* --- Weekly objective rows / cells ------------------------------------------ */
+[data-theme="dark"] .personal-ojosama-root .objective-check {
+  border-color: #5a5b60;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-title-input {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-delete {
+  color: #6a6b6f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-delete:hover {
+  background: #2d1212;
+  color: #f87171;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-day-button,
+[data-theme="dark"] .personal-ojosama-root .objective-day-editor {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-day-cell.filled .objective-day-button {
+  color: #75d891;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-day-button:hover {
+  border-color: #4a4b50;
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-day-editor {
+  color: #f0f0f1;
+}
+
+/* --- Weekly add-objective row / card ---------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .weekly-add-objective {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-add-objective input {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-add-objective button {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .weekly-add-objective button:hover {
+  background: #2e2f34;
+  color: #f0f0f1;
+}
+
+/* --- Objective card --------------------------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .objective-card:hover {
+  border-color: #4a4b50;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-card-icon {
+  color: #a394ff;
+}
+
+/* Objective drag preview lives outside .personal-ojosama-root, so each token
+   must be flipped literally. */
+[data-theme="dark"] .objective-drag-preview {
+  border-color: #4a4b50;
+  background: #26272b;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .objective-drag-preview .objective-card-label {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .objective-drag-preview .objective-card-time {
+  color: #d0d1d4;
+  background: #1e1f23;
+}
+
+[data-theme="dark"] .objective-drag-preview .objective-card-title {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .objective-drag-preview .objective-card-icon {
+  color: #a394ff;
+}
+
+[data-theme="dark"] .objective-drag-preview .objective-card-channel {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-card-subtask-title {
+  color: #d0d1d4;
+}
+
+/* --- Day-event / day-note rows --------------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .day-event-row {
+  background: #1e1f23;
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .day-event-row svg {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .day-event-time {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .day-event-title {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .day-note-row {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .day-note-kind {
+  background: #2e2f34;
+  color: #d0d1d4;
+}
+
+/* --- Task more-button + count chip + context menu -------------------------- */
+[data-theme="dark"] .personal-ojosama-root .task-more-button {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .task-more-button:hover {
+  background: #2e2f34;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .subtask-count-chip {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-context-menu {
+  background: #2a2b30;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .task-context-menu button {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .task-context-menu button svg {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .task-context-menu button:hover:not(:disabled) {
+  background: #35363b;
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .task-context-menu button.danger {
+  color: #f87171;
+}
+
+[data-theme="dark"] .task-context-menu button.danger svg {
+  color: #f87171;
+}
+
+[data-theme="dark"] .task-context-menu button.danger:hover:not(:disabled) {
+  background: #2d1212;
+  color: #fca5a5;
+}
+
+/* --- Review (weekly review) ------------------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .review-card-label {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-headline {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-bar-count {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-bar-label {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-project-name {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-project-count {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-empty-line {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-day-header h3 {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-day-header span {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-day-empty {
+  color: #4a4b50;
+}
+
+[data-theme="dark"] .personal-ojosama-root .review-task-title {
+  color: #f0f0f1;
+}
+
+/* --- Objective detail modal (light modal portaled into .personal-ojosama-root) */
+[data-theme="dark"] .personal-ojosama-root:has(> .objective-detail-modal) {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-detail-modal {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-detail-kind {
+  color: #a394ff;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-detail-note-input {
+  background: #1e1f23;
+}
+
+[data-theme="dark"] .personal-ojosama-root .objective-detail-comment-form textarea {
+  background: #1e1f23;
+}
+
+/* --- Today range-picker dropdown -------------------------------------------- */
+[data-theme="dark"] .personal-ojosama-root .date-range-menu {
+  background: #2a2b30;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-quick-btn {
+  background: #1e1f23;
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-quick-btn:hover {
+  background: #2e2f34;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-hint {
+  color: #9a9b9f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-month-nav span {
+  color: #f0f0f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-icon {
+  color: #c8c9cc;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-icon:hover {
+  background: #2e2f34;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-weekday {
+  color: #6a6b6f;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-day {
+  color: #d0d1d4;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-day:hover {
+  background: rgba(93, 155, 216, 0.18);
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-day.muted {
+  color: #4a4b50;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-day.in-range {
+  background: rgba(93, 155, 216, 0.22);
+  color: #9bd2f1;
+}
+
+[data-theme="dark"] .personal-ojosama-root .drm-day.today {
+  color: #9bd2f1;
+}

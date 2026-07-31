@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">대리.ai mark</title>
+  <desc id="desc">A clean autonomous work assistant mark for orthus.ai.</desc>
+  <rect width="64" height="64" rx="16" fill="#57BF78"/>
+  <path d="M15 35L22 28L28 34L44 17L51 24L28 47Z" fill="#FFFFFF"/>
+  <circle cx="49" cy="14" r="2.8" fill="#1F7A4D"/>
+</svg>
