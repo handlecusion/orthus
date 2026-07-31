@@ -1,0 +1,23 @@
+{
+  "neighbors": {
+    "depth=1": "MATCH path = (p:WikiPage {slug:$slug})-[:SUPPORTS|CONFLICTS_WITH|BACKLINK|DERIVED_FROM|EXTRACTED_FROM*1..1]-(n) RETURN path LIMIT $limit",
+    "depth=2": "MATCH path = (p:WikiPage {slug:$slug})-[:SUPPORTS|CONFLICTS_WITH|BACKLINK|DERIVED_FROM|EXTRACTED_FROM*1..2]-(n) RETURN path LIMIT $limit"
+  },
+  "path_between": {
+    "max_hops=2": "MATCH path = shortestPath((a:WikiPage {slug:$slug_a})-[:SUPPORTS|CONFLICTS_WITH|BACKLINK|DERIVED_FROM|EXTRACTED_FROM*..2]-(b:WikiPage {slug:$slug_b})) RETURN path LIMIT $limit",
+    "max_hops=3": "MATCH path = shortestPath((a:WikiPage {slug:$slug_a})-[:SUPPORTS|CONFLICTS_WITH|BACKLINK|DERIVED_FROM|EXTRACTED_FROM*..3]-(b:WikiPage {slug:$slug_b})) RETURN path LIMIT $limit",
+    "max_hops=4": "MATCH path = shortestPath((a:WikiPage {slug:$slug_a})-[:SUPPORTS|CONFLICTS_WITH|BACKLINK|DERIVED_FROM|EXTRACTED_FROM*..4]-(b:WikiPage {slug:$slug_b})) RETURN path LIMIT $limit"
+  },
+  "conflicts_of": {
+    "default": "MATCH (c:WikiClaim {slug:$slug})-[k:CONFLICTS_WITH]-(o) RETURN c, k, o LIMIT $limit"
+  },
+  "page_conflicts": {
+    "default": "MATCH (p:WikiPage {slug:$slug}) OPTIONAL MATCH (p)-[bl:BACKLINK]-(c:WikiClaim)-[k:CONFLICTS_WITH]-(o) RETURN p, bl, c, k, o LIMIT $limit"
+  },
+  "provenance_chain": {
+    "default": "MATCH (c:WikiClaim {slug:$slug})-[sr:SUPPORTS]->(s:WikiSource)-[er:EXTRACTED_FROM]->(d:Document) RETURN c, sr, s, er, d LIMIT $limit"
+  },
+  "entity_mentions": {
+    "default": "MATCH (e:Entity {name_norm:$name_norm})-[m:MENTIONED_IN]->(n) RETURN e, m, n LIMIT $limit"
+  }
+}
