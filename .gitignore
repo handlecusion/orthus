@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# env / secrets
+.env
+.env.local
+
+# Node / Next.js
+web/node_modules/
+web/.next/
+web/out/
+node_modules/
+
+# worktrees
+.worktrees/
+
+# screenshots (E2E)
+*-screenshot.png
+iphone*.png
+*.e2e.png
+web-*.png
+
+# macOS
+.DS_Store
+
+# OMC session state
+.omc/
+
+# local browser QA artifacts
+.playwright-mcp/
+
+# 로컬 시드 산출물 (커밋 안 함)
+*seed*.log
+
+# 시드된 wiki 데이터 = 회사 데이터. repo에 안 올림(스켈레톤 .gitkeep/templates/index/log만 추적).
+wiki-store/sources/*.md
+wiki-store/claims/*.md
+wiki-store/wiki/*.md
+wiki-store/tasks/*.md
+# P2.1 scope 레이아웃 (company/personal 서브디렉 = 회사/개인 데이터)
+wiki-store/company/
+wiki-store/personal/
+
+# 대시보드 미디어 업로드(이미지/동영상/파일) 런타임 저장소 = 회사 데이터. repo에 안 올림.
+media-store/
+
+# designer verification screenshots
+ask-console-*.png
+ojosama-*.png
+personal-board-*.png
+personal-workspace-*.png
+
+# reports
+reports
+
+# QA evidence screenshots (local only)
+qa-*.png
+p85b-*.png
+p63-*.png
+
+# Tauri sidecar binaries (build artifacts)
+
+# local E2E screenshots
+e2e-*.png
+
+# macOS AppleDouble junk
+._*
+.DS_Store
+theme-*.png
+experiments/fugu-ko/raw/
+!experiments/fugu-ko/analysis/reports/
+!experiments/fugu-ko/analysis/reports/**

@@ -1,0 +1,350 @@
+name: CI
+
+# GitHub-hosted runners. Postgres/neo4j는 docker compose로 띄운다
+# (ubuntu-latest에 docker + compose v2 기본 탑재).
+# lane별 path gating: backend는 web/ 외 변경, frontend는 web/ 변경일 때만 돈다
+# (ci.yml 자체 변경은 전 lane 발화).
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  changes:
+    name: Changed areas
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      backend: ${{ steps.scope.outputs.backend }}
+      frontend: ${{ steps.scope.outputs.frontend }}
+
+    steps:
+      - name: Checkout history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed areas
+        id: scope
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+          PUSH_AFTER_SHA: ${{ github.sha }}
+        run: |
+          all_true() {
+            {
+              echo "backend=true"
+              echo "frontend=true"
+            } >> "$GITHUB_OUTPUT"
+            exit 0
+          }
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            BASE_SHA="$PR_BASE_SHA"
+            HEAD_SHA="$PR_HEAD_SHA"
+          else
+            # push: 직전 커밋과 비교한다. 브랜치 생성/force-push면 before가 all-zero라
+            # 비교 대상이 없다 — 그 경우만 전 lane fail-open으로 돌린다.
+            BASE_SHA="$PUSH_BEFORE_SHA"
+            HEAD_SHA="$PUSH_AFTER_SHA"
+            case "$BASE_SHA" in
+              ""|0000000000000000000000000000000000000000) all_true ;;
+            esac
+            git rev-parse --verify --quiet "$BASE_SHA^{commit}" >/dev/null || all_true
+          fi
+
+          backend=false
+          frontend=false
+          while IFS= read -r path; do
+            case "$path" in
+              # CI 정의가 바뀌면 전 lane을 실제로 돌려 확인한다.
+              .github/workflows/ci.yml) backend=true; frontend=true ;;
+              web/*) frontend=true ;;
+              *) backend=true ;;
+            esac
+          done < <(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+
+          {
+            echo "backend=$backend"
+            echo "frontend=$frontend"
+          } >> "$GITHUB_OUTPUT"
+
+  backend_fast:
+    name: Backend Fast
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      # Collection imports the shared DB guard, but this lane deselects every
+      # pg/kg test before fixture execution.  A deliberately unreachable test
+      # DSN keeps accidental DB use fail-closed.
+      ORTHUS_PG_DSN: postgresql+psycopg://orthus:orthus@127.0.0.1:1/orthus_test
+      ORTHUS_PG_DSN_READONLY: postgresql+psycopg://orthus_ro:orthus_ro@127.0.0.1:1/orthus_test
+      ORTHUS_AUTH_PUBLIC_BASE_URL: http://127.0.0.1:8820
+      ORTHUS_AUTH_WEB_BASE_URL: http://127.0.0.1:3820
+      ORTHUS_KG_TEST_REQUIRED: "0"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install 3.12
+
+      - name: Install Python dependencies
+        run: uv sync --python 3.12 --extra dev
+
+      - name: Ruff
+        run: uv run ruff check orthus tests scripts
+
+      - name: Docs spec check
+        run: uv run python scripts/check_docs_spec.py
+
+      - name: Pure unit tests
+        run: uv run pytest -m "not pg and not kg" --durations=50 --durations-min=0.2
+
+  backend_pg:
+    name: Backend PG (${{ matrix.shard_label }}/2)
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shard_index: 0
+            shard_label: 1
+            compose_project: orthus-ci-pg-0
+            pg_container: orthus_ci_pg_0
+            pg_port: "55433"
+          - shard_index: 1
+            shard_label: 2
+            compose_project: orthus-ci-pg-1
+            pg_container: orthus_ci_pg_1
+            pg_port: "55434"
+
+    env:
+      ORTHUS_KG_PASSWORD: ci-interpolation-dummy
+      ORTHUS_KG_TEST_REQUIRED: "0"
+      ORTHUS_AUTH_PUBLIC_BASE_URL: http://127.0.0.1:8820
+      ORTHUS_AUTH_WEB_BASE_URL: http://127.0.0.1:3820
+      COMPOSE_PROJECT_NAME: ${{ matrix.compose_project }}
+      PG_CONTAINER: ${{ matrix.pg_container }}
+      PG_PORT: ${{ matrix.pg_port }}
+      ORTHUS_CI_PG_DSN: postgresql+psycopg://orthus:orthus@localhost:${{ matrix.pg_port }}/orthus_test
+      ORTHUS_CI_PG_DSN_READONLY: postgresql+psycopg://orthus_ro:orthus_ro@localhost:${{ matrix.pg_port }}/orthus_test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install 3.12
+
+      - name: Install Python dependencies
+        run: uv sync --python 3.12 --extra dev
+
+      # 컨테이너 이름/프로젝트 네임스페이스는 shard별로 갈라 둔다. hosted 러너는 job마다
+      # 새 VM이라 충돌이 없지만, 이 검증은 compose 파일과 env가 어긋나면 즉시 실패시키는
+      # 값싼 가드라 유지한다.
+      - name: Verify Docker namespace
+        run: |
+          docker compose -f docker-compose.ci.yml config \
+            | grep -q "^name: $COMPOSE_PROJECT_NAME$"
+          docker compose -f docker-compose.ci.yml config \
+            | grep -q "container_name: $PG_CONTAINER"
+
+      - name: Start Postgres
+        run: docker compose -f docker-compose.ci.yml up -d postgres
+
+      - name: Wait for Postgres
+        run: |
+          until [ "$(docker inspect -f '{{.State.Health.Status}}' "$PG_CONTAINER" 2>/dev/null)" = "healthy" ]; do
+            sleep 1
+          done
+
+      - name: PostgreSQL tests
+        env:
+          ORTHUS_PG_DSN: ${{ env.ORTHUS_CI_PG_DSN }}
+          ORTHUS_PG_DSN_READONLY: ${{ env.ORTHUS_CI_PG_DSN_READONLY }}
+          ORTHUS_EMBEDDING: mock
+          ORTHUS_LLM: mock
+        run: |
+          bash scripts/setup_test_db.sh
+          uv run pytest -m "pg and not kg" \
+            --ci-shard-index ${{ matrix.shard_index }} --ci-shard-count 2 \
+            --durations=50 --durations-min=0.2
+
+      - name: Stop containers
+        if: always()
+        run: docker compose -f docker-compose.ci.yml down --volumes
+
+  backend_kg:
+    name: Backend KG
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    env:
+      ORTHUS_KG_PASSWORD: ci-interpolation-dummy
+      ORTHUS_KG_TEST_REQUIRED: "1"
+      ORTHUS_AUTH_PUBLIC_BASE_URL: http://127.0.0.1:8820
+      ORTHUS_AUTH_WEB_BASE_URL: http://127.0.0.1:3820
+      ORTHUS_KG_TEST_URI: bolt://127.0.0.1:57690
+      COMPOSE_PROJECT_NAME: orthus-ci-kg
+      PG_CONTAINER: orthus_ci_pg_kg
+      PG_PORT: "55435"
+      KG_CONTAINER: orthus_ci_neo4j_test_kg
+      KG_HTTP_PORT: "57476"
+      KG_BOLT_PORT: "57690"
+      ORTHUS_CI_PG_DSN: postgresql+psycopg://orthus:orthus@localhost:55435/orthus_test
+      ORTHUS_CI_PG_DSN_READONLY: postgresql+psycopg://orthus_ro:orthus_ro@localhost:55435/orthus_test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install 3.12
+
+      - name: Install Python dependencies
+        run: uv sync --python 3.12 --extra dev
+
+      - name: Verify Docker namespace
+        run: |
+          docker compose -f docker-compose.ci.yml --profile test config \
+            | grep -q "^name: $COMPOSE_PROJECT_NAME$"
+          docker compose -f docker-compose.ci.yml --profile test config \
+            | grep -q "container_name: $KG_CONTAINER"
+
+      - name: Start Postgres + neo4j-test
+        run: docker compose -f docker-compose.ci.yml --profile test up -d postgres neo4j-test
+
+      - name: Wait for Postgres
+        run: |
+          until [ "$(docker inspect -f '{{.State.Health.Status}}' "$PG_CONTAINER" 2>/dev/null)" = "healthy" ]; do
+            sleep 1
+          done
+
+      - name: Wait for neo4j-test
+        run: |
+          for _ in $(seq 1 60); do
+            if docker exec "$KG_CONTAINER" cypher-shell -u neo4j -p orthus-kg-test "RETURN 1" >/dev/null 2>&1; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "neo4j-test did not become ready" >&2
+          docker logs "$KG_CONTAINER" | tail -50 >&2
+          exit 1
+
+      - name: Knowledge graph tests
+        env:
+          ORTHUS_PG_DSN: ${{ env.ORTHUS_CI_PG_DSN }}
+          ORTHUS_PG_DSN_READONLY: ${{ env.ORTHUS_CI_PG_DSN_READONLY }}
+          ORTHUS_EMBEDDING: mock
+          ORTHUS_LLM: mock
+        run: |
+          bash scripts/setup_test_db.sh
+          uv run pytest -m kg --durations=50 --durations-min=0.2
+
+      - name: Stop containers
+        if: always()
+        run: docker compose -f docker-compose.ci.yml --profile test down --volumes
+
+  backend:
+    name: Backend
+    if: always()
+    needs: [changes, backend_fast, backend_pg, backend_kg]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Verify backend lanes
+        env:
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          BACKEND_REQUIRED: ${{ needs.changes.outputs.backend }}
+          FAST_RESULT: ${{ needs.backend_fast.result }}
+          PG_RESULT: ${{ needs.backend_pg.result }}
+          KG_RESULT: ${{ needs.backend_kg.result }}
+        run: |
+          if [ "$CHANGES_RESULT" != "success" ]; then
+            echo "Change detection failed" >&2
+            exit 1
+          fi
+          if [ "$BACKEND_REQUIRED" != "true" ]; then
+            echo "Backend skipped: PR changes are confined to web/."
+            exit 0
+          fi
+          for result in "$FAST_RESULT" "$PG_RESULT" "$KG_RESULT"; do
+            if [ "$result" != "success" ]; then
+              echo "A required backend lane did not pass: $result" >&2
+              exit 1
+            fi
+          done
+
+  frontend:
+    name: Frontend
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    defaults:
+      run:
+        working-directory: web
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.29.2
+          run_install: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build

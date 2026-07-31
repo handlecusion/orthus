@@ -1,0 +1,34 @@
+name: orthus-ci
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ${PG_CONTAINER:-orthus_ci_pg}
+    environment:
+      POSTGRES_USER: orthus
+      POSTGRES_PASSWORD: orthus
+      POSTGRES_DB: orthus
+    ports:
+      - "127.0.0.1:${PG_PORT:-55433}:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    volumes:
+      - ./scripts/pg_init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orthus -d orthus"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  neo4j-test:
+    profiles: [test]
+    image: neo4j:5-community
+    container_name: ${KG_CONTAINER:-orthus_ci_neo4j_test}
+    ports:
+      - "127.0.0.1:${KG_HTTP_PORT:-57474}:7474"
+      - "127.0.0.1:${KG_BOLT_PORT:-57688}:7687"
+    environment:
+      NEO4J_AUTH: neo4j/orthus-kg-test
+      NEO4J_db_transaction_monitor_check_interval: 10ms
+    tmpfs:
+      - /data

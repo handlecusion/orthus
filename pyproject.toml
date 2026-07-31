@@ -1,0 +1,64 @@
+[project]
+name = "orthus"
+dynamic = ["version"]
+description = "Orthus — Solar 단일 백엔드 에이전틱 지식 시스템 (아카식 + 비서 + 지식그래프)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "sqlalchemy>=2.0.36",
+    "psycopg[binary]>=3.2",
+    "pgvector>=0.3.6",
+    "alembic>=1.14",
+    "pydantic>=2.10",
+    "pydantic-settings>=2.7",
+    "sqlglot>=26.0",
+    "httpx>=0.28",
+    "neo4j>=5.28",
+    # 대시보드 미디어 업로드(FastAPI UploadFile/File 멀티파트 파싱). starlette가
+    # transitive로 끌어오지만 /dashboard/media 라우트가 직접 요구하므로 명시.
+    "python-multipart>=0.0.32",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "ruff==0.15.14",
+    # so MCP tool-surface tests run in CI (not skipped)
+    "mcp>=1.2,<2",
+]
+mcp = [
+    "mcp>=1.2,<2",
+]
+
+[project.scripts]
+orthus = "orthus.cli:main"
+orthus-mcp = "orthus.mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["orthus"]
+
+# Version SoR is the repo-root VERSION file. Reading it here bakes the real
+# version into every build shape — the uv-tool wheel and `uv sync` source
+# installs — so `orthus version` tracks releases instead of a frozen literal.
+[tool.hatch.version]
+path = "VERSION"
+pattern = "(?P<version>.+)"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "pg: requires the isolated PostgreSQL test database",
+    "kg: requires both the isolated PostgreSQL database and neo4j-test",
+    "serial: must not share mutable external state with another test process",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+

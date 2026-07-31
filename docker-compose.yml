@@ -1,0 +1,97 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: orthus_pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: orthus
+      POSTGRES_PASSWORD: orthus
+      POSTGRES_DB: orthus
+    ports:
+      - "5433:5432"
+    volumes:
+      - orthus_pg_data:/var/lib/postgresql/data
+      - ./scripts/pg_init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orthus -d orthus"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # K1 (docs/kg-model.md §1): central-only rebuildable KG index. loopback 바인딩과
+  # ORTHUS_KG_PASSWORD 미설정 시 로컬 데모 기본값(orthus-kg-local)으로 기동한다.
+  neo4j:
+    image: neo4j:5-community
+    container_name: orthus_neo4j
+    ports:
+      - "127.0.0.1:7474:7474" # HTTP — loopback 전용
+      - "127.0.0.1:7687:7687" # bolt — loopback 전용
+    environment:
+      NEO4J_AUTH: neo4j/${ORTHUS_KG_PASSWORD:-orthus-kg-local}
+      NEO4J_server_memory_heap_initial__size: 256m
+      NEO4J_server_memory_heap_max__size: 512m
+      NEO4J_server_memory_pagecache_size: 256m
+    volumes:
+      - orthus_neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # 테스트 전용 PG — neo4j-test와 동형(profiles: [test] + tmpfs). `make up`에는
+  # 미포함이고 `make pg-test-up`으로만 기동한다.
+  #
+  # WHY: 테스트 하네스는 테스트마다 전 테이블을 TRUNCATE한다. 운영 `orthus_pg`는
+  # 디스크 볼륨이라 WSL2에서 TRUNCATE 하나가 ~0.8s fsync를 기다리고, 전체 스위트가
+  # 단독 실행에서도 ~4시간이 된다(2026-07-17 실측: CPU 63% idle = 순수 I/O 대기).
+  # tmpfs(RAM) + fsync off로 그 대기를 없앤다.
+  #
+  # fsync/synchronous_commit/full_page_writes off는 크래시 시 DB 손상을 허용하는
+  # 설정이라 **운영 컨테이너에는 절대 넣지 않는다**. 여기서만 안전한 이유: 이 DB는
+  # tmpfs라 재기동하면 어차피 전부 사라지는 throwaway이고, 보존할 데이터가 없다.
+  # 같은 이유로 `orthus_pg`(실제 orthus_company 데이터 보유)에 이 설정을 주면 안 된다.
+  postgres-test:
+    profiles: [test]
+    image: pgvector/pgvector:pg16
+    container_name: orthus_pg_test
+    environment:
+      POSTGRES_USER: orthus
+      POSTGRES_PASSWORD: orthus # 테스트 고정값 — secret 아님 (neo4j-test와 동일)
+      POSTGRES_DB: orthus
+    ports:
+      - "127.0.0.1:5434:5432" # loopback 전용 — 운영 5433과 분리
+    volumes:
+      - ./scripts/pg_init:/docker-entrypoint-initdb.d:ro # orthus_ro 롤 동일 생성
+    tmpfs: [/var/lib/postgresql/data]
+    command:
+      - postgres
+      - -c
+      - fsync=off
+      - -c
+      - synchronous_commit=off
+      - -c
+      - full_page_writes=off
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orthus -d orthus"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  neo4j-test: # 테스트 전용 — orthus_test PG 분리 패턴과 동형
+    profiles: [test] # `make up`에는 미포함 — `make kg-test-up`으로 기동
+    image: neo4j:5-community
+    container_name: orthus_neo4j_test
+    ports:
+      - "127.0.0.1:7688:7687"
+    environment:
+      NEO4J_AUTH: neo4j/orthus-kg-test # 테스트 고정값 — secret 아님
+      # K4 timeout 회귀용 — transaction timeout은 reaper 주기(기본 2s)로만
+      # 강제돼 2초 미만 쿼리는 timeout이 안 잡힌다. 테스트 컨테이너만 10ms로
+      # 줄여 게이트 timeout reject를 결정적으로 만든다(운영 컨테이너 불변).
+      NEO4J_db_transaction_monitor_check_interval: 10ms
+    tmpfs: [/data]
+
+volumes:
+  orthus_pg_data:
+  orthus_neo4j_data:
