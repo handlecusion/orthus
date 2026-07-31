@@ -1,0 +1,272 @@
+<title>프롬프트를 측정으로 다듬다 — orthus 프롬프트 실험 보고서</title>
+<style>
+  :root{
+    --paper:#f2f1ec; --card:#fbfaf7; --ink:#20241f; --muted:#68705f; --line:#d9d8cd;
+    --accent:#22633f; --accent-soft:#e4efe6; --accent-line:#bcd6c2;
+    --reject:#93402e; --reject-soft:#f4e6e0; --reject-line:#ddbcb0;
+    --note:#8a6d1f; --note-soft:#f4edd8; --note-line:#dfd0a2;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;
+    --shadow:0 1px 2px rgba(32,36,31,.05),0 6px 22px rgba(32,36,31,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#171a15; --card:#1e221c; --ink:#e8eae2; --muted:#9aa38e; --line:#333a2f;
+      --accent:#5cb884; --accent-soft:#1c3226; --accent-line:#2f5940;
+      --reject:#d98a72; --reject-soft:#34211a; --reject-line:#5c392c;
+      --note:#d4b45a; --note-soft:#2e2817; --note-line:#584a22;
+      --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 26px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f2f1ec; --card:#fbfaf7; --ink:#20241f; --muted:#68705f; --line:#d9d8cd;
+    --accent:#22633f; --accent-soft:#e4efe6; --accent-line:#bcd6c2;
+    --reject:#93402e; --reject-soft:#f4e6e0; --reject-line:#ddbcb0;
+    --note:#8a6d1f; --note-soft:#f4edd8; --note-line:#dfd0a2;
+    --shadow:0 1px 2px rgba(32,36,31,.05),0 6px 22px rgba(32,36,31,.06);
+  }
+  :root[data-theme="dark"]{
+    --paper:#171a15; --card:#1e221c; --ink:#e8eae2; --muted:#9aa38e; --line:#333a2f;
+    --accent:#5cb884; --accent-soft:#1c3226; --accent-line:#2f5940;
+    --reject:#d98a72; --reject-soft:#34211a; --reject-line:#5c392c;
+    --note:#d4b45a; --note-soft:#2e2817; --note-line:#584a22;
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 8px 26px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 20px 90px}
+  a{color:var(--accent)}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:clamp(27px,5vw,40px);line-height:1.12;margin:.3em 0 .2em;letter-spacing:-.02em;font-weight:800;text-wrap:balance}
+  .lede{color:var(--muted);font-size:15.5px;max-width:62ch;margin:0}
+  .lede b{color:var(--ink)}
+  .meta{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .meta b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+
+  .scoreboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:26px 0 0}
+  .score{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+  .score .n{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .score .n.adopt{color:var(--accent)} .score .n.rej{color:var(--reject)}
+  .score .l{font-size:12px;color:var(--muted);margin-top:2px}
+
+  h2{font-size:19px;margin:46px 0 4px;letter-spacing:-.01em;font-weight:800}
+  h2 .tag{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:600;margin-left:8px;letter-spacing:.05em}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 14px;max-width:66ch}
+
+  .verdict{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.06em;
+    padding:2.5px 9px;border-radius:5px;white-space:nowrap;vertical-align:2px}
+  .verdict.adopt{color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line)}
+  .verdict.rej{color:var(--reject);background:var(--reject-soft);border:1px solid var(--reject-line)}
+  .verdict.note{color:var(--note);background:var(--note-soft);border:1px solid var(--note-line)}
+
+  table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--card);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .tblwrap{overflow-x:auto;margin:14px 0;border-radius:12px}
+  th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;background:color-mix(in srgb,var(--line) 26%,var(--card))}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:12.5px}
+  .win{color:var(--accent);font-weight:700}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);margin:14px 0}
+  .card h3{margin:0 0 6px;font-size:15.5px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .card p{margin:8px 0;font-size:14px;max-width:66ch}
+  .card .why{color:var(--muted);font-size:13px;border-left:2px solid var(--line);padding-left:11px;max-width:64ch}
+
+  code,.mono{font-family:var(--mono);font-size:12.5px}
+  code{background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);padding:1px 5px;border-radius:5px}
+  pre{font-family:var(--mono);font-size:12px;line-height:1.55;background:color-mix(in srgb,var(--line) 30%,var(--card));
+    border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;white-space:pre-wrap}
+
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  @media(max-width:620px){.ba{grid-template-columns:1fr}}
+  .ba > div{border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-size:12.5px;background:color-mix(in srgb,var(--line) 18%,var(--card))}
+  .ba .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .ba .bad .lbl{color:var(--reject)} .ba .good .lbl{color:var(--accent)}
+  .ba .bad{border-color:var(--reject-line)} .ba .good{border-color:var(--accent-line)}
+
+  .trap{border-left:3px solid var(--note);background:var(--note-soft);border-radius:0 10px 10px 0;padding:11px 15px;margin:10px 0;font-size:13.5px;max-width:70ch}
+  .trap b{color:var(--note)}
+  footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+  footer .mono{font-size:11.5px;line-height:1.9}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">orthus · prompt-lab · 2026-07-19</div>
+  <h1>프롬프트를 측정으로 다듬다</h1>
+  <p class="lede">에이전트의 컨텍스트 전달 경로는 계속 고쳐왔지만 <b>프롬프트 문구 자체를 측정으로 다듬은 적은 없었다</b>.
+  하루 동안 7개 프롬프트 표면에 A/B 하네스를 세우고 8개 변형을 쌍대 측정해 —
+  <b>3건을 채택하고 5건을 기각했다</b>. 채택 판정은 전부 결정론 지표, p≤10⁻⁴.
+  이후 "한국어 wiki였다면?"을 순한글 코퍼스로 검증하고, 축을 뒤집어 <b>국내 3모델(Solar·A.X·EXAONE)을 7표면에 돌려 태스크별 강약을 쟀다</b>.</p>
+  <div class="meta">
+    <span>표면 <b>7</b></span><span>변형 실험 <b>8</b></span><span>골든 문항 <b>691</b></span>
+    <span>실행 모델 <b>Solar</b>(prod 배정)</span><span>판정자 <b>gpt-4o</b>(근거 동봉)</span><span>게이트웨이 <b>codex</b> 실호출 20런</span>
+  </div>
+  <div class="scoreboard">
+    <div class="score"><div class="n adopt">3</div><div class="l">채택 — 프로덕션 반영 완료</div></div>
+    <div class="score"><div class="n rej">5</div><div class="l">기각 — 현행 유지가 측정 결론</div></div>
+    <div class="score"><div class="n">38/38</div><div class="l">게이트웨이 시드 계약 위반 0</div></div>
+    <div class="score"><div class="n">3×3</div><div class="l">모델×태스크 매트릭스 — 태스크별 약점 검출</div></div>
+  </div>
+</header>
+
+<h2>실험 지도 <span class="tag">8 rounds · 4 harnesses</span></h2>
+<p class="sub">모든 라운드는 한 번에 한 축만 바꾸고, paired 검정(McNemar/sign)으로 판정했다. 애매하면 신규 홀드아웃으로 확증했고, "해로울 것 없으니 넣자"는 사전 등록 위반이라 한 번도 따르지 않았다.</p>
+<div class="tblwrap"><table>
+  <tr><th>표면</th><th>가설</th><th>결과</th><th>판정</th></tr>
+  <tr><td>위키 저작 (distill)</td><td>지시문 한국어화</td><td>전 지표 비유의</td><td><span class="verdict rej">기각</span></td></tr>
+  <tr><td>위키 저작 (distill)</td><td>외부지식/추정 금지 문구</td><td>방향 일관 우세 · 홀드아웃 121문서 p=0.36</td><td><span class="verdict rej">기각</span></td></tr>
+  <tr><td>위키 저작 (distill)</td><td>evidence 원문 인용 강제</td><td>인용률 21→82% · 오염 불변</td><td><span class="verdict rej">기각</span></td></tr>
+  <tr><td>답변 (wiki_qa)</td><td>지시문 한국어화</td><td>baseline 유의 승 (혼합 p=0.0013 · 순한글 p=0.0010)</td><td><span class="verdict rej">기각</span></td></tr>
+  <tr><td>답변 (wiki_qa)</td><td>인용마커 금지 강화+실체보존</td><td>위반 57→30% (p=3.2e-8) · 품질 우세</td><td><span class="verdict adopt">채택 cite-v2</span></td></tr>
+  <tr><td>후속 재작성 (rewrite)</td><td>지시어 잔존 금지 명시</td><td>잔존 17.5→3.3% (p=0.0001) · 품질 동등</td><td><span class="verdict adopt">채택 strict-v1</span></td></tr>
+  <tr><td>합성 (synthesize)</td><td>마커 drop 명시+action 규칙 승격</td><td>마커 83→17% (p&lt;1e-5) · 품질 동등</td><td><span class="verdict adopt">채택 syn-v2</span></td></tr>
+  <tr><td>분해 게이트 (decompose)</td><td>—</td><td>미탐 전부 알려진 프리필터 갭 — tier 3에서 회복</td><td><span class="verdict note">설정 권고</span></td></tr>
+  <tr><td>P10 게이트웨이 시드</td><td>—</td><td>9시나리오 계약 위반 0 (38/38)</td><td><span class="verdict note">현행 확인</span></td></tr>
+</table></div>
+
+<h2>채택 1 — 답변 인용 마커 <span class="tag">wiki_qa · cite-v2</span></h2>
+<p class="sub">이번 실험 최대 발견. 답변의 <b>57%가 인용 마커 금지 규칙을 위반</b>하고 있었다 — 사용자 화면에 죽은 참조([1], 문서 [2] 참조)가 노출되고, 학습 게이트(<code>_should_learn</code>)가 그 답변들의 위키 축적을 전부 차단하는 이중 피해.</p>
+<div class="card">
+  <h3>금지 규칙을 말미에 예시와 함께 재강조 + "참조를 지워도 정보는 지우지 마라" <span class="verdict adopt">채택</span></h3>
+  <div class="tblwrap"><table>
+    <tr><th>지표 (140쌍 paired)</th><th class="num">현행</th><th class="num">cite-v2</th><th class="num">검정</th></tr>
+    <tr><td>인용마커 위반율</td><td class="num">57.1%</td><td class="num win">30.0%</td><td class="num">McNemar 44:6 · p=3.2e-8</td></tr>
+    <tr><td>판정자 쌍대 승수</td><td class="num">23</td><td class="num win">35</td><td class="num">tie 82 · p=0.15</td></tr>
+    <tr><td>답변 길이 (median)</td><td class="num">198자</td><td class="num">246자</td><td class="num">더 충실</td></tr>
+  </table></div>
+  <p class="why">중간 단계(cite-v1: 금지 강화만)는 위반을 26%까지 내렸지만 답이 얇아지는 트레이드(판정 30:16)가 있었다. "간결이 아니라 완전성이 목표"라는 실체 보존 조항을 더하자 트레이드가 사라지고 품질 방향까지 반전됐다. 잔여 30%는 프롬프트의 바닥 — 후처리/재생성 루프는 구조적 후속 과제.</p>
+</div>
+
+<h2>채택 2 — 후속질문 재작성 <span class="tag">rewrite · strict-v1</span></h2>
+<div class="card">
+  <h3>"재작성에 지시어가 남으면 안 된다"를 명시 <span class="verdict adopt">채택</span></h3>
+  <p>측정 전엔 몰랐던 약점: 재작성 결과의 <b>17.5%에 지시어("그거", "아까")가 그대로 남았다</b> — 재작성의 존재 이유를 부정하는 결함. 금지 명시 한 문장으로 3.3%로 감소.</p>
+  <div class="tblwrap"><table>
+    <tr><th>지표 (120쌍 paired)</th><th class="num">현행</th><th class="num">strict-v1</th><th class="num">검정</th></tr>
+    <tr><td>지시어 잔존</td><td class="num">21/120</td><td class="num win">4/120</td><td class="num">McNemar 18:1 · p=0.0001</td></tr>
+    <tr><td>판정자 pass</td><td class="num">75/120</td><td class="num">77/120</td><td class="num">동등 (p=0.80)</td></tr>
+  </table></div>
+  <p class="why">40쌍 1차에선 p=0.070으로 경계 — 표본을 120쌍으로 늘려 확증한 뒤 채택했다.</p>
+</div>
+
+<h2>채택 3 — 복합질문 합성 <span class="tag">synthesize · syn-v2</span></h2>
+<div class="card">
+  <h3>"source marker를 보존하라"던 규칙을 "마커는 버려라"로 교정 <span class="verdict adopt">채택</span></h3>
+  <p>합성 답변의 <b>83%가 인용 마커를 노출</b>했는데, 원인이 얄궂다 — 기존 rule 3이 <i>"source markers must survive"</i>라고 마커 보존을 <b>명시적으로 지시</b>하고 있었다. 채택 1(cite-v2)과 정면 충돌하는 문구. 마커 drop을 명시하자 83%→17% (McNemar 20:0, p&lt;1e-5), 사실 보존 판정은 동등(29→28/30).</p>
+  <p class="why">함께 시도한 action 무시 규칙 강화(rule 5 → FINAL RULE 승격)는 위반 7/10→6/10으로 <b>무효</b> — "메일 보내드리겠습니다" 누설은 프롬프트 개입에 저항한다. 합성 후 결정론 검출→재생성 같은 구조적 처리로 넘겼다.</p>
+</div>
+
+<h2>기각의 값어치 — 직관 배반 2제 <span class="tag">negative results</span></h2>
+<div class="card">
+  <h3>① "한국어 모델이니 한국어 지시문이 낫다" — 두 번 기각 <span class="verdict rej">기각</span></h3>
+  <p>규칙 내용을 1:1 보존하고 지시문 언어만 바꿔 두 표면에서 측정했다. distill에선 전 지표 무차이, wiki_qa에선 <b>유의하게 해로웠다</b>(baseline 33승 vs 11승, p=0.0013) — 한국어 지시가 Solar의 답을 더 짧고 소극적으로 만들었다(거부형 답변 2배). 프롬프트 언어는 정합의 문제가 아니라 측정의 문제였다.</p>
+</div>
+<div class="card">
+  <h3>② "evidence를 원문 인용으로 강제하면 오염이 잡힌다" <span class="verdict rej">기각</span></h3>
+  <p>지시는 완벽히 먹혔다 — verbatim evidence 21%→82%, claim 수 무손실. 그런데 <b>오염률은 안 움직였다</b>(5.1→4.9%, p=0.84). 오염 claim 22개 중 17개가 멀쩡한 원문 인용을 달고 있었다: <b>오염은 evidence 출처가 아니라 claim–evidence 관계에 산다.</b> Solar는 진짜 원문을 인용하면서 claim 문장에 외부지식을 섞는다. 이 발견이 "비인용 evidence drop" 결정론 게이트 구상도 함께 죽였다(recall 23%, 정상 claim 17% 손실).</p>
+</div>
+
+<h2>미측정 영역 검증 — "한국어 wiki였다면?" <span class="tag">순한글 3박자 조건</span></h2>
+<p class="sub">위 기각 ①에 정당한 반론이 있다: 실제 코퍼스는 한글 42%뿐인 혼합 코퍼스였다. <b>한국어모델–한국어wiki–한국어지시</b> 3박자가 모두 맞으면 결과가 다를까? 답을 내기 위해 순한글 합성 코퍼스(60문서, 한글비율 median 0.91 — 실제의 두 배)를 짓고 distill·wiki_qa 두 표면을 재측정했다.</p>
+<div class="card">
+  <h3>3박자를 모두 맞춰도 한국어 지시문은 이기지 않는다 <span class="verdict rej">가설 기각</span></h3>
+  <div class="tblwrap"><table>
+    <tr><th>표면 (순한글, paired)</th><th class="num">baseline</th><th class="num">kr-v1</th><th class="num">검정</th></tr>
+    <tr><td>distill 오염률 (60문서)</td><td class="num">0.36%</td><td class="num">0.80%</td><td class="num">McNemar 1:3 · p=0.63</td></tr>
+    <tr><td>distill 커버리지</td><td class="num">82.2%</td><td class="num">83.4%</td><td class="num">sign 14:8 · p=0.29</td></tr>
+    <tr><td>wiki_qa 판정 승수 (60문항)</td><td class="num win">14</td><td class="num">1</td><td class="num">tie 45 · <b>p=0.0010</b></td></tr>
+    <tr><td>wiki_qa 거부형 답</td><td class="num win">0</td><td class="num">3</td><td class="num">더 소극적</td></tr>
+    <tr><td>wiki_qa 답변 길이 (median)</td><td class="num">82자</td><td class="num">57자</td><td class="num">—</td></tr>
+  </table></div>
+  <p>distill은 혼합 코퍼스와 똑같이 <b>무차이</b>, wiki_qa는 똑같이 <b>유의 패배</b>(혼합 33:11 p=0.0013 → 순한글 14:1 p=0.0010). 근거가 순한글이어도 kr-v1은 시행일·지급일·상태값을 빠뜨린 최소 답변을 낸다.</p>
+  <p class="why">이로써 kr-v1의 패인이 확정된다 — <b>언어 이해 정합이 아니라 행동 프라이어 변화</b>다. 한국어 지시문은 Solar를 더 짧고 소극적으로 만들고(82→57자, 거부 0→3), 이 효과는 근거·질문·wiki의 언어와 무관하다. 그래서 wiki를 순한글로 바꿔도 결론이 뒤집히지 않는다. <b>영어 지시문 유지 결정은 코퍼스 언어 구성과 독립적으로 유효하다.</b></p>
+  <div class="ba">
+    <div class="bad"><div class="lbl">kr-v1 (한국어 지시)</div>출연료 정산 내역은 매주 금요일까지 출연자에게 발송됩니다.</div>
+    <div class="good"><div class="lbl">baseline (영어 지시) — 승</div>매주 금요일까지 발송, 익주 월요일 지급 완료, 2023-11-01부터 적용.</div>
+  </div>
+  <p class="why" style="margin-top:12px">한계: 합성 코퍼스는 실제보다 깨끗해 오염 바닥이 낮다(0.4% vs 실측 5%). 그러나 두 프롬프트를 같은 60문서에 paired 비교하므로 A/B 결론에는 영향 없다.</p>
+</div>
+
+<h2>Track B — P10 게이트웨이 시드 <span class="tag">codex 실호출 · 결정론 루브릭</span></h2>
+<div class="card">
+  <h3>프로덕션 시드, 9개 시나리오 계약 위반 0 <span class="verdict note">현행 확인 · 변형 불필요</span></h3>
+  <p>상주 엔진 대신 <code>codex exec</code>로 시드 주입 경로를 재현했다(임시 HOME/CODEX_HOME 격리, 잡 프롬프트는 프로덕션 <code>build_job_prompt</code> 그대로). 산출물 포맷(PDF/docx/CSV·md 금지·로컬 경로 금지), 잡 dedup 계약(ITEM 키·seen 재보고 금지·신규-only), 안내 프로토콜(브라우저/로그인/메일), 스킬화까지 <b>38/38 통과</b>.</p>
+  <p class="why">최초 채점 34/38의 실패 4건은 전부 루브릭 오탐이었다 — "Gmail 플러그인은 설치할 필요 <b>없습니다</b>"라는 올바른 부정문이 금지 정규식에 걸린 것. 실약점이 없으므로 measure-first 원칙대로 개입하지 않았고, <b>하네스 자체가 산출물</b>이다: 앞으로 시드 블록을 고칠 때 이 9계약 회귀를 10분에 돌릴 수 있다.</p>
+</div>
+
+<h2>축을 뒤집다 — 모델×태스크 매트릭스 <span class="tag">Solar · A.X · EXAONE × 7표면</span></h2>
+<p class="sub">여기까지는 "모델 고정(Solar) + 프롬프트 변형"이었다. 마지막으로 축을 뒤집어 <b>프롬프트 고정(현행) + 모델 변형</b>으로 국내 3모델을 7표면에 돌렸다 — "특정 모델이 특정 태스크를 잘하나?" 신규 홀드아웃 + Holm 다중비교 보정, 판정은 codex(ChatGPT OAuth) 중립 판정자.</p>
+<div class="card">
+  <h3>기존 "모델간 유의차 없음"과 다르게 — 태스크별 차이가 나왔다 <span class="verdict adopt">신호 있음</span></h3>
+  <p>회사의 이전 측정(<span class="mono">model-orchestration.md</span>)은 판정자 기반 holistic 품질로 "국내 3모델 간 유의차 없음"이었다. 이번에 <b>객관 결함율 지표로 특정 실패모드를 직접 재니</b> Holm 보정 후에도 살아남는 태스크별 차이 4건이 나왔다.</p>
+  <div class="tblwrap"><table>
+    <tr><th>태스크</th><th>지표</th><th class="num">Solar</th><th class="num">A.X</th><th class="num">EXAONE</th><th>Holm 유의</th></tr>
+    <tr><td>rewrite</td><td>지시어 잔존율</td><td class="num win">1.7%</td><td class="num">10.3%</td><td class="num">34.5%</td><td>★ Solar·A.X ≫ EXAONE</td></tr>
+    <tr><td>decompose</td><td>게이트 오답률</td><td class="num win">15.8%</td><td class="num">52.6%</td><td class="num">26.3%</td><td>★ Solar·EXAONE ≫ A.X</td></tr>
+    <tr><td>delegation</td><td>함정 오탐율</td><td class="num">13.0%</td><td class="num">25.9%</td><td class="num win">11.1%</td><td>A.X 최악 (raw p=.008)</td></tr>
+    <tr><td>wiki_qa</td><td>판정 Copeland</td><td class="num">−32</td><td class="num">+11</td><td class="num win">+21</td><td>Solar 최약 (raw p=.008)</td></tr>
+    <tr><td>synthesize</td><td>마커·action 누설</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>무차이 (n=29)</td></tr>
+    <tr><td>distill</td><td>오염률</td><td class="num">0%</td><td class="num">0%</td><td class="num">0%</td><td>무차이 (codex 판정)</td></tr>
+    <tr><td>지연</td><td>p50 / p95</td><td class="num">1140/1823</td><td class="num">1553/4777</td><td class="num win">945/3363</td><td>EXAONE 최속·A.X 꼬리 최악</td></tr>
+  </table></div>
+  <p><b>모델별 프로파일</b>: <b>Solar</b> = 구조적 지시 따르기 최강(rewrite·decompose), 답변 품질은 최약(간결 편향 — Track A 결과와 정합). <b>EXAONE</b> = 답변 품질·위임 안전·속도 우위, 지시어 해소는 최약(잔존 34.5%). <b>A.X</b> = 분해 게이트·위임 오탐·지연 꼬리가 최약, 나머지 중위.</p>
+  <p class="why"><b>정확한 결론</b>: holistic 품질(wiki_qa 판정)에선 여전히 강건한 승자가 없다(기존 결론 재확인). 새 신호는 <b>객관 결함율</b>에 있고, 그것도 "이 모델이 이 태스크를 잘한다"보다 <b>"이 모델은 이 태스크에서 눈에 띄게 약하니 그 배정만 피하라"</b>가 맞다 — rewrite에 EXAONE, decompose·delegation에 A.X 배정 회피. delegation→EXAONE 선호는 기존 배정과 정합.</p>
+  <p class="why" style="margin-top:10px"><b>Caveat</b>: 현행 prod 프롬프트로 측정(모델 절대능력 아님) · distill 0%는 codex 판정이 gpt-4o보다 관대할 여지(앞 gpt-4o 실측 5~7%) · wiki_qa는 codex가 상세답 선호 시 간결한 Solar 불리(prod가 Solar 쓰는 건 지연·비용·벤더 때문). OpenAI API 빌링 소진으로 판정을 codex OAuth로 전환한 결과 — 국내 heterogeneous/gpt-4o 교차검증 여지 있음.</p>
+</div>
+<div class="card">
+  <h3>후속 — 저작 모델이 위키를 바꾸나 <span class="verdict rej">downstream 무차이</span></h3>
+  <p>같은 70문서를 Solar·A.X·EXAONE <b>distill</b>로 각각 저작해 위키 3개를 짓고(임베딩·답변 모델은 Solar 고정 → 저작만 변수) downstream을 쟀다. <b>밀도는 갈렸다</b>: EXAONE 6.7 claims/doc &gt; Solar 5.7 &gt; A.X 4.2, 그리고 A.X는 저작 35분(Solar의 10배) + <b>70문서 중 12개 저작 실패</b>. <b>그런데 downstream은 안 갈렸다</b>: 3위키 모두 답변 거부 0/70, 답변 품질 무유의(최소 p=0.066).</p>
+  <p class="why"><b>여기서 측정 결함을 하나 잡았다</b>: 1차 판정에선 A.X-저작 위키가 1위(+24)였는데, 판정자가 원본을 못 본 데다 A.X가 저작 실패한 12문서에도 거부 없이 답을 지어냈다. <b>원본을 정답 근거로 동봉해 재판정하자 A.X는 +8로 16점 빠지고 EXAONE(+19)에 역전됐다</b> — 1위는 아티팩트였다. "지표가 표본보다 먼저다"의 세 번째 재현.</p>
+  <p class="why">→ distill/compile 슬롯은 <b>답변 품질로 고를 이유가 없다</b>. cost·latency·reliability로 고르면 되고 그 축에서 A.X가 최악. 현행 Solar/codex_pool 저작 유지가 맞다. (70문서라 거부율 천장효과 — 대형 코퍼스 일반화는 유보.)</p>
+</div>
+<p class="sub" style="margin-top:14px">📊 매트릭스 전체 표·모델별 프로파일·미니위키 상세는 <b>모델×태스크 매트릭스 전용 보고서</b>에 있다 →
+국내 3모델, 어느 태스크에 강한가</p>
+
+<h2>방법론 — 이 결론을 믿어도 되는 이유 <span class="tag">discipline</span></h2>
+<div class="tblwrap"><table>
+  <tr><th>장치</th><th>내용</th></tr>
+  <tr><td>실행 모델 = prod 배정</td><td>모든 변형을 Solar(prod chat 배정 모델)로 측정 — 프롬프트 튜닝은 모델-특이적이라 다른 모델 측정은 무효</td></tr>
+  <tr><td>frozen hits</td><td>재구축 위키(Solar distill+임베딩, 1,972문서, 혼재 0)에서 문항당 retrieval을 1회 캡처해 고정 — 모든 답변 변형이 같은 근거 위에서 경쟁</td></tr>
+  <tr><td>골든셋 역방향 생성</td><td>페이지→질문 생성(생성기 2종 교차) + 제목 누출 자동 검사 — 임베딩 실험의 "죽은 시험지" 함정 회피</td></tr>
+  <tr><td>판정자 원문 동봉</td><td>근거를 못 본 판정자는 자신감 있는 환각에 가점한다(§12.1) — 모든 판정에 원문/근거 포함, 익명 A/B + 양방향 스왑 + 불일치=tie</td></tr>
+  <tr><td>사전 등록 + 홀드아웃</td><td>판정 규칙을 실행 전에 선언, 경계 결과는 신규 표본으로 확증(ext-v1 121문서 홀드아웃, strict-v1 80쌍 확장)</td></tr>
+  <tr><td>결정론 우선</td><td>채택 3건의 1차 지표는 전부 정규식/파일 검사 — 판정자 편향과 무관하게 재현 가능</td></tr>
+</table></div>
+
+<h2>이번에도, 잡아낸 건 우리 자신의 실수 <span class="tag">traps</span></h2>
+<div class="trap"><b>판정자 전멸 사건.</b> rewrite/synthesize 1차 채점이 0/40·0/30 전멸 — 모델이 아니라 판정 프롬프트에 "JSON" 단어가 없어 OpenAI json_object 모드가 요청을 거부했고, 하네스가 예외를 fail로 삼켰다. 극단값은 먼저 측정기를 의심하라.</div>
+<div class="trap"><b>루브릭 오탐 4건.</b> 게이트웨이 "실패"의 전부가 금지를 올바르게 재진술한 부정문("설치할 필요 없습니다")을 위반으로 센 것. 응답 원문을 열어보기 전에 위반율을 믿지 마라.</div>
+<div class="trap"><b>판정자 인용 편향.</b> 판정 화면에선 [1]~[5]가 살아 있어 마커 답변이 근거충실해 보인다 — 프로덕션에선 죽은 참조다. 무마커 서브셋 재집계로 교차 확인했다.</div>
+<div class="trap"><b>프롬프트 저항성 패턴.</b> distill 오염(5~7%)과 합성 action 누설(70%)은 문구 강화·구조 지시·자기점검 어느 것에도 안 움직였다. 이 계열은 프롬프트가 아니라 파이프라인(검증 패스·결정론 검출)의 일이다.</div>
+
+<h2>프로덕션 반영 상태 <span class="tag">3 files · tests green</span></h2>
+<div class="tblwrap"><table>
+  <tr><th>파일</th><th>변경</th><th>검증</th></tr>
+  <tr><td><span class="mono">orthus/wiki/qa.py</span></td><td>cite-v2 블록 (근거 주석 포함)</td><td>단위 33개 통과</td></tr>
+  <tr><td><span class="mono">orthus/router/rewrite.py</span></td><td>strict-v1 문장 (근거 주석 포함)</td><td>단위 11개 통과</td></tr>
+  <tr><td><span class="mono">orthus/router/decompose.py</span></td><td>_SYNTHESIZE_SYSTEM → syn-v2</td><td>단위 75개 통과</td></tr>
+</table></div>
+<p class="sub">커밋/PR은 owner 지시로 보류 중. 하네스·기록은 <span class="mono">experiments/prompt-lab/</span>(원자료·키 gitignore).</p>
+
+<h2>남은 것</h2>
+<div class="tblwrap"><table>
+  <tr><th>항목</th><th>성격</th></tr>
+  <tr><td>prod 위키 rebuild — cite-v2 등은 답변측이라 즉시 효과, distill 결론(현행 유지)은 C6/C1 pending rebuild 창에 그대로 편승</td><td>운영 (owner 게이트)</td></tr>
+  <tr><td><span class="mono">ORTHUS_DECOMPOSE_PREFILTER_EXT_TIER=3</span> 활성화 — 복합문 미탐 회복(t7 15→19/22), 기존 E3 문서 결론 재확인</td><td>설정 결정</td></tr>
+  <tr><td>합성 action 누설·distill 오염 — 프롬프트 저항성 계열의 구조적 처리(검증 패스/결정론 검출→재생성)</td><td>후속 설계</td></tr>
+  <tr><td>답변 인용마커 잔여 30% — 후처리 strip vs 위반 시 1회 재생성</td><td>후속 설계</td></tr>
+  <tr><td>게이트웨이 로그인-벽 전용 안내 — 브라우저 MCP attach 환경 실봇 QA에서만 검증 가능</td><td>QA 체크리스트</td></tr>
+</table></div>
+
+<footer>
+  <b>근거 파일</b>
+  <div class="mono">
+    실험 기록 — experiments/prompt-lab/analysis/{round-1..3, qa-round-1..3, gw-round-1, korean-experiment, matrix-results, matrix-interpretation}.md · 계획 — PLAN.md<br>
+    하네스 — distill_harness · score_distill · qa_lab · misc_lab · gateway_lab · korean_lab · matrix_lab · codex_judge.py (+variants_*)<br>
+    모델 매트릭스 — 국내 3모델 × 7표면, 신규 홀드아웃(distill 48·qa 60·rewrite 58·syn 29·decompose 38·delegation 54), codex(ChatGPT OAuth) 중립 판정, Holm 보정<br>
+    데이터 — 골든 691문항(distill 201 · qa 140 · rewrite 120 · syn 30 · dec 38 · 순한글 distill 60+qa 60 · gw 9시나리오) · 원자료/키 gitignore<br>
+    기준 위키 — 로컬 Solar 재구축: 1,972 docs → claims 9,799 · chunks 13,851 (embedding-passage:1024 단일, 혼재 0) · 순한글 검증 — 합성 60문서(한글 median 0.91)
+  </div>
+</footer>
+</div>

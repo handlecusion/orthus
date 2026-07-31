@@ -1,0 +1,1845 @@
+{
+ "seed": 1234,
+ "key": [
+  {
+   "label_id": "L0001",
+   "orig_id": "r3-t-104",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0002",
+   "orig_id": "r3-g-015",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0003",
+   "orig_id": "r3-g-048",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0004",
+   "orig_id": "r3-g-034",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0005",
+   "orig_id": "r3-t-067",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0006",
+   "orig_id": "r3-g-110",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0007",
+   "orig_id": "r3-t-008",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0008",
+   "orig_id": "r3-g-096",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0009",
+   "orig_id": "r3-t-103",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0010",
+   "orig_id": "r3-g-082",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0011",
+   "orig_id": "r3-t-027",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0012",
+   "orig_id": "r3-g-053",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0013",
+   "orig_id": "r3-g-003",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0014",
+   "orig_id": "r3-t-059",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0015",
+   "orig_id": "r3-g-108",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0016",
+   "orig_id": "r3-t-111",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0017",
+   "orig_id": "r3-t-091",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0018",
+   "orig_id": "r3-t-095",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0019",
+   "orig_id": "r3-t-082",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0020",
+   "orig_id": "r3-t-053",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0021",
+   "orig_id": "r3-t-032",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0022",
+   "orig_id": "r3-t-057",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0023",
+   "orig_id": "r3-g-062",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0024",
+   "orig_id": "r3-t-023",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0025",
+   "orig_id": "r3-t-031",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0026",
+   "orig_id": "r3-t-001",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0027",
+   "orig_id": "r3-t-066",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0028",
+   "orig_id": "r3-g-103",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0029",
+   "orig_id": "r3-g-084",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0030",
+   "orig_id": "r3-t-034",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0031",
+   "orig_id": "r3-t-035",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0032",
+   "orig_id": "r3-g-006",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0033",
+   "orig_id": "r3-t-069",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0034",
+   "orig_id": "r3-g-001",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0035",
+   "orig_id": "r3-t-038",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0036",
+   "orig_id": "r3-g-095",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0037",
+   "orig_id": "r3-g-101",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0038",
+   "orig_id": "r3-g-050",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0039",
+   "orig_id": "r3-g-104",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0040",
+   "orig_id": "r3-t-078",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0041",
+   "orig_id": "r3-t-071",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0042",
+   "orig_id": "r3-t-065",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0043",
+   "orig_id": "r3-g-044",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0044",
+   "orig_id": "r3-g-076",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0045",
+   "orig_id": "r3-t-013",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0046",
+   "orig_id": "r3-g-066",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0047",
+   "orig_id": "r3-t-005",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0048",
+   "orig_id": "r3-g-032",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0049",
+   "orig_id": "r3-g-073",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0050",
+   "orig_id": "r3-g-093",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0051",
+   "orig_id": "r3-t-079",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0052",
+   "orig_id": "r3-t-120",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0053",
+   "orig_id": "r3-g-092",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0054",
+   "orig_id": "r3-t-106",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0055",
+   "orig_id": "r3-t-006",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0056",
+   "orig_id": "r3-g-080",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0057",
+   "orig_id": "r3-g-027",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0058",
+   "orig_id": "r3-g-109",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0059",
+   "orig_id": "r3-t-037",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0060",
+   "orig_id": "r3-g-074",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0061",
+   "orig_id": "r3-g-098",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0062",
+   "orig_id": "r3-g-072",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0063",
+   "orig_id": "r3-g-060",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0064",
+   "orig_id": "r3-t-093",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0065",
+   "orig_id": "r3-g-031",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0066",
+   "orig_id": "r3-g-081",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0067",
+   "orig_id": "r3-t-088",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0068",
+   "orig_id": "r3-t-070",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0069",
+   "orig_id": "r3-g-087",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0070",
+   "orig_id": "r3-g-013",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0071",
+   "orig_id": "r3-t-109",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0072",
+   "orig_id": "r3-g-055",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0073",
+   "orig_id": "r3-t-042",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0074",
+   "orig_id": "r3-g-102",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0075",
+   "orig_id": "r3-t-049",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0076",
+   "orig_id": "r3-t-113",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0077",
+   "orig_id": "r3-g-059",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0078",
+   "orig_id": "r3-t-028",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0079",
+   "orig_id": "r3-g-041",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0080",
+   "orig_id": "r3-t-089",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0081",
+   "orig_id": "r3-g-065",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0082",
+   "orig_id": "r3-t-099",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0083",
+   "orig_id": "r3-t-112",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0084",
+   "orig_id": "r3-t-077",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0085",
+   "orig_id": "r3-t-043",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0086",
+   "orig_id": "r3-g-028",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0087",
+   "orig_id": "r3-g-051",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0088",
+   "orig_id": "r3-t-114",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0089",
+   "orig_id": "r3-g-010",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0090",
+   "orig_id": "r3-g-058",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0091",
+   "orig_id": "r3-t-115",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0092",
+   "orig_id": "r3-t-047",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0093",
+   "orig_id": "r3-g-035",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0094",
+   "orig_id": "r3-g-075",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0095",
+   "orig_id": "r3-g-021",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0096",
+   "orig_id": "r3-t-054",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0097",
+   "orig_id": "r3-t-024",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0098",
+   "orig_id": "r3-g-106",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0099",
+   "orig_id": "r3-g-045",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0100",
+   "orig_id": "r3-g-025",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0101",
+   "orig_id": "r3-g-083",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0102",
+   "orig_id": "r3-g-033",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0103",
+   "orig_id": "r3-g-085",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0104",
+   "orig_id": "r3-g-049",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0105",
+   "orig_id": "r3-g-063",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0106",
+   "orig_id": "r3-t-052",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0107",
+   "orig_id": "r3-g-068",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0108",
+   "orig_id": "r3-t-004",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0109",
+   "orig_id": "r3-t-025",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0110",
+   "orig_id": "r3-t-045",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0111",
+   "orig_id": "r3-g-054",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0112",
+   "orig_id": "r3-t-094",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0113",
+   "orig_id": "r3-t-060",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0114",
+   "orig_id": "r3-g-016",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0115",
+   "orig_id": "r3-g-036",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0116",
+   "orig_id": "r3-g-038",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0117",
+   "orig_id": "r3-t-020",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0118",
+   "orig_id": "r3-t-016",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0119",
+   "orig_id": "r3-g-067",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0120",
+   "orig_id": "r3-g-100",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0121",
+   "orig_id": "r3-g-094",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0122",
+   "orig_id": "r3-g-057",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0123",
+   "orig_id": "r3-t-110",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0124",
+   "orig_id": "r3-t-119",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0125",
+   "orig_id": "r3-t-084",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0126",
+   "orig_id": "r3-g-105",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0127",
+   "orig_id": "r3-t-002",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0128",
+   "orig_id": "r3-t-011",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0129",
+   "orig_id": "r3-t-076",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0130",
+   "orig_id": "r3-t-055",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0131",
+   "orig_id": "r3-t-083",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0132",
+   "orig_id": "r3-g-088",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0133",
+   "orig_id": "r3-t-017",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0134",
+   "orig_id": "r3-g-090",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0135",
+   "orig_id": "r3-g-099",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0136",
+   "orig_id": "r3-t-046",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0137",
+   "orig_id": "r3-t-096",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0138",
+   "orig_id": "r3-t-030",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0139",
+   "orig_id": "r3-g-077",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0140",
+   "orig_id": "r3-g-040",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0141",
+   "orig_id": "r3-t-075",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0142",
+   "orig_id": "r3-g-046",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0143",
+   "orig_id": "r3-t-036",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0144",
+   "orig_id": "r3-g-071",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0145",
+   "orig_id": "r3-g-107",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "meeting_note_embedded"
+  },
+  {
+   "label_id": "L0146",
+   "orig_id": "r3-g-011",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0147",
+   "orig_id": "r3-t-064",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0148",
+   "orig_id": "r3-g-079",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0149",
+   "orig_id": "r3-t-081",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0150",
+   "orig_id": "r3-t-080",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0151",
+   "orig_id": "r3-g-029",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0152",
+   "orig_id": "r3-t-101",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0153",
+   "orig_id": "r3-g-007",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0154",
+   "orig_id": "r3-t-072",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0155",
+   "orig_id": "r3-g-056",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0156",
+   "orig_id": "r3-t-074",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0157",
+   "orig_id": "r3-t-051",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0158",
+   "orig_id": "r3-g-042",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0159",
+   "orig_id": "r3-t-018",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0160",
+   "orig_id": "r3-t-041",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0161",
+   "orig_id": "r3-g-020",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0162",
+   "orig_id": "r3-g-014",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0163",
+   "orig_id": "r3-g-043",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0164",
+   "orig_id": "r3-g-097",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0165",
+   "orig_id": "r3-t-012",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0166",
+   "orig_id": "r3-g-037",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0167",
+   "orig_id": "r3-g-086",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0168",
+   "orig_id": "r3-t-117",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0169",
+   "orig_id": "r3-g-019",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0170",
+   "orig_id": "r3-t-021",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0171",
+   "orig_id": "r3-t-102",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0172",
+   "orig_id": "r3-t-085",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0173",
+   "orig_id": "r3-t-026",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0174",
+   "orig_id": "r3-t-007",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0175",
+   "orig_id": "r3-g-052",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0176",
+   "orig_id": "r3-t-058",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0177",
+   "orig_id": "r3-t-108",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0178",
+   "orig_id": "r3-g-069",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0179",
+   "orig_id": "r3-t-107",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0180",
+   "orig_id": "r3-t-098",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0181",
+   "orig_id": "r3-g-078",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0182",
+   "orig_id": "r3-t-100",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0183",
+   "orig_id": "r3-t-086",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0184",
+   "orig_id": "r3-t-033",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0185",
+   "orig_id": "r3-g-070",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0186",
+   "orig_id": "r3-g-012",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0187",
+   "orig_id": "r3-t-039",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0188",
+   "orig_id": "r3-t-022",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0189",
+   "orig_id": "r3-g-023",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0190",
+   "orig_id": "r3-t-063",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0191",
+   "orig_id": "r3-t-044",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0192",
+   "orig_id": "r3-g-018",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0193",
+   "orig_id": "r3-t-010",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0194",
+   "orig_id": "r3-t-029",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0195",
+   "orig_id": "r3-t-061",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0196",
+   "orig_id": "r3-g-017",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0197",
+   "orig_id": "r3-g-064",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "ticket_comment"
+  },
+  {
+   "label_id": "L0198",
+   "orig_id": "r3-t-015",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0199",
+   "orig_id": "r3-t-019",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0200",
+   "orig_id": "r3-g-004",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0201",
+   "orig_id": "r3-t-118",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0202",
+   "orig_id": "r3-t-073",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0203",
+   "orig_id": "r3-g-047",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0204",
+   "orig_id": "r3-t-116",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0205",
+   "orig_id": "r3-g-039",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0206",
+   "orig_id": "r3-t-009",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0207",
+   "orig_id": "r3-t-048",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0208",
+   "orig_id": "r3-t-014",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0209",
+   "orig_id": "r3-t-050",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0210",
+   "orig_id": "r3-t-056",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "self_assignment",
+   "register": null
+  },
+  {
+   "label_id": "L0211",
+   "orig_id": "r3-g-089",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0212",
+   "orig_id": "r3-t-105",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "meeting_note_action_item",
+   "register": null
+  },
+  {
+   "label_id": "L0213",
+   "orig_id": "r3-t-092",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0214",
+   "orig_id": "r3-g-008",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0215",
+   "orig_id": "r3-g-005",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0216",
+   "orig_id": "r3-g-061",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "email"
+  },
+  {
+   "label_id": "L0217",
+   "orig_id": "r3-g-091",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0218",
+   "orig_id": "r3-t-087",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0219",
+   "orig_id": "r3-g-026",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0220",
+   "orig_id": "r3-g-022",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0221",
+   "orig_id": "r3-t-068",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0222",
+   "orig_id": "r3-t-062",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "third_party_report",
+   "register": null
+  },
+  {
+   "label_id": "L0223",
+   "orig_id": "r3-g-009",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0224",
+   "orig_id": "r3-t-040",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "question_vs_command",
+   "register": null
+  },
+  {
+   "label_id": "L0225",
+   "orig_id": "r3-t-097",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  },
+  {
+   "label_id": "L0226",
+   "orig_id": "r3-g-024",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0227",
+   "orig_id": "r3-g-002",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0228",
+   "orig_id": "r3-g-030",
+   "author_label": "delegation",
+   "author_outcome": "dispatch",
+   "axis": null,
+   "register": "chat"
+  },
+  {
+   "label_id": "L0229",
+   "orig_id": "r3-t-003",
+   "author_label": "trap",
+   "author_outcome": "no_op",
+   "axis": "tense_aspect_flip",
+   "register": null
+  },
+  {
+   "label_id": "L0230",
+   "orig_id": "r3-t-090",
+   "author_label": "trap",
+   "author_outcome": "request_more_data",
+   "axis": "underspecified_assignee",
+   "register": null
+  }
+ ]
+}

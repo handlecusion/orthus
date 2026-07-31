@@ -1,0 +1,4 @@
+# X-tier 외부 데이터셋 로컬 캐시.
+# KUDGE·Korean-Human-Judgements는 라이선스 미표기 = 재배포 금지(b4-prereg §6).
+# 저장소에는 download.py + MANIFEST.sha256만 남기고 데이터 행은 절대 커밋하지 않는다.
+.cache/

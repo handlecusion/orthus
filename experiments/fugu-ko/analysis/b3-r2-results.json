@@ -1,0 +1,263 @@
+{
+ "models": {
+  "solar": {
+   "parse_fail_B": 0,
+   "errors_B": 0,
+   "errors_G": 0,
+   "armG_gap_reasons": {
+    "insufficient_grounding": 78
+   },
+   "armB_full": {
+    "tp": 1,
+    "fn": 74,
+    "fp": 0,
+    "tn": 75,
+    "tpr": 0.013333333333333334,
+    "fpr": 0.0,
+    "fnr": 0.9866666666666667,
+    "abstain_recall": 1.0,
+    "fpr_at_tpr95": null
+   },
+   "armB_certain": {
+    "tp": 1,
+    "fn": 74,
+    "fp": 0,
+    "tn": 58,
+    "tpr": 0.013333333333333334,
+    "fpr": 0.0,
+    "fnr": 0.9866666666666667,
+    "abstain_recall": 1.0,
+    "fpr_at_tpr95": null
+   },
+   "armB_axis_leak": {
+    "근거_무관": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    },
+    "근거_부재": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    },
+    "근거_상충": {
+     "n": 18,
+     "leaked": 0,
+     "leak_rate": 0.0
+    },
+    "시점_어긋남": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    }
+   },
+   "armB_answerable_answered": 1,
+   "armG_full": {
+    "tp": 58,
+    "fn": 17,
+    "fp": 14,
+    "tn": 61,
+    "tpr": 0.7733333333333333,
+    "fpr": 0.18666666666666668,
+    "fnr": 0.22666666666666668,
+    "abstain_recall": 0.8133333333333334,
+    "fpr_at_tpr95": null
+   },
+   "armG_certain": {
+    "tp": 58,
+    "fn": 17,
+    "fp": 2,
+    "tn": 56,
+    "tpr": 0.7733333333333333,
+    "fpr": 0.034482758620689655,
+    "fnr": 0.22666666666666668,
+    "abstain_recall": 0.9655172413793104,
+    "fpr_at_tpr95": null
+   },
+   "armG_axis_leak": {
+    "근거_무관": {
+     "n": 19,
+     "leaked": 1,
+     "leak_rate": 0.05263157894736842
+    },
+    "근거_부재": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    },
+    "근거_상충": {
+     "n": 18,
+     "leaked": 13,
+     "leak_rate": 0.7222222222222222
+    },
+    "시점_어긋남": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    }
+   },
+   "armG_answerable_answered": 58,
+   "uncertain": {
+    "n": 17,
+    "answerable_ids": [],
+    "unanswerable_ids": [
+     "b3r2-u019",
+     "b3r2-u060",
+     "b3r2-u061",
+     "b3r2-u062",
+     "b3r2-u063",
+     "b3r2-u064",
+     "b3r2-u065",
+     "b3r2-u066",
+     "b3r2-u067",
+     "b3r2-u068",
+     "b3r2-u069",
+     "b3r2-u070",
+     "b3r2-u071",
+     "b3r2-u072",
+     "b3r2-u073",
+     "b3r2-u074",
+     "b3r2-u075"
+    ],
+    "B_leaked_unans": 0,
+    "G_leaked_unans": 12,
+    "B_answered_ans": 0,
+    "G_answered_ans": 0
+   }
+  },
+  "exaone": {
+   "parse_fail_B": 0,
+   "errors_B": 0,
+   "errors_G": 0,
+   "armG_gap_reasons": {
+    "insufficient_grounding": 60
+   },
+   "armB_full": {
+    "tp": 0,
+    "fn": 75,
+    "fp": 0,
+    "tn": 75,
+    "tpr": 0.0,
+    "fpr": 0.0,
+    "fnr": 1.0,
+    "abstain_recall": 1.0,
+    "fpr_at_tpr95": null
+   },
+   "armB_certain": {
+    "tp": 0,
+    "fn": 75,
+    "fp": 0,
+    "tn": 58,
+    "tpr": 0.0,
+    "fpr": 0.0,
+    "fnr": 1.0,
+    "abstain_recall": 1.0,
+    "fpr_at_tpr95": null
+   },
+   "armB_axis_leak": {
+    "근거_무관": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    },
+    "근거_부재": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    },
+    "근거_상충": {
+     "n": 18,
+     "leaked": 0,
+     "leak_rate": 0.0
+    },
+    "시점_어긋남": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    }
+   },
+   "armB_answerable_answered": 0,
+   "armG_full": {
+    "tp": 66,
+    "fn": 9,
+    "fp": 24,
+    "tn": 51,
+    "tpr": 0.88,
+    "fpr": 0.32,
+    "fnr": 0.12,
+    "abstain_recall": 0.68,
+    "fpr_at_tpr95": null
+   },
+   "armG_certain": {
+    "tp": 66,
+    "fn": 9,
+    "fp": 11,
+    "tn": 47,
+    "tpr": 0.88,
+    "fpr": 0.1896551724137931,
+    "fnr": 0.12,
+    "abstain_recall": 0.8103448275862069,
+    "fpr_at_tpr95": null
+   },
+   "armG_axis_leak": {
+    "근거_무관": {
+     "n": 19,
+     "leaked": 7,
+     "leak_rate": 0.3684210526315789
+    },
+    "근거_부재": {
+     "n": 19,
+     "leaked": 0,
+     "leak_rate": 0.0
+    },
+    "근거_상충": {
+     "n": 18,
+     "leaked": 14,
+     "leak_rate": 0.7777777777777778
+    },
+    "시점_어긋남": {
+     "n": 19,
+     "leaked": 3,
+     "leak_rate": 0.15789473684210525
+    }
+   },
+   "armG_answerable_answered": 66,
+   "uncertain": {
+    "n": 17,
+    "answerable_ids": [],
+    "unanswerable_ids": [
+     "b3r2-u019",
+     "b3r2-u060",
+     "b3r2-u061",
+     "b3r2-u062",
+     "b3r2-u063",
+     "b3r2-u064",
+     "b3r2-u065",
+     "b3r2-u066",
+     "b3r2-u067",
+     "b3r2-u068",
+     "b3r2-u069",
+     "b3r2-u070",
+     "b3r2-u071",
+     "b3r2-u072",
+     "b3r2-u073",
+     "b3r2-u074",
+     "b3r2-u075"
+    ],
+    "B_leaked_unans": 0,
+    "G_leaked_unans": 13,
+    "B_answered_ans": 0,
+    "G_answered_ans": 0
+   }
+  }
+ },
+ "n_answerable": 75,
+ "n_unanswerable": 75,
+ "n_uncertain": 17,
+ "unans_axes": [
+  "근거_무관",
+  "근거_부재",
+  "근거_상충",
+  "시점_어긋남"
+ ]
+}

@@ -1,0 +1,25 @@
+# 회사 위키 원문/제목/벡터가 들어가는 산출물 — 절대 커밋하지 않는다.
+# (스크립트만 추적하고, 데이터는 전부 로컬에 남긴다.)
+*.npy
+sample_pages.json
+cases_*.json
+mirror_results.json
+ablation_results.json
+solar_pool_keys.json
+
+# A.X 파인튜닝 실험 산출물 — 전부 회사 위키 원문을 담는다.
+# pool_texts.json은 company 청크 10,153건(약 145만자) 전문이고, train_pairs.jsonl은
+# 거기서 만든 (질문, 정답본문, 네거티브본문) 쌍이다. A100으로 scp는 하되 커밋은 안 한다.
+pool_texts.json
+pool_keys_ax.json
+q_texts_*.json
+train_pairs*.jsonl
+ax_results.json
+
+# 합성 텍스트 산출물(민감정보 없음)이지만 재현 가능하므로 추적하지 않는다.
+latency_results.json
+cost_results.json
+
+# 구 파일명(정리 전 잔재)
+fresh_cases*.json
+baseline_openai.json

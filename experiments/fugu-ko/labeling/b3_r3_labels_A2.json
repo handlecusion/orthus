@@ -1,0 +1,1164 @@
+{
+ "labeler": "A2",
+ "n": 230,
+ "labels": [
+  {
+   "label_id": "L0001",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0002",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0003",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0004",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0005",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0006",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0007",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0008",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0009",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0010",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0011",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0012",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0013",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0014",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0015",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0016",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0017",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0018",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0019",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0020",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0021",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0022",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0023",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0024",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0025",
+   "label": "no_op",
+   "confidence": "medium",
+   "note": "rhetorical pushback; '릴리스부터 하시죠' is a proposal to the room, no task/assignee"
+  },
+  {
+   "label_id": "L0026",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0027",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0028",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0029",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0030",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0031",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0032",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0033",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0034",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0035",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0036",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0037",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0038",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0039",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0040",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0041",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0042",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0043",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0044",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0045",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0046",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0047",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0048",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0049",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0050",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0051",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0052",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0053",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0054",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0055",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0056",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0057",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0058",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0059",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0060",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0061",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0062",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0063",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0064",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0065",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0066",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0067",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0068",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0069",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0070",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0071",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0072",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0073",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0074",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0075",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0076",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0077",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0078",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0079",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0080",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0081",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0082",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0083",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0084",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0085",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0086",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0087",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0088",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0089",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0090",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0091",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0092",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0093",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0094",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0095",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0096",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0097",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0098",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0099",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0100",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0101",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0102",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0103",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0104",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0105",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0106",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0107",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0108",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0109",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0110",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0111",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0112",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0113",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0114",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0115",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0116",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0117",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0118",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0119",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0120",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0121",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0122",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0123",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0124",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0125",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0126",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0127",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0128",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0129",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0130",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0131",
+   "label": "request_more_data",
+   "confidence": "medium",
+   "note": "addressed to a team ('백엔드 쪽'), not a specific person"
+  },
+  {
+   "label_id": "L0132",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0133",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0134",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0135",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0136",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0137",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0138",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0139",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0140",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0141",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0142",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0143",
+   "label": "no_op",
+   "confidence": "medium",
+   "note": "question about normalcy; implies a possible problem but asks nothing to be done"
+  },
+  {
+   "label_id": "L0144",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0145",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0146",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0147",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0148",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0149",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0150",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0151",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0152",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0153",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0154",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0155",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0156",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0157",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0158",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0159",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0160",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0161",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0162",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0163",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0164",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0165",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0166",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0167",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0168",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0169",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0170",
+   "label": "no_op",
+   "confidence": "medium",
+   "note": "question about expected behavior; hints at a bug but requests no work"
+  },
+  {
+   "label_id": "L0171",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0172",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0173",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0174",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0175",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0176",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0177",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0178",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0179",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0180",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0181",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0182",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0183",
+   "label": "request_more_data",
+   "confidence": "medium",
+   "note": "addressed to QA as a group, no individual named"
+  },
+  {
+   "label_id": "L0184",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0185",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0186",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0187",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0188",
+   "label": "no_op",
+   "confidence": "medium",
+   "note": "'알고 계셨어요?' is a question; a hint of a task but not an actual request"
+  },
+  {
+   "label_id": "L0189",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0190",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0191",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0192",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0193",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0194",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0195",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0196",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0197",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0198",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0199",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0200",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0201",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0202",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0203",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0204",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0205",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0206",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0207",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0208",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0209",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0210",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0211",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0212",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0213",
+   "label": "request_more_data",
+   "confidence": "medium",
+   "note": "addressed to '프론트 쪽' team, no individual"
+  },
+  {
+   "label_id": "L0214",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0215",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0216",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0217",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0218",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0219",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0220",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0221",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0222",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0223",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0224",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0225",
+   "label": "request_more_data",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0226",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0227",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0228",
+   "label": "dispatch",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0229",
+   "label": "no_op",
+   "confidence": "high"
+  },
+  {
+   "label_id": "L0230",
+   "label": "request_more_data",
+   "confidence": "medium",
+   "note": "addressed to '데이터팀', a team not a person"
+  }
+ ]
+}

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>국내 오케스트레이션 vs 프론티어 — 벤치마크 종합</title>
+</head>
+<body>
+
+<style>
+  :root {
+    --paper:#EEF0F2; --sheet:#FBFCFC; --sunk:#E3E7EA; --band:#E7EAED;
+    --ink:#171C21; --ink-sf:#48545C; --ink-ft:#74828B; --rule:#D3D9DD; --rule-sf:#E4E8EB;
+    --accent:#27407A;
+    --dom:#2E6F4E; --dom-bg:#E4EFE9;      /* 국내 */
+    --front:#8A5A1E; --front-bg:#F4EBD9;   /* 프론티어 */
+    --refute:#9A6B1E; --judge:#2B5A8A;
+    --serif:"AppleMyungjo","Nanum Myeongjo","Batang",ui-serif,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --measure:72ch;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --paper:#0F1316;--sheet:#161B1F;--sunk:#1D242A;--band:#1A2126;--ink:#E5EAED;--ink-sf:#A6B2BA;--ink-ft:#74828B;--rule:#2A333A;--rule-sf:#212930;
+    --accent:#8CA0D6;--dom:#6FBF8F;--dom-bg:#152A20;--front:#D6A94E;--front-bg:#2C2413;--refute:#D6A94E;--judge:#77AEDD;}}
+  :root[data-theme="light"]{--paper:#EEF0F2;--sheet:#FBFCFC;--sunk:#E3E7EA;--band:#E7EAED;--ink:#171C21;--ink-sf:#48545C;--ink-ft:#74828B;--rule:#D3D9DD;--rule-sf:#E4E8EB;--accent:#27407A;--dom:#2E6F4E;--dom-bg:#E4EFE9;--front:#8A5A1E;--front-bg:#F4EBD9;--refute:#9A6B1E;--judge:#2B5A8A;}
+  :root[data-theme="dark"]{--paper:#0F1316;--sheet:#161B1F;--sunk:#1D242A;--band:#1A2126;--ink:#E5EAED;--ink-sf:#A6B2BA;--ink-ft:#74828B;--rule:#2A333A;--rule-sf:#212930;--accent:#8CA0D6;--dom:#6FBF8F;--dom-bg:#152A20;--front:#D6A94E;--front-bg:#2C2413;--refute:#D6A94E;--judge:#77AEDD;}
+
+  html{-webkit-text-size-adjust:100%;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.72;margin:0;letter-spacing:-.003em;}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px 100px;}
+
+  .mast{padding:56px 0 26px;border-bottom:2px solid var(--ink);margin-bottom:40px;}
+  .eyebrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-ft);margin-bottom:20px;}
+  .mast h1{font-family:var(--serif);font-weight:400;font-size:clamp(29px,5.2vw,48px);line-height:1.16;letter-spacing:-.02em;text-wrap:balance;margin:0 0 16px;}
+  .thesis{max-width:var(--measure);font-size:18px;margin:0;}
+  .thesis b{color:var(--accent);}
+  .mast-meta{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:22px;font-family:var(--mono);font-size:12px;color:var(--ink-ft);}
+
+  h2{font-family:var(--serif);font-weight:400;font-size:25px;line-height:1.3;letter-spacing:-.015em;text-wrap:balance;margin:0 0 6px;padding-top:14px;border-top:1px solid var(--ink);display:flex;gap:13px;align-items:baseline;}
+  h2 .n{font-family:var(--mono);font-size:12px;color:var(--accent);flex:none;}
+  section{margin-bottom:54px;}
+  p{max-width:var(--measure);margin:0 0 14px;}
+  .dek{max-width:var(--measure);color:var(--ink-sf);font-size:15px;margin:0 0 22px;}
+  strong{font-weight:650;}
+  code{font-family:var(--mono);font-size:.86em;background:var(--sunk);padding:.1em .36em;border-radius:3px;word-break:break-word;}
+
+  /* verdict band */
+  .verdict{border:1px solid var(--dom);background:var(--dom-bg);padding:20px 22px;margin:0 0 26px;max-width:var(--measure);}
+  .verdict .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dom);}
+  .verdict .big{font-family:var(--serif);font-size:22px;line-height:1.5;margin-top:8px;text-wrap:balance;}
+
+  /* head-to-head table */
+  .scroller{overflow-x:auto;border:1px solid var(--rule);background:var(--sheet);margin:0 0 16px;}
+  table{border-collapse:collapse;width:100%;min-width:600px;font-size:13.5px;line-height:1.5;}
+  thead th{text-align:right;font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-ft);padding:10px 12px;background:var(--band);border-bottom:1px solid var(--rule);white-space:nowrap;}
+  thead th:first-child{text-align:left;}
+  tbody td{padding:9px 12px;border-bottom:1px solid var(--rule-sf);text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;}
+  tbody td:first-child{text-align:left;font-family:var(--sans);}
+  tbody tr:last-child td{border-bottom:none;}
+  tr.comp td{background:var(--dom-bg);font-weight:650;}
+  tr.comp td:first-child{color:var(--dom);}
+  .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;padding:1px 5px;border-radius:2px;margin-left:5px;vertical-align:1px;}
+  .tag.d{background:var(--dom-bg);color:var(--dom);border:1px solid var(--dom);}
+  .tag.f{background:var(--front-bg);color:var(--front);border:1px solid var(--front);}
+  .bartd{position:relative;}
+  .win{color:var(--dom);font-weight:650;}
+
+  /* verdict chips row */
+  .h2h{display:grid;grid-template-columns:1fr;gap:10px;margin:18px 0 0;}
+  @media(min-width:680px){.h2h{grid-template-columns:repeat(3,1fr);}}
+  .vs{border:1px solid var(--rule);background:var(--sheet);padding:14px 16px;}
+  .vs .vt{font-family:var(--mono);font-size:12px;color:var(--front);}
+  .vs .vg{font-size:22px;font-family:var(--mono);font-variant-numeric:tabular-nums;margin:4px 0;}
+  .vs .vv{font-size:12.5px;color:var(--ink-sf);}
+  .vs.beat{border-left:3px solid var(--dom);}
+  .vs.tie{border-left:3px solid var(--front);}
+
+  .note{max-width:var(--measure);border:1px dashed var(--rule);background:var(--paper);padding:13px 16px;margin:18px 0 0;font-size:13.5px;}
+  .note .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-ft);margin-bottom:5px;display:block;}
+  .note ol{margin:0;padding-left:1.2em;} .note li{margin-bottom:4px;}
+
+  /* glue mini */
+  .curve{display:flex;align-items:flex-end;gap:12px;height:120px;margin:6px 0 4px;max-width:440px;}
+  .bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .bar .col{width:100%;border-radius:2px 2px 0 0;min-height:3px;}
+  .bar.dm .col{background:var(--dom);} .bar.fr .col{background:var(--front);}
+  .bar .v{font-family:var(--mono);font-size:11px;color:var(--ink-sf);}
+  .bar .k{font-family:var(--mono);font-size:9.5px;color:var(--ink-ft);}
+  .legend{display:flex;gap:16px;font-size:12px;color:var(--ink-sf);margin:2px 0 14px;}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .sw{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  /* fact */
+  .fact{border:1px solid var(--accent);background:var(--sheet);margin:16px 0 0;}
+  .fact-top{padding:15px 18px;background:var(--accent);color:var(--paper);}
+  .fact-top .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.85;}
+  .fact-top .claim{font-family:var(--serif);font-size:18px;line-height:1.5;margin-top:5px;}
+  .faces{display:grid;grid-template-columns:1fr;}
+  @media(min-width:680px){.faces{grid-template-columns:repeat(3,1fr);}}
+  .face{padding:14px 18px;border-top:1px solid var(--rule);}
+  @media(min-width:680px){.face{border-top:none;border-left:1px solid var(--rule);}.face:first-child{border-left:none;}}
+  .face .fc{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:600;}
+  .face .ft{font-size:13px;color:var(--ink-sf);line-height:1.5;margin-top:5px;}
+
+  .diag{display:flex;flex-direction:column;}
+  .drow{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule-sf);}
+  .drow:first-child{border-top:1px solid var(--rule);}
+  .drow .dc{font-family:var(--mono);font-size:12.5px;color:var(--accent);}
+  .drow .dc b{display:block;color:var(--ink);font-family:var(--sans);font-size:13px;margin-top:2px;}
+  .drow .dd{font-size:13.5px;color:var(--ink-sf);}
+  .drow .dd b{color:var(--ink);}
+  .badge{font-family:var(--mono);font-size:9.5px;padding:1px 5px;border-radius:2px;border:1px solid;margin-right:6px;}
+  .badge.r{color:var(--refute);border-color:var(--refute);background:var(--front-bg);}
+  .badge.p{color:var(--judge);border-color:var(--judge);}
+
+  ul{max-width:var(--measure);padding-left:1.2em;margin:0 0 14px;} li{margin-bottom:6px;} li::marker{color:var(--ink-ft);}
+  .colophon{border-top:1px solid var(--rule);margin-top:12px;padding-top:18px;font-size:12.5px;color:var(--ink-ft);max-width:var(--measure);}
+  .colophon code{background:none;padding:0;}
+  a{color:var(--accent);} a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="eyebrow"><span>fugu-ko</span><span>·</span><span>국내 오케스트레이션 vs 프론티어</span><span>·</span><span>2026-07-24 · living</span></div>
+    <h1>국내 모델 오케스트레이션은<br>프론티어와 경쟁하는가</h1>
+    <p class="thesis">
+      <b>답: 그렇다.</b> 작업별로 국내 모델을 역할 배정한 조립이 최신 프론티어(gpt-5.3 · Sonnet 4.6)와
+      정확도 동률이고, 원가·지연·벤더 독립성은 국내가 앞선다. 그 경쟁력의 출처는 국내 모델이 특별해서가
+      아니라 <b>우리가 만든 결정론 시스템</b>이다.
+    </p>
+    <div class="mast-meta"><span>N=200 (D9 확장) · 6작업 · 프론티어 9종</span><span>WB-KO·BFCL 외부검증 · 전 arm 완주</span><span>레퍼런스 E2E "동률" 재현·확장</span></div>
+  </header>
+
+  <!-- ===== headline ===== -->
+  <section id="head">
+    <h2><span class="n">01</span>헤드라인 — 조립 vs 프론티어</h2>
+
+    <div class="scroller">
+      <table>
+        <thead><tr><th>모델</th><th>t3</th><th>t5</th><th>t6</th><th>t7</th><th>t9</th><th>t10</th><th>합계 /145</th></tr></thead>
+        <tbody>
+          <tr class="comp"><td>★ 국내 조립 <span class="tag d">DOM</span></td><td>28</td><td>19</td><td>19</td><td class="win">14</td><td>32</td><td class="win">21</td><td>133 · 91.7%</td></tr>
+          <tr><td>gpt-5.3 <span class="tag f">F</span></td><td>28</td><td>19</td><td>19</td><td>13</td><td>32</td><td>21</td><td>132 · 91.0%</td></tr>
+          <tr><td>exaone <span class="tag d">DOM</span></td><td>28</td><td>19</td><td>19</td><td>14</td><td>30</td><td>21</td><td>131 · 90.3%</td></tr>
+          <tr><td>Sonnet 4.6 <span class="tag f">F</span></td><td>28</td><td>19</td><td>19</td><td>12</td><td>32</td><td>21</td><td>131 · 90.3%</td></tr>
+          <tr><td>Opus 4.6 <span class="tag f">F</span></td><td>26</td><td>19</td><td>19</td><td>11</td><td>32</td><td>22</td><td>129 · 89.0%</td></tr>
+          <tr><td>GLM-5.2 <span class="tag f">F</span></td><td>28</td><td>19</td><td>19</td><td>10</td><td>32</td><td>20</td><td>128 · 88.3%</td></tr>
+          <tr><td>DeepSeek V4 Pro <span class="tag f">F</span></td><td>28</td><td>19</td><td>19</td><td>13</td><td>32</td><td>16</td><td>127 · 87.6%</td></tr>
+          <tr><td>gpt-5.5 <span class="tag f">F</span> (Codex OAuth†)</td><td>27</td><td>19</td><td>19</td><td>10</td><td>32</td><td>18</td><td>125 · 86.2%</td></tr>
+          <tr><td>solar <span class="tag d">DOM</span></td><td>28</td><td>18</td><td>19</td><td>14</td><td>32</td><td>16</td><td>127 · 87.6%</td></tr>
+          <tr><td>gpt-4o-mini <span class="tag">현행</span></td><td>24</td><td>19</td><td>19</td><td>15</td><td>32</td><td>17</td><td>126 · 86.9%</td></tr>
+          <tr><td>gpt-4o <span class="tag f">F</span></td><td>28</td><td>19</td><td>19</td><td>11</td><td>32</td><td>16</td><td>125 · 86.2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dek" style="margin-bottom:14px;">위 표는 n=145 작업별 상세(역사 기준). <b>D9 확장 n=200 최종: 조립 183/200(91.5%) — 프론티어 9종 중 유의 우세 arm 0</b>(Opus 4.8 187 수치 1위·p=0.289 동률), 조립은 gpt-4o(p=0.007)·현행(p=0.013)·solar 단일(p=0.008)에 유의 우세. 조립 슬롯: t3→solar · t5→exaone · t6→solar · t7→solar · t9→solar · t10→exaone.</p>
+
+    <div class="h2h">
+      <div class="vs tie"><div class="vt">vs gpt-5.3 (최강)</div><div class="vg">p=1.00</div><div class="vv">n=200 동수 · <strong>통계 동률</strong></div></div>
+      <div class="vs tie"><div class="vt">vs Opus 4.8 (수치 1위)</div><div class="vg">p=0.289</div><div class="vv">−4문항 · <strong>통계 동률</strong> (지연 ~2.7배)</div></div>
+      <div class="vs beat"><div class="vt">vs gpt-4o</div><div class="vg">p=0.007</div><div class="vv">+5.5pp · <strong class="win">조립 유의 우세</strong></div></div>
+    </div>
+    <div class="legend" style="margin-top:12px;"><span>지연 p50 · 국내 1.7~4.6배 빠름:</span><span><i class="sw" style="background:var(--dom)"></i>solar 514ms · exaone 417ms</span><span><i class="sw" style="background:var(--front)"></i>gpt-5.3 1644ms · Sonnet 1938ms · Opus 4.6 2061ms</span></div>
+
+    <div class="note">
+      <span class="lab">정직한 뉘앙스 — "조립이 마법"이 아니다</span>
+      조립(183/200)이 최선 단일 국내 exaone(180)을 유의하게 이기진 못한다(p=0.25) — 단
+      <strong>solar 단일 대비는 D9 확장에서 처음 유의화(p=0.008)</strong>됐다. 진짜 스토리는
+      <strong>"국내 모델이 — 조립이든 최선단일이든 — 프론티어와 동률이고, 조립은 최소한 손해가 없다"</strong>.
+      승부처는 <strong>t10 위임</strong>·<strong>t7 분해</strong> — 프론티어가 국내에 지거나 겨우 맞추는 작업들.
+    </div>
+  </section>
+
+  <!-- ===== verdict ===== -->
+  <section id="verdict-s" style="margin-bottom:44px;">
+    <div class="verdict">
+      <span class="lab">대회 서사</span>
+      <div class="big">국내 오케스트레이션은 최신 프론티어와 정확도 동률이면서 원가·지연·벤더 독립성에서 앞선다.
+      그 경쟁력은 국내 모델이 특별해서가 아니라, 우리 결정론 시스템이 벤더 격차를 덮기 때문이다 —
+      같은 시스템을 프론티어에 얹어도 결과는 수렴한다.</div>
+    </div>
+    <div class="note">
+      <span class="lab">정직한 유보</span>
+      <ol>
+        <li><strong>조립이 최선 단일 국내(exaone)를 유의하게 못 이긴다</strong>(n=200 p=0.25) — 단 solar 단일 대비는 유의(p=0.008). 조립의 마진은 "국내가 프론티어와 동률 + 손해 없음"이다.</li>
+        <li>조립엔 약한 in-sample 낙관(작업별 승자를 같은 셋에서 고름). load-bearing 슬롯(t10/t5)은 마진이 크고 안정적이라 프로덕션 배정표로 계산해도 거의 동일.</li>
+        <li>D9 확장 예측 기각 2건(gpt-5.5† 유의승 0.057로 상실 · 신규 t7 프론티어 약세 미재현)은 그대로 기록.</li>
+        <li>gpt-5.3는 temperature=1 강제(타 모델 0), 벤더 2026-08경 종료 예정. gpt-5.5†/5.6†은 Codex OAuth 서빙(스냅샷 미보증).</li>
+        <li>GLM-5.2의 D9 확장치는 벤더 레이트 캡으로 측정 불가 확정(3회 동일 서명) — n=145(128/145)만 인용.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== mechanism ===== -->
+  <section id="mech">
+    <h2><span class="n">02</span>왜 경쟁하는가 — 메커니즘은 시스템이다</h2>
+    <p class="dek">같은 결정론 파이프(compile→gate→execute→snap→repair)에 모델만 갈아끼운 t3 글루 곡선.
+      <strong>글루가 국내·프론티어를 똑같이 +20pp 올린다.</strong></p>
+
+    <div class="curve">
+      <div class="bar dm"><div class="col" style="height:72%"></div><div class="v">72.2</div><div class="k">solar L0</div></div>
+      <div class="bar fr"><div class="col" style="height:74%"></div><div class="v">74.0</div><div class="k">gpt-4o L0</div></div>
+      <div class="bar dm"><div class="col" style="height:94%"></div><div class="v">94.2</div><div class="k">solar+snap</div></div>
+      <div class="bar fr"><div class="col" style="height:94.5%"></div><div class="v">94.5</div><div class="k">gpt-4o+snap</div></div>
+      <div class="bar dm"><div class="col" style="height:98.6%"></div><div class="v">98.6</div><div class="k">solar 풀</div></div>
+      <div class="bar fr"><div class="col" style="height:99.2%"></div><div class="v">99.2</div><div class="k">Opus4.8+글루</div></div>
+    </div>
+    <div class="legend"><span><i class="sw" style="background:var(--dom)"></i>국내</span><span><i class="sw" style="background:var(--front)"></i>프론티어</span></div>
+
+    <p>
+      병목을 푸는 건 벤더가 아니라 <strong>우리 시스템</strong> — snap 한 칸이 +22pp, 모델 교체는 ±2pp.
+      맨몸에선 프론티어가 앞서지만(Opus 4.8 bare 91.8 vs solar 72.8), 글루를 얹으면 국내가 따라붙어
+      <strong>격차가 사라진다</strong>(solar 풀 98.6 ≈ Sonnet 99.1 ≈ Opus 4.8 99.2). 글루 이득은
+      bare 성능에 반비례(ax +41.2pp ≫ solar +23.7 ≫ Opus +7.4) — 파손 0.
+    </p>
+    <div class="note">
+      <span class="lab">비용 인사이트 · 정직한 신호</span>
+      <ol>
+        <li>값싼 snap(1콜)이 거의 전부. 자기일관성(L3)은 <strong>5배 비용에 +1pp·첫 파손 1건</strong> — "더 쌓을수록 좋다"가 아니다.</li>
+        <li>exaone L2 하락(89.6→86.2)은 repair 글루가 solar SQL 패턴에 튜닝돼 exaone엔 안 맞은 것 — <strong>글루가 모델-특수적일 수 있다.</strong></li>
+        <li><strong>ax 최종: 55.5 → 96.7%(+41.2pp, 전 모델 최대)</strong> — 글루는 약한 모델일수록 크게 끌어올리는 <strong>평준화 장치</strong>다. 주판정(min Δ_glue ≫ max Δ_model) 성립.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== diagnostics ===== -->
+  <section id="diag">
+    <h2><span class="n">03</span>어디서 경쟁하는가 — 시스템 진단</h2>
+    <p class="dek">조립이 프론티어와 붙는 이유/한계를 각 벤치마크가 설명한다. <strong>일부는 우리 가설을 반박한다 — 그게 신뢰도다.</strong></p>
+    <div class="diag">
+      <div class="drow"><div class="dc">B2<b>계약 이행</b></div><div class="dd">Haiku 펜스붕괴 C1 37.5→77.5%(배선 +40p). 프로덕션 성능은 추론력 아닌 <b>출력 계약</b>이 가름 — 국내 모델도 배선으로 복구 가능.</div></div>
+      <div class="drow"><div class="dc">B3-R1<b>게이트 거부</b></div><div class="dd"><span class="badge r">가설 반증</span>게이트가 맨몸보다 <b>더 샘</b>. SQL 게이트는 refuse 레이어가 아님 — 조립의 약점.</div></div>
+      <div class="drow"><div class="dc">B3-R2<b>추상화</b></div><div class="dd"><span class="badge r">가설 반증</span>grounding은 안전 아닌 <b>유용성</b>. 국내도 grounding 얹으면 사기업 지식 77~88% 답변.</div></div>
+      <div class="drow"><div class="dc">B3-R3<b>위임 오탐</b></div><div class="dd">국내 exaone이 위임 판별 <b>21/22로 프론티어 앞섬</b> — t10 승부처의 근거. 안전은 사람검토 정책에서.</div></div>
+      <div class="drow"><div class="dc">B4-X1/X2<b>판정자 κ</b></div><div class="dd"><span class="badge p">PASS</span>판정자 사람 수준 검증 — 위 승률들의 해석 근거.</div></div>
+      <div class="drow"><div class="dc">B4-X3<b>한국어 스키마</b></div><div class="dd">게이트통과 99.5% — 국내 컬럼 링킹이 외부 한국어 표에서도 됨(부호 성립).</div></div>
+      <div class="drow"><div class="dc">B4-X4<b>임베딩</b></div><div class="dd">Solar &gt; 현행 2/2, <b>2.3배 빠름</b> — 국내 임베딩이 검색 슬롯에서도 경쟁 + 지연 우위.</div></div>
+      <div class="drow"><div class="dc">M05<b>생성 아레나</b></div><div class="dd"><span class="badge p">글루로 1위</span>email 9모델 라운드로빈(36쌍 × 30문항 × 위치스왑 = 2,160표, 검증 판정자 gpt-4o) 평균 승점: <b>★F4a(현행 조립: solar+구조화 프롬프트) 78.3 — 1위</b> &gt; Opus 4.8 70.4 &gt; gpt-5.3 60.8 &gt; Sonnet 54.2 &gt; Opus 4.6 46.0 &gt; gpt-5.6† 45.6 &gt; solar-구 41.0 &gt; Opus 4.5 29.4 &gt; exaone-구 24.2. 진행 서사 보존: exaone 구배정 유의 열세(3 프론티어 재현) → <b>F3</b> solar 재배정(§15 개정) → <b>F4a</b> 프롬프트 구조화(사전선언·대조 배틀 무편향 증명, <b>같은 solar가 +37.3점</b>). 쌍대: Sonnet·Opus 4.5/4.6·gpt-5.3·gpt-5.6†에 유의 우세, Opus 4.8만 방향 우세(tie 63%, p=0.065). <b>순위가 벤더 티어가 아니라 글루 유무로 갈렸다.</b> 한계: 판정자 프록시 1인·email 30문항 한정.</div></div>
+      <div class="drow"><div class="dc">M06<b>플로우 완수</b></div><div class="dd"><span class="badge p">글루로 1위</span>다단계 업무 완수 <b>n=168 (D10 사전선언 확장 84→168, 블라인드 저작)</b> — <b>★오케스트레이터+글루 98.2%(165/168)</b> &gt; Sonnet=Opus4.6=Opus4.8 91.1% &gt; gpt-5.6† 90.5% &gt; solar=exaone 89.3% &gt; DSv4 88.7% &gt; gpt-5.5†=gpt-5.3 87.5%. 2위와 <b>+12문항</b>. 신규 집계-신호 판별 5문항을 글루 없는 <b>9개 arm 전원이 동일 실패</b>(F2b가 고치는 실패의 모델 불문성 10모델째) · 지식형 역방향 오폴백 0 — 확장 예측 3/3 적중, "기존 84 과적합" 기각. F1(위임 k=3, 오탐 7→4)·F2b(v1 파손 15 실측 기각→재등록 적중)·F3(생성 슬롯 solar) 이력 보존. 플래그 default off(prod는 owner).</div></div>
+      <div class="drow"><div class="dc">M07<b>에이전틱 루프</b></div><div class="dd"><span class="badge r">예측 적중</span>자율 루프에선 <b>프론티어 우세</b>(5종 전원 sweep(±1) vs 국내 14/20, 복구과제 격차 최대). "프론티어 우세"를 <b>측정 전 예측 등록</b> — 패배가 아키텍처 정당화: 자율성 대신 스캐폴드를 택한 이유. solar의 확신 오정보 커밋(W5)은 P3 사람검토 게이트의 직접 증거.</div></div>
+      <div class="drow"><div class="dc">WB-KO<b>외부 오피스 벤치</b></div><div class="dd"><span class="badge r">외부 확증</span>공개 WorkBench 한국어 이식(200과제, 원본 결정론 채점): 자유 루프에서 <b>Opus 97%·Sonnet 95% vs 국내 35-43%</b>(유해 36-38%). 영어 대조 30과제로 한국어 페널티 기각 — 스캐폴드 없는 격차가 남의 벤치에서도 재현. "국내≈프론티어는 스캐폴드 아래서만"의 외부 증거.</div></div>
+      <div class="drow"><div class="dc">BFCL<b>멀티턴 FC</b></div><div class="dd"><span class="badge r">외부 확증</span>공개 BFCL v3 완주(프로그램 채점, 200/카테고리): base <b>Opus 75.5 &gt; Sonnet 73.0 &gt; EXAONE 49.5 &gt; solar 39.0</b>, miss_param 60.0/56.0/34.5/19.5. 프론티어 되묻기율 0.59-0.63 vs solar 0.26(환각 인자 호출 148/200) — B3/M7의 "요청-데이터 되묻기" 격차가 외부 재현. ax는 구조화 호출 0(40/40 텍스트 시도)으로 B2 바닥과 동일. <b>뒤집힌 것 정직 병기:</b> 단일턴 형식준수는 solar&gt;exaone(내부 B2-C6)인데 장기 멀티턴 실행은 EXAONE&gt;solar — 내부 순위는 축별로만 이식된다.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== one fact ===== -->
+  <section id="fact">
+    <h2><span class="n">04</span>관통 인사이트 — 하나의 사실, 세 얼굴</h2>
+    <div class="fact">
+      <div class="fact-top"><span class="lab">단일 아키텍처 선택</span><div class="claim">orthus의 structured 레이어는 "확신에 찬 0을 진짜로 신뢰"한다.</div></div>
+      <div class="faces">
+        <div class="face"><div class="fc">B1 · 글루</div><div class="ft">캐스케이드가 confident-0 재시도 제외 → 그 오답은 글루가 못 고침(실 쿼리엔 드묾).</div></div>
+        <div class="face"><div class="fc">B3-R1 · 게이트</div><div class="ft">같은 이유로 없는-컬럼(0 반환)을 게이트가 못 잡음 → refuse 레이어 아님.</div></div>
+        <div class="face"><div class="fc">B4-X3 · 스키마</div><div class="ft"><code>schema_ok</code>가 키를 데이터로 취급 → 한국어 컬럼 공짜 통과(장점)이자 미검증(단점).</div></div>
+      </div>
+    </div>
+    <p style="margin-top:16px;">실 쿼리 최적화가 적대적 out-of-schema엔 취약하다. 세 벤치마크가 <strong>독립적으로 같은 지점</strong>을 짚었다.
+      그 외: "안전해 보이는 baseline은 대개 무응답"(R1·R2), "진짜 병목은 n"(B2 6모델 유의성 미달), "성능은 모델이 아니라 시스템에서 온다 — 좋은 쪽도 나쁜 쪽도".</p>
+  </section>
+
+  <section id="open">
+    <h2><span class="n">05</span>아직 열린 것</h2>
+    <ul>
+      <li><strong>측정 잔여 없음</strong> — D9(n=200)·D10(n=168)·아레나 9모델 라운드로빈·프론티어 9종·외부 2벤치까지 완주. 남은 것은 결정: <strong>F1/F2b 글루 + F3 배정 + F4a 프롬프트의 prod 활성화</strong>(플래그 전부 default off, owner) · 사전선언 LOCK · 사람 스팟체크 43건 · GLM 재측정용 페이싱 하네스(선택).</li>
+      <li><strong>McNemar 확정치</strong>: n=200은 <code>d9-results.md</code>, n=145 이력은 <code>b1-layer2-orchestration.md</code> 인용.</li>
+      <li><strong>작업 간 조립 out-of-sample</strong>: 프로덕션 배정표(고정) 기준 재계산으로 in-sample 낙관 제거.</li>
+      <li><strong>LOCK</strong>: 전 사전선언 봉인. 실행 전 결함 수정·실측 기각(F2 v1)·예측 기각(D9 2건) 이력이 그 값어치.</li>
+    </ul>
+  </section>
+
+  <footer class="colophon">
+    <p>수치 SoR은 <code>analysis/d9-results.md</code>·<code>d10-results.md</code>·<code>f1~f4-results.md</code>·각 <code>*-results.md</code>, 종합 원문 <code>analysis/INSIGHTS.md</code>(최종 갱신 1-15).
+      living — 본 파일은 repo <code>analysis/reports/insights.html</code>로 버전 관리된다. N=200 · Flow n=168 · 프론티어 9종.</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

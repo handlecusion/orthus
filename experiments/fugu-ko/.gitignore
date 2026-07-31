@@ -1,0 +1,16 @@
+# 실험 응답 원문·키·중간 산출물은 커밋 금지
+analysis/raw/
+# E5 드리프트 비교용 직전 실행 스냅샷(응답 원문 포함 — 동일하게 커밋 금지)
+analysis/raw_prev/
+*.key
+*.secret
+golden/*.raw.json
+# pool.py FUGU_KEYS default는 off-repo(OneDrive)라 지금까지는 "관례상" repo에
+# 없었을 뿐, gitignore 규칙은 없었다. 누군가 keys.json을 repo 트리 안에(예:
+# experiments/fugu-ko/keys.json, e2e/keys.json) 두는 경우를 방어적으로 차단한다.
+keys.json
+**/keys.json
+# G1 학습 데이터 산출물 (questions는 gen.py seed 고정 재생성 가능, labels는 API 실행 산출)
+train/data/
+# G2 학습 산출물 (모델 가중치·로그)
+train/runs/

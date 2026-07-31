@@ -1,0 +1,275 @@
+<title>국내 3모델, 어느 태스크에 강한가 — orthus 모델×태스크 매트릭스</title>
+<style>
+  :root{
+    --bg:#eef1f4; --panel:#ffffff; --ink:#141a21; --muted:#5d6b78; --line:#d7dee5; --line-soft:#e7ecf1;
+    --solar:#c77a12; --solar-bg:#fbf0dd; --solar-line:#ecd3a3;
+    --ax:#9a3b7a; --ax-bg:#f7e6f1; --ax-line:#e5bcd6;
+    --exa:#1f7d78; --exa-bg:#dcf0ee; --exa-line:#a9dcd6;
+    --win:#1f8a5b; --win-bg:#e2f3ea;
+    --flag:#b23c2a;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",Roboto,sans-serif;
+    --shadow:0 1px 2px rgba(20,26,33,.05),0 10px 30px rgba(20,26,33,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0d1319; --panel:#151d25; --ink:#e7edf3; --muted:#93a2b1; --line:#26313c; --line-soft:#1d2731;
+      --solar:#e0a445; --solar-bg:#2e2411; --solar-line:#574420;
+      --ax:#e07bbf; --ax-bg:#2e1626; --ax-line:#552a45;
+      --exa:#4fbcb2; --exa-bg:#12302d; --exa-line:#265a54;
+      --win:#4fc487; --win-bg:#12301f;
+      --flag:#e0836f;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#eef1f4; --panel:#ffffff; --ink:#141a21; --muted:#5d6b78; --line:#d7dee5; --line-soft:#e7ecf1;
+    --solar:#c77a12; --solar-bg:#fbf0dd; --solar-line:#ecd3a3; --ax:#9a3b7a; --ax-bg:#f7e6f1; --ax-line:#e5bcd6;
+    --exa:#1f7d78; --exa-bg:#dcf0ee; --exa-line:#a9dcd6; --win:#1f8a5b; --win-bg:#e2f3ea; --flag:#b23c2a;
+    --shadow:0 1px 2px rgba(20,26,33,.05),0 10px 30px rgba(20,26,33,.07);
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1319; --panel:#151d25; --ink:#e7edf3; --muted:#93a2b1; --line:#26313c; --line-soft:#1d2731;
+    --solar:#e0a445; --solar-bg:#2e2411; --solar-line:#574420; --ax:#e07bbf; --ax-bg:#2e1626; --ax-line:#552a45;
+    --exa:#4fbcb2; --exa-bg:#12302d; --exa-line:#265a54; --win:#4fc487; --win-bg:#12301f; --flag:#e0836f;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:44px 20px 90px}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  h1{font-size:clamp(28px,5.2vw,44px);line-height:1.06;margin:.3em 0 .22em;letter-spacing:-.025em;font-weight:820;text-wrap:balance}
+  .lede{color:var(--muted);font-size:15.5px;max-width:64ch;margin:0}
+  .lede b{color:var(--ink);font-weight:650}
+  .meta{display:flex;flex-wrap:wrap;gap:7px 20px;margin-top:20px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .meta b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+
+  /* model key */
+  .key{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;border-radius:999px;padding:6px 14px 6px 11px;border:1px solid}
+  .chip .sw{width:12px;height:12px;border-radius:3px;flex:none}
+  .chip.solar{color:var(--solar);background:var(--solar-bg);border-color:var(--solar-line)} .chip.solar .sw{background:var(--solar)}
+  .chip.ax{color:var(--ax);background:var(--ax-bg);border-color:var(--ax-line)} .chip.ax .sw{background:var(--ax)}
+  .chip.exa{color:var(--exa);background:var(--exa-bg);border-color:var(--exa-line)} .chip.exa .sw{background:var(--exa)}
+  .chip small{font-family:var(--mono);font-weight:500;opacity:.75;font-size:11px}
+
+  h2{font-size:19px;margin:44px 0 5px;letter-spacing:-.01em;font-weight:800}
+  h2 .tag{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:600;margin-left:8px;letter-spacing:.04em}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px;max-width:68ch}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:18px 20px;margin:14px 0}
+  .panel h3{margin:0 0 8px;font-size:15.5px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+
+  /* matrix table */
+  .tblwrap{overflow-x:auto;margin:14px 0;border-radius:13px;border:1px solid var(--line);box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--panel);min-width:560px}
+  th,td{padding:10px 13px;border-bottom:1px solid var(--line-soft);text-align:left;vertical-align:middle}
+  thead th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:700;background:color-mix(in srgb,var(--line) 22%,var(--panel));white-space:nowrap}
+  thead th.solar{color:var(--solar)} thead th.ax{color:var(--ax)} thead th.exa{color:var(--exa)}
+  tbody tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12.5px}
+  td.task{font-weight:650}
+  td.metric{color:var(--muted);font-size:12.5px}
+  .cell-win{position:relative;font-weight:800;color:var(--win);background:var(--win-bg)}
+  .cell-flag{color:var(--flag);font-weight:700}
+  .holm{font-size:12px;color:var(--muted);white-space:nowrap}
+  .holm .star{color:var(--win);font-weight:800}
+
+  /* profile cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}}
+  .mc{border:1px solid var(--line);border-top:3px solid var(--top);border-radius:13px;background:var(--panel);box-shadow:var(--shadow);padding:15px 16px}
+  .mc.solar{--top:var(--solar)} .mc.ax{--top:var(--ax)} .mc.exa{--top:var(--exa)}
+  .mc .name{font-weight:800;font-size:16px;letter-spacing:-.01em}
+  .mc .name.solar{color:var(--solar)} .mc .name.ax{color:var(--ax)} .mc .name.exa{color:var(--exa)}
+  .mc .vendor{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:11px}
+  .mc .row{display:flex;gap:8px;font-size:13px;margin:7px 0;align-items:baseline}
+  .mc .row .lab{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);width:38px;flex:none;padding-top:2px}
+  .mc .row .txt b{color:var(--ink)}
+  .mc .up{color:var(--win)} .mc .dn{color:var(--flag)}
+
+  .callout{border-left:3px solid var(--win);background:var(--win-bg);border-radius:0 11px 11px 0;padding:13px 16px;margin:14px 0;font-size:14px;max-width:72ch}
+  .callout b{color:var(--win)}
+  .caveat{border-left:3px solid var(--muted);background:color-mix(in srgb,var(--line) 20%,var(--panel));border-radius:0 11px 11px 0;padding:11px 15px;margin:9px 0;font-size:13px;color:var(--muted);max-width:74ch}
+  .caveat b{color:var(--ink)}
+  code,.mono{font-family:var(--mono);font-size:12.5px}
+  code{background:color-mix(in srgb,var(--exa) 12%,transparent);color:var(--exa);padding:1px 5px;border-radius:5px}
+  p.body{font-size:14px;max-width:70ch}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+  footer .mono{font-size:11.5px;line-height:1.9}
+  section{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){section{animation:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">orthus · 모델 오케스트레이션 실험 · 2026-07-20</div>
+  <h1>국내 3모델, 어느 태스크에 강한가</h1>
+  <p class="lede">Solar·A.X·EXAONE을 <b>프롬프트는 고정하고 모델만 바꿔</b> 7개 태스크에 돌렸다.
+  회사의 기존 결론은 "모델간 유의차 없음"이었지만, <b>신규 홀드아웃 + 객관 결함율 지표</b>로
+  특정 실패모드를 직접 재니 — 태스크별 강약이 갈렸다. 다만 그 신호는 "누가 잘하나"보다
+  <b>"누가 이 태스크에서 눈에 띄게 약한가"</b>에 있다.</p>
+
+  <div class="key">
+    <span class="chip solar"><span class="sw"></span>Solar <small>Upstage · solar-pro</small></span>
+    <span class="chip ax"><span class="sw"></span>A.X <small>SKT · A.X-K1</small></span>
+    <span class="chip exa"><span class="sw"></span>EXAONE <small>LG · K-EXAONE</small></span>
+  </div>
+
+  <p class="sub" style="margin-top:14px">🧪 이 실험이 속한 전체 프롬프트 실험(채택 3·기각 5, 순한글 검증, 게이트웨이)은 →
+  프롬프트를 측정으로 다듬다</p>
+  <div class="meta">
+    <span>모델 <b>3</b></span><span>태스크 <b>7</b> + 저작 축</span>
+    <span>홀드아웃 문항 <b>287</b> + 미니위키 70</span>
+    <span>판정자 <b>codex</b> (ChatGPT OAuth · 중립)</span>
+    <span>유의성 <b>McNemar + Holm</b></span>
+  </div>
+</header>
+
+<h2>매트릭스 — 태스크 × 모델 <span class="tag">낮을수록 좋음(결함율) · Copeland는 높을수록 좋음</span></h2>
+<p class="sub">각 행에서 <span style="color:var(--win);font-weight:700">초록</span>이 최고, <span style="color:var(--flag);font-weight:700">빨강</span>이 최악. 오른쪽 열은 Holm 다중비교 보정(19개 비교, α=0.05)을 통과한 유의차.</p>
+<div class="tblwrap"><table>
+  <thead><tr>
+    <th>태스크</th><th>지표</th>
+    <th class="num solar">Solar</th><th class="num ax">A.X</th><th class="num exa">EXAONE</th>
+    <th>Holm 유의</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td class="task">rewrite</td><td class="metric">지시어 잔존율</td>
+      <td class="num cell-win">1.7%</td><td class="num">10.3%</td><td class="num cell-flag">34.5%</td>
+      <td class="holm"><span class="star">★</span> Solar·A.X ≫ EXAONE</td>
+    </tr>
+    <tr>
+      <td class="task">decompose</td><td class="metric">분해 게이트 오답률</td>
+      <td class="num cell-win">15.8%</td><td class="num cell-flag">52.6%</td><td class="num">26.3%</td>
+      <td class="holm"><span class="star">★</span> Solar·EXAONE ≫ A.X</td>
+    </tr>
+    <tr>
+      <td class="task">delegation</td><td class="metric">함정 오탐율</td>
+      <td class="num">13.0%</td><td class="num cell-flag">25.9%</td><td class="num cell-win">11.1%</td>
+      <td class="holm">A.X 최악 (raw p=.008)</td>
+    </tr>
+    <tr>
+      <td class="task">wiki_qa</td><td class="metric">답변 품질 Copeland</td>
+      <td class="num cell-flag">−32</td><td class="num">+11</td><td class="num cell-win">+21</td>
+      <td class="holm">Solar 최약 (raw p=.008)</td>
+    </tr>
+    <tr>
+      <td class="task">synthesize</td><td class="metric">마커·action 누설</td>
+      <td class="num">비유의</td><td class="num">비유의</td><td class="num">비유의</td>
+      <td class="holm">무차이 (n=29)</td>
+    </tr>
+    <tr>
+      <td class="task">distill</td><td class="metric">claim 오염율</td>
+      <td class="num">0%</td><td class="num">0%</td><td class="num">0%</td>
+      <td class="holm">무차이 (판정자 caveat)</td>
+    </tr>
+    <tr>
+      <td class="task">지연</td><td class="metric">p50 / p95 (ms)</td>
+      <td class="num">1140 / 1823</td><td class="num cell-flag">1553 / 4777</td><td class="num cell-win">945 / 3363</td>
+      <td class="holm">EXAONE 최속 · A.X 꼬리 최악</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<h2>모델별 프로파일</h2>
+<div class="cards">
+  <div class="mc solar">
+    <div class="name solar">Solar</div><div class="vendor">Upstage · solar-pro</div>
+    <div class="row"><span class="lab up">강</span><span class="txt">구조적 <b>지시 따르기 최강</b> — rewrite 잔존 1.7%, decompose 오답 15.8% 둘 다 1위</span></div>
+    <div class="row"><span class="lab dn">약</span><span class="txt"><b>답변 품질 최약</b> (Copeland −32) — 간결 편향. 프롬프트 실험에서도 짧고 소극적</span></div>
+    <div class="row"><span class="lab">속</span><span class="txt">지연 중간 (p50 1140ms)</span></div>
+  </div>
+  <div class="mc exa">
+    <div class="name exa">EXAONE</div><div class="vendor">LG · K-EXAONE-236B</div>
+    <div class="row"><span class="lab up">강</span><span class="txt"><b>답변 품질·위임 안전·속도</b> 우위 — Copeland +21, 오탐 11.1%, p50 945ms 모두 1위</span></div>
+    <div class="row"><span class="lab dn">약</span><span class="txt"><b>지시어 해소 최약</b> — 재작성의 34.5%에 "그거·아까"가 그대로 남음</span></div>
+    <div class="row"><span class="lab">비</span><span class="txt">236B 대형이나 지연은 오히려 최속</span></div>
+  </div>
+  <div class="mc ax">
+    <div class="name ax">A.X</div><div class="vendor">SKT · A.X-K1</div>
+    <div class="row"><span class="lab dn">약</span><span class="txt"><b>분해 게이트(52.6%)·위임 오탐(25.9%)·지연 꼬리(4777ms)</b> 셋 다 최악</span></div>
+    <div class="row"><span class="lab up">강</span><span class="txt">뚜렷한 1위 태스크 없음 — 나머지는 중위</span></div>
+    <div class="row"><span class="lab">주</span><span class="txt">위임 오탐은 발신자 자기 계획을 위임으로 오독 (기존 관측 재현)</span></div>
+  </div>
+</div>
+
+<h2>결론 — 기존 "유의차 없음"을 어떻게 갱신하나 <span class="tag">nuance</span></h2>
+<p class="body">회사의 이전 측정(<span class="mono">model-orchestration.md</span>)은 <b>판정자 기반 holistic 품질</b>로 "국내 3모델 간 어떤 태스크도 유의차 없음"이었다. 이번 결과는 그것을 뒤집지 않고 <b>정밀화</b>한다:</p>
+<div class="callout">
+  <b>holistic 품질(wiki_qa 판정)에선 여전히 강건한 승자가 없다</b> — 기존 결론 재확인.
+  새 신호는 <b>객관 결함율 지표</b>(지시어 잔존·게이트 오답·함정 오탐)에 있고, Holm 보정 후에도
+  4건이 살아남는다. 그리고 그 신호의 방향은 "누가 잘한다"가 아니라 <b>"누가 이 태스크에서
+  약하다"</b>이다.
+</div>
+<p class="body"><b>실무 함의 — 배정이 아니라 회피</b>: rewrite에 EXAONE 배정 회피(잔존 34.5%), decompose·delegation에 A.X 배정 회피(오답 52.6%·오탐 25.9%). delegation→EXAONE 선호는 현행 <code>delegation_extract→EXAONE</code> 배정과 정합한다.</p>
+
+<h2>후속 — 저작 모델이 위키를 바꾸나 <span class="tag">미니위키 · 70문서 × 3저작</span></h2>
+<p class="sub">위 매트릭스는 답변·분류 태스크였다. 위키 <b>저작(distill)</b> 축은 따로 봤다 — 같은 70문서를 Solar·A.X·EXAONE으로 각각 저작해 3개의 위키를 짓고(임베딩·답변 모델은 Solar로 고정해 <b>저작만 변수</b>로 격리) downstream 답변을 쟀다.</p>
+<div class="panel">
+  <h3>저작 모델은 위키 밀도를 바꾸지만, downstream 답변은 못 바꾼다</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>저작 모델</th><th class="num">claims/doc</th><th class="num">저작 시간</th><th class="num">빌드 오류</th><th class="num">거부율</th><th class="num">답변 Copeland</th></tr></thead>
+    <tbody>
+      <tr><td class="task" style="color:var(--exa)">EXAONE</td><td class="num cell-win">6.7</td><td class="num">2073s</td><td class="num">0</td><td class="num">0/70</td><td class="num">+4</td></tr>
+      <tr><td class="task" style="color:var(--solar)">Solar</td><td class="num">5.7</td><td class="num cell-win">197s</td><td class="num">0</td><td class="num">0/70</td><td class="num">−28</td></tr>
+      <tr><td class="task" style="color:var(--ax)">A.X</td><td class="num cell-flag">4.2</td><td class="num cell-flag">2116s</td><td class="num cell-flag">12</td><td class="num">0/70</td><td class="num">+24</td></tr>
+    </tbody>
+  </table></div>
+  <p class="body"><b>밀도는 확실히 갈린다</b>: EXAONE이 가장 촘촘(6.7 claims/doc), A.X가 가장 얇고(4.2) + <b>70문서 중 12개 저작 실패</b> + RPS 상한으로 Solar의 <b>10배 느림</b>(35분).</p>
+</div>
+
+<div class="panel">
+  <h3>★ 그런데 1차 판정이 틀렸다 — 측정 결함을 잡은 과정</h3>
+  <p class="body">1차 판정에서 <b>A.X-저작 위키가 1위</b>(Copeland +24)로 나왔다. 그런데 결함 두 개가 겹쳐 있었다: <b>①판정자가 원본을 못 봄</b>(질문+답변만 제시 — "근거 없는 판정자는 자신감 있는 환각에 가점"하는 그 함정) <b>②A.X는 12문서를 저작 못 했는데 거부율은 0</b>(위키에 없는 문서를 물어도 답변 모델이 뭔가 지어냄). 둘이 곱해지면 A.X가 <b>지어낸 답으로 점수를 따는</b> 구조다.</p>
+  <p class="body"><b>원본 문서를 정답 근거로 동봉해 재판정하자 뒤집혔다:</b></p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>비교</th><th class="num">① 근거 미동봉</th><th class="num">② 원본=정답 동봉</th></tr></thead>
+    <tbody>
+      <tr><td class="task" style="color:var(--ax)">A.X Copeland</td><td class="num">+24 <b>(1위)</b></td><td class="num cell-flag">+8 (2위) ↓16</td></tr>
+      <tr><td class="task" style="color:var(--exa)">EXAONE Copeland</td><td class="num">+4</td><td class="num cell-win">+19 <b>(1위)</b> ↑15</td></tr>
+      <tr><td class="task" style="color:var(--solar)">Solar Copeland</td><td class="num">−28</td><td class="num">−27 (불변)</td></tr>
+      <tr><td class="task">solar vs ax</td><td class="num">14:31 p=<b>0.016</b></td><td class="num">15:28 p=0.066</td></tr>
+      <tr><td class="task">ax vs exaone</td><td class="num">27:20 (A.X 우세)</td><td class="num cell-win">21:26 (EXAONE 우세) ← <b>역전</b></td></tr>
+    </tbody>
+  </table></div>
+  <p class="body"><b>A.X의 1위는 측정 아티팩트였다.</b> 판정자가 사실을 확인할 수 있게 되자 16점이 빠지고 맞대결이 뒤집혔다. EXAONE이 1위로 올라온 건 가장 촘촘한 위키 + 저작 실패 1건이라는 결정론 지표와 정합한다. 올바른 지표에서는 <b>어떤 쌍도 유의하지 않다</b>(최소 p=0.066).</p>
+  <div class="callout" style="border-color:var(--muted);background:color-mix(in srgb,var(--line) 20%,var(--panel))">
+    <b>실무 함의</b>: 저작 모델은 downstream 답변 품질을 유의하게 바꾸지 않는다 — 매트릭스의 per-doc 무차이가 end-to-end에서도 확인됐다. distill/compile 슬롯은 cost·latency·reliability로 고르면 되고, 그 축에서 <b>A.X는 명백히 최악</b>(위키당 35분 + 12문서 저작 실패). 현행 Solar/codex_pool 유지가 맞다.
+  </div>
+  <div class="caveat"><b>정정 기록</b>: 1차 리포트는 Holm 가족에 거부율 비교 3건(3위키 모두 0:0인 <b>퇴화 검정</b>)을 함께 넣어 K를 6으로 부풀렸다. 품질 3비교만으로 잡으면 임계 0.0167이라 1차의 p=0.0161은 아슬아슬하게 유의였다 — 코드 정정 완료. 다만 <b>그 유의했던 신호 자체가 결함 지표의 산물</b>이라 결론은 바뀌지 않는다.</div>
+  <div class="caveat"><b>교훈(이 세션 3번째 재현)</b>: "표본이 작아 유의가 안 나온 것 아니냐"는 타당한 의심이었고 실제로 가족 설정 오류도 있었다. 그러나 표본을 늘렸다면 <b>가짜 우세가 더 또렷해졌을 뿐</b>이다 — "지표가 표본보다 먼저다". 검정력 계산은 지표가 옳은지를 검증해주지 않는다.</div>
+  <div class="caveat"><b>한계</b>: 70문서 소규모라 거부율에 천장효과(3위키 모두 0). 대형 코퍼스면 A.X의 저작 실패가 검색 갭으로 드러나 <b>오히려 A.X에 더 불리</b>해질 방향.</div>
+</div>
+
+<h2>방법 <span class="tag">measure-first · 편향 방어</span></h2>
+<div class="panel">
+  <div class="tblwrap"><table>
+    <tbody>
+      <tr><td class="task">축</td><td>프롬프트 고정(현행 prod) + 모델만 변형 — 순수 모델 비교</td></tr>
+      <tr><td class="task">홀드아웃</td><td>distill 48 · wiki_qa 60 · rewrite 58 · synthesize 29 · decompose 38 · delegation 54 — 프롬프트 실험에 안 쓴 신규 문항 + 고정 라벨 골든</td></tr>
+      <tr><td class="task">생성기 편향</td><td>wiki_qa 질문을 3모델 로테이션 생성 — 어느 모델도 자기 질문 유리 없음</td></tr>
+      <tr><td class="task">판정자</td><td>codex(ChatGPT OAuth) 중립 판정 — API 빌링과 별개 계정, 국내 self-preference 배제. wiki_qa는 익명 A/B + 양방향 스왑 + 불일치=tie</td></tr>
+      <tr><td class="task">유의성</td><td>paired McNemar + Holm 보정(19개 비교) — 태스크×모델쌍 많아 우연 승자가 나오는 함정 방어</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<h2>정직한 한계 <span class="tag">caveats</span></h2>
+<div class="caveat"><b>현행 프롬프트로 측정.</b> 프롬프트가 prod 배정 모델에 맞춰졌을 수 있어 "그 프롬프트에서 어느 모델이 나은가"이지 모델 절대능력이 아니다.</div>
+<div class="caveat"><b>distill 0% 오염</b>은 codex 판정자가 앞서 쓴 gpt-4o(실측 5~7%)보다 fabrication 플래그에 관대하거나 신규 48문서가 유독 깨끗해서일 수 있다 — "모델 차이 없음"만 유효.</div>
+<div class="caveat"><b>wiki_qa는 codex 판정</b> — codex가 상세한 답을 선호하면 간결한 Solar가 불리하다. prod가 Solar를 쓰는 건 지연·비용·벤더 방침 때문이지 답변 품질 1위라서가 아니며, 이 결과와 정합한다.</div>
+<div class="caveat"><b>판정 단일.</b> OpenAI API 빌링 소진으로 판정을 codex OAuth로 전환한 결과다. 빌링 충전 시 <code>--judge gpt-4o</code>, 또는 국내 heterogeneous(judge ∉ pair) 교차검증 여지가 코드에 남아 있다. synthesize는 n=29 소표본.</div>
+
+<footer>
+  <b>근거</b>
+  <div class="mono">
+    실험 기록 — experiments/prompt-lab/analysis/{matrix-results, matrix-interpretation, miniwiki-results, miniwiki-interpretation}.md<br>
+    하네스 — matrix_lab.py · score_distill.py · codex_judge.py · distill_harness.py (+ fugu-ko pool/significance)<br>
+    데이터 — 국내 3모델 × 7표면 · 홀드아웃 287문항 · 원자료/키 gitignore<br>
+    Holm 생존(4) — rewrite: Solar≫EXAONE(p&lt;.0001)·A.X≫EXAONE(p=.0026) / decompose: Solar≫A.X(p=.0005)·EXAONE≫A.X(p=.0020)
+  </div>
+</footer>
+</div>

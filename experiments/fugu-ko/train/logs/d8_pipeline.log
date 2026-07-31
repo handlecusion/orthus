@@ -1,0 +1,20 @@
+[1/5] 32B 학습 완료 대기...
+[ep0] val_loss=0.0077
+[ep1] val_loss=0.0050
+[train] done best_val=0.0050 (207.4m)
+[2/5] 32B val 생성 (백본 선택용, GPU0)
+[3/5] 백본 동결 (학습셋 val — 판정셋 무접촉)
+══ 백본 선택 — 학습셋 val (판정셋 무접촉) ══
+  sft12b_v4   : 타깃 정확일치  96.2% (152/158)  |  클린 실행  99.0% (96/97)
+  sft32b_v4   : 타깃 정확일치  94.9% (150/158)  |  클린 실행  96.9% (94/97)
+
+══ 주판정 백본 = sft12b_v4  (근거: 타깃 정확일치) ══
+[저장] train/data/backbone_choice.json
+동결된 주판정 백본: sft12b_v4
+[4/5] c8 k=5 생성 (7,190건, GPU0, 백본=sft12b_v4)
+gen 7182/7190 (0.13s/콜, 남은 ~0분)
+[gen] done → train/data/sft_d8_gen.jsonl
+[5/5] 생성물 회수
+c8 생성 완료: 7182 / 7190 줄
+=== 본판정 준비 완료 — 실행 명령 ===
+  <repo>/.venv/bin/python train/judge_d8.py --gen_file data/sft_d8_gen.jsonl

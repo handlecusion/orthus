@@ -1,0 +1,32 @@
+  [solar] 100/463 err=0 (1.0s/문항)
+  [solar] 200/463 err=0 (1.1s/문항)
+  [solar] 300/463 err=0 (1.1s/문항)
+  [solar] 400/463 err=0 (1.1s/문항)
+[solar] 완료 err=0/463 (8.1분)
+  [ax] 100/463 err=0 (2.7s/문항)
+  [ax] 200/463 err=0 (2.5s/문항)
+  [ax] 300/463 err=0 (2.3s/문항)
+  [ax] 400/463 err=0 (2.3s/문항)
+[ax] 완료 err=0/463 (17.2분)
+  [exaone] 100/463 err=0 (1.2s/문항)
+  [exaone] 200/463 err=0 (1.2s/문항)
+  [exaone] 300/463 err=0 (1.3s/문항)
+  [exaone] 400/463 err=0 (1.4s/문항)
+[exaone] 완료 err=0/463 (10.6분)
+[save] <repo>/.worktrees/fugu-ko-selector-v2/experiments/fugu-ko/analysis/raw/holdout_worker_answers.json
+
+══ 워커 투표 앙상블 (주판정 holdout n=463) ══
+  oracle(참고 상한) 68.0%
+
+전략             정답률 vs static    McNemar  비고
+static       61.1%         —          —  (규칙 baseline)
+vote2of3     58.5%     -2.6p   p=0.0652  무의 · 일관된 단일 답  [c만맞12 b만맞24]
+best_pair    66.3%     +5.2p   p=0.0000  ★유의승 · 일관된 단일 답  [c만맞24 b만맞0]
+union3       68.0%     +6.9p   p=0.0000  ★유의승 · 실 답 아님(recall 상한)  [c만맞32 b만맞0]
+
+[워커 답 불일치 284/463]
+  static     57.4%
+  vote2of3   53.2%
+  best_pair  65.8%
+
+판정: vote2of3/best_pair이 p<0.05 & >static 이면 → 앙상블이 규칙을 이김(선택기와 달리).

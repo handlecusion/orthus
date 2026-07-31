@@ -1,0 +1,603 @@
+{
+ "_note": "dry/fixture 모드 전용 합성 판정자 응답. 실제 데이터셋 행이 아니며 실측 수치도 아니다.",
+ "khj-0": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-1": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "khj-2": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-3": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-4": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-5": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-6": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-7": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-8": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "khj-9": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-10": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-11": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-12": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-13": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-14": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-15": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-16": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-17": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-18": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-19": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-20": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-21": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-22": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-23": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "khj-24": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "khj-25": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-26": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "khj-27": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-28": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-29": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-30": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-31": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-32": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-33": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-34": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-35": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-36": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-37": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-38": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "khj-39": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-40": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-41": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-42": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-43": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "khj-44": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-45": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-46": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-47": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-48": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-49": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-50": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-51": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-52": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-53": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-54": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-55": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-56": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "khj-57": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "khj-58": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "khj-59": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9009-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "mtb-9018-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9013-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9032-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "mtb-9016-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9033-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9039-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9026-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9012-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9038-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9008-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "mtb-9010-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9001-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9017-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9021-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9023-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9027-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9003-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9034-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9035-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "mtb-9004-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9014-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9024-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9031-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9019-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9020-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "mtb-9011-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9029-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9025-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9030-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9037-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9015-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9022-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9006-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9036-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9002-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9005-fixture-a-fixture-b": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "mtb-9000-fixture-a-fixture-b": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "mtb-9007-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "mtb-9028-fixture-a-fixture-b": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "summ-fx-summ-000": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-001": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-004": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-005": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-006": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "summ-fx-summ-007": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-009": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-011": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-012": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-015": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-016": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "summ-fx-summ-017": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-018": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "summ-fx-summ-019": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-00-02-fx-kudge-00-11": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "kudge-fx-kudge-00-02-fx-kudge-00-09": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-00-01-fx-kudge-00-06": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-00-04-fx-kudge-00-09": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-00-02-fx-kudge-00-04": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-00-08-fx-kudge-00-10": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "kudge-fx-kudge-00-04-fx-kudge-00-07": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-01-09-fx-kudge-01-10": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-01-01-fx-kudge-01-11": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-01-02-fx-kudge-01-11": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-01-02-fx-kudge-01-06": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-01-07-fx-kudge-01-11": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-01-10-fx-kudge-01-11": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "kudge-fx-kudge-02-03-fx-kudge-02-06": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-02-02-fx-kudge-02-03": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-02-05-fx-kudge-02-08": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-02-01-fx-kudge-02-05": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-02-04-fx-kudge-02-11": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-03-05-fx-kudge-03-07": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-03-03-fx-kudge-03-05": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-03-08-fx-kudge-03-11": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-03-07-fx-kudge-03-10": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-03-02-fx-kudge-03-11": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-03-05-fx-kudge-03-08": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-04-04-fx-kudge-04-07": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-04-00-fx-kudge-04-05": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "kudge-fx-kudge-04-00-fx-kudge-04-08": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-04-03-fx-kudge-04-10": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-04-01-fx-kudge-04-11": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-04-04-fx-kudge-04-05": {
+  "prefers": "a",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-05-01-fx-kudge-05-09": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-05-06-fx-kudge-05-10": {
+  "prefers": "none",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-05-02-fx-kudge-05-10": {
+  "prefers": "none",
+  "position_biased": true
+ },
+ "kudge-fx-kudge-05-04-fx-kudge-05-10": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-05-05-fx-kudge-05-10": {
+  "prefers": "b",
+  "position_biased": false
+ },
+ "kudge-fx-kudge-05-01-fx-kudge-05-07": {
+  "prefers": "none",
+  "position_biased": false
+ }
+}

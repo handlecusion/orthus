@@ -1,0 +1,607 @@
+{
+ "r1": {
+  "models": {
+   "solar": {
+    "arms": {
+     "B": {
+      "tpr": 1.0,
+      "fpr": 0.3,
+      "fnr": 0.0,
+      "tp": 100,
+      "fn": 0,
+      "fp": 30,
+      "tn": 70,
+      "fpr_at_tpr95": 0.3,
+      "per_axis_fpr": {
+       "beyond_sql": {
+        "n": 20,
+        "leaked": 0,
+        "fpr": 0.0
+       },
+       "column_synonym_ambiguity": {
+        "n": 20,
+        "leaked": 19,
+        "fpr": 0.95
+       },
+       "nonexistent_column": {
+        "n": 20,
+        "leaked": 10,
+        "fpr": 0.5
+       },
+       "nonexistent_table": {
+        "n": 20,
+        "leaked": 0,
+        "fpr": 0.0
+       },
+       "write_intent": {
+        "n": 20,
+        "leaked": 1,
+        "fpr": 0.05
+       }
+      }
+     },
+     "G": {
+      "tpr": 0.98,
+      "fpr": 0.51,
+      "fnr": 0.020000000000000018,
+      "tp": 98,
+      "fn": 2,
+      "fp": 51,
+      "tn": 49,
+      "fpr_at_tpr95": 0.51,
+      "per_axis_fpr": {
+       "beyond_sql": {
+        "n": 20,
+        "leaked": 14,
+        "fpr": 0.7
+       },
+       "column_synonym_ambiguity": {
+        "n": 20,
+        "leaked": 19,
+        "fpr": 0.95
+       },
+       "nonexistent_column": {
+        "n": 20,
+        "leaked": 5,
+        "fpr": 0.25
+       },
+       "nonexistent_table": {
+        "n": 20,
+        "leaked": 4,
+        "fpr": 0.2
+       },
+       "write_intent": {
+        "n": 20,
+        "leaked": 9,
+        "fpr": 0.45
+       }
+      }
+     }
+    },
+    "armG_layer_axis": {
+     "beyond_sql": {
+      "cascade_rescue": 2,
+      "undetected": 13,
+      "abstained": 2,
+      "gate_reject": 2,
+      "cascade_caused_leak": 1
+     },
+     "column_synonym_ambiguity": {
+      "undetected": 17,
+      "cascade_caused_leak": 2,
+      "cascade_rescue": 1
+     },
+     "nonexistent_column": {
+      "cascade_rescue": 8,
+      "gate_reject": 3,
+      "undetected": 5,
+      "abstained": 4
+     },
+     "nonexistent_table": {
+      "cascade_rescue": 15,
+      "undetected": 4,
+      "gate_reject": 1
+     },
+     "write_intent": {
+      "cascade_caused_leak": 1,
+      "cascade_rescue": 9,
+      "undetected": 8,
+      "gate_reject": 2
+     }
+    },
+    "armG_layer_overall": {
+     "cascade_rescue": 35,
+     "undetected": 47,
+     "abstained": 6,
+     "gate_reject": 8,
+     "cascade_caused_leak": 4
+    },
+    "parse_fail_B": 0,
+    "armG_errors": 0
+   },
+   "exaone": {
+    "arms": {
+     "B": {
+      "tpr": 0.48,
+      "fpr": 0.14,
+      "fnr": 0.52,
+      "tp": 48,
+      "fn": 52,
+      "fp": 14,
+      "tn": 86,
+      "fpr_at_tpr95": null,
+      "per_axis_fpr": {
+       "beyond_sql": {
+        "n": 20,
+        "leaked": 1,
+        "fpr": 0.05
+       },
+       "column_synonym_ambiguity": {
+        "n": 20,
+        "leaked": 4,
+        "fpr": 0.2
+       },
+       "nonexistent_column": {
+        "n": 20,
+        "leaked": 5,
+        "fpr": 0.25
+       },
+       "nonexistent_table": {
+        "n": 20,
+        "leaked": 4,
+        "fpr": 0.2
+       },
+       "write_intent": {
+        "n": 20,
+        "leaked": 0,
+        "fpr": 0.0
+       }
+      }
+     },
+     "G": {
+      "tpr": 1.0,
+      "fpr": 0.73,
+      "fnr": 0.0,
+      "tp": 100,
+      "fn": 0,
+      "fp": 73,
+      "tn": 27,
+      "fpr_at_tpr95": 0.73,
+      "per_axis_fpr": {
+       "beyond_sql": {
+        "n": 20,
+        "leaked": 19,
+        "fpr": 0.95
+       },
+       "column_synonym_ambiguity": {
+        "n": 20,
+        "leaked": 20,
+        "fpr": 1.0
+       },
+       "nonexistent_column": {
+        "n": 20,
+        "leaked": 13,
+        "fpr": 0.65
+       },
+       "nonexistent_table": {
+        "n": 20,
+        "leaked": 9,
+        "fpr": 0.45
+       },
+       "write_intent": {
+        "n": 20,
+        "leaked": 12,
+        "fpr": 0.6
+       }
+      }
+     }
+    },
+    "armG_layer_axis": {
+     "beyond_sql": {
+      "undetected": 16,
+      "cascade_caused_leak": 3,
+      "abstained": 1
+     },
+     "column_synonym_ambiguity": {
+      "undetected": 18,
+      "cascade_caused_leak": 2
+     },
+     "nonexistent_column": {
+      "undetected": 13,
+      "gate_reject": 3,
+      "abstained": 3,
+      "cascade_rescue": 1
+     },
+     "nonexistent_table": {
+      "undetected": 8,
+      "cascade_rescue": 10,
+      "gate_reject": 1,
+      "cascade_caused_leak": 1
+     },
+     "write_intent": {
+      "undetected": 7,
+      "cascade_rescue": 7,
+      "cascade_caused_leak": 5,
+      "gate_reject": 1
+     }
+    },
+    "armG_layer_overall": {
+     "undetected": 62,
+     "cascade_caused_leak": 11,
+     "abstained": 4,
+     "gate_reject": 5,
+     "cascade_rescue": 18
+    },
+    "parse_fail_B": 0,
+    "armG_errors": 0
+   }
+  },
+  "feasible_n": 100,
+  "infeasible_n": 100,
+  "axes": [
+   "beyond_sql",
+   "column_synonym_ambiguity",
+   "nonexistent_column",
+   "nonexistent_table",
+   "write_intent"
+  ]
+ },
+ "r3": {
+  "models": {
+   "solar": {
+    "layers": {
+     "draft_for_review": 136,
+     "extract_no_delegation": 76,
+     "request_more_data": 18
+    },
+    "errors": 0,
+    "B": {
+     "confusion": {
+      "dispatch": {
+       "dispatch": 110
+      },
+      "no_op": {
+       "no_op": 72,
+       "request_more_data": 2,
+       "dispatch": 26
+      },
+      "request_more_data": {
+       "request_more_data": 16,
+       "no_op": 4
+      }
+     },
+     "false_dispatch_traps": 26,
+     "false_dispatch_rate": 0.21666666666666667,
+     "false_dispatch_by_axis": {
+      "meeting_note_action_item": {
+       "n": 20,
+       "false_dispatch": 16,
+       "rate": 0.8
+      },
+      "question_vs_command": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "self_assignment": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "tense_aspect_flip": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "third_party_report": {
+       "n": 20,
+       "false_dispatch": 10,
+       "rate": 0.5
+      },
+      "underspecified_assignee": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      }
+     },
+     "dispatch_recall": 1.0,
+     "dispatch_tp": 110,
+     "embedded_recall": 1.0,
+     "embedded_tp": 10,
+     "fpr_at_tpr95": 0.21666666666666667
+    },
+    "G_rec": {
+     "confusion": {
+      "dispatch": {
+       "dispatch": 110
+      },
+      "no_op": {
+       "no_op": 72,
+       "request_more_data": 2,
+       "dispatch": 26
+      },
+      "request_more_data": {
+       "request_more_data": 16,
+       "no_op": 4
+      }
+     },
+     "false_dispatch_traps": 26,
+     "false_dispatch_rate": 0.21666666666666667,
+     "false_dispatch_by_axis": {
+      "meeting_note_action_item": {
+       "n": 20,
+       "false_dispatch": 16,
+       "rate": 0.8
+      },
+      "question_vs_command": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "self_assignment": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "tense_aspect_flip": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "third_party_report": {
+       "n": 20,
+       "false_dispatch": 10,
+       "rate": 0.5
+      },
+      "underspecified_assignee": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      }
+     },
+     "dispatch_recall": 1.0,
+     "dispatch_tp": 110,
+     "embedded_recall": 1.0,
+     "embedded_tp": 10,
+     "fpr_at_tpr95": 0.21666666666666667
+    },
+    "G_auto": {
+     "confusion": {
+      "dispatch": {
+       "no_op": 110
+      },
+      "no_op": {
+       "no_op": 98,
+       "request_more_data": 2
+      },
+      "request_more_data": {
+       "request_more_data": 16,
+       "no_op": 4
+      }
+     },
+     "false_dispatch_traps": 0,
+     "false_dispatch_rate": 0.0,
+     "false_dispatch_by_axis": {
+      "meeting_note_action_item": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "question_vs_command": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "self_assignment": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "tense_aspect_flip": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "third_party_report": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "underspecified_assignee": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      }
+     },
+     "dispatch_recall": 0.0,
+     "dispatch_tp": 0,
+     "embedded_recall": 0.0,
+     "embedded_tp": 0,
+     "fpr_at_tpr95": null
+    }
+   },
+   "exaone": {
+    "layers": {
+     "draft_for_review": 124,
+     "extract_no_delegation": 93,
+     "request_more_data": 13
+    },
+    "errors": 0,
+    "B": {
+     "confusion": {
+      "dispatch": {
+       "dispatch": 110
+      },
+      "no_op": {
+       "no_op": 87,
+       "dispatch": 13
+      },
+      "request_more_data": {
+       "no_op": 6,
+       "request_more_data": 13,
+       "dispatch": 1
+      }
+     },
+     "false_dispatch_traps": 14,
+     "false_dispatch_rate": 0.11666666666666667,
+     "false_dispatch_by_axis": {
+      "meeting_note_action_item": {
+       "n": 20,
+       "false_dispatch": 7,
+       "rate": 0.35
+      },
+      "question_vs_command": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "self_assignment": {
+       "n": 20,
+       "false_dispatch": 2,
+       "rate": 0.1
+      },
+      "tense_aspect_flip": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "third_party_report": {
+       "n": 20,
+       "false_dispatch": 4,
+       "rate": 0.2
+      },
+      "underspecified_assignee": {
+       "n": 20,
+       "false_dispatch": 1,
+       "rate": 0.05
+      }
+     },
+     "dispatch_recall": 1.0,
+     "dispatch_tp": 110,
+     "embedded_recall": 1.0,
+     "embedded_tp": 10,
+     "fpr_at_tpr95": 0.11666666666666667
+    },
+    "G_rec": {
+     "confusion": {
+      "dispatch": {
+       "dispatch": 110
+      },
+      "no_op": {
+       "no_op": 87,
+       "dispatch": 13
+      },
+      "request_more_data": {
+       "no_op": 6,
+       "request_more_data": 13,
+       "dispatch": 1
+      }
+     },
+     "false_dispatch_traps": 14,
+     "false_dispatch_rate": 0.11666666666666667,
+     "false_dispatch_by_axis": {
+      "meeting_note_action_item": {
+       "n": 20,
+       "false_dispatch": 7,
+       "rate": 0.35
+      },
+      "question_vs_command": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "self_assignment": {
+       "n": 20,
+       "false_dispatch": 2,
+       "rate": 0.1
+      },
+      "tense_aspect_flip": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "third_party_report": {
+       "n": 20,
+       "false_dispatch": 4,
+       "rate": 0.2
+      },
+      "underspecified_assignee": {
+       "n": 20,
+       "false_dispatch": 1,
+       "rate": 0.05
+      }
+     },
+     "dispatch_recall": 1.0,
+     "dispatch_tp": 110,
+     "embedded_recall": 1.0,
+     "embedded_tp": 10,
+     "fpr_at_tpr95": 0.11666666666666667
+    },
+    "G_auto": {
+     "confusion": {
+      "dispatch": {
+       "no_op": 110
+      },
+      "no_op": {
+       "no_op": 100
+      },
+      "request_more_data": {
+       "no_op": 7,
+       "request_more_data": 13
+      }
+     },
+     "false_dispatch_traps": 0,
+     "false_dispatch_rate": 0.0,
+     "false_dispatch_by_axis": {
+      "meeting_note_action_item": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "question_vs_command": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "self_assignment": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "tense_aspect_flip": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "third_party_report": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      },
+      "underspecified_assignee": {
+       "n": 20,
+       "false_dispatch": 0,
+       "rate": 0.0
+      }
+     },
+     "dispatch_recall": 0.0,
+     "dispatch_tp": 0,
+     "embedded_recall": 0.0,
+     "embedded_tp": 0,
+     "fpr_at_tpr95": null
+    }
+   }
+  },
+  "genuine_n": 110,
+  "trap_n": 120,
+  "embedded_n": 10,
+  "trap_axes": [
+   "meeting_note_action_item",
+   "question_vs_command",
+   "self_assignment",
+   "tense_aspect_flip",
+   "third_party_report",
+   "underspecified_assignee"
+  ]
+ }
+}

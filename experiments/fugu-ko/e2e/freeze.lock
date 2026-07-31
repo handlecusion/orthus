@@ -1,0 +1,101 @@
+{
+  "note": "🚦 drift gate. manifest_sha256 per manifest_schema.md §13 = sha256 over '<id>:<input_sha256>' for every non-pending item in that tier (tier_x.jsonl + l2 tier-x built items), sorted by id, newline-joined. Pending (frozen.input_sha256 null / __pending_user_fill__) excluded + counted.",
+  "generated_at": "<BUILD_TIMESTAMP_PLACEHOLDER>",
+  "frozen_at_build": "build:511c0de",
+  "tier_a": {
+    "count": 1955,
+    "pending_excluded": 10,
+    "manifest_sha256": "4f5b6dc58d5f4e417f3b7c71ba92b471b1b52de8210c5ac1c79a17fa0ac7a335"
+  },
+  "tier_b": {
+    "count": 1657,
+    "pending_excluded": 52,
+    "manifest_sha256": "b283326909de90566a0255bc2da60b107fbd712f89fcddc1a1473860b1f1b83f"
+  },
+  "per_file": {
+    "tier_a.jsonl": {
+      "total": 1884,
+      "tier_a_hashed": 1884,
+      "tier_b_hashed": 0,
+      "tier_a_pending": 0,
+      "tier_b_pending": 0,
+      "provenance": [
+        "golden"
+      ]
+    },
+    "tier_b.jsonl": {
+      "total": 1653,
+      "tier_a_hashed": 0,
+      "tier_b_hashed": 1653,
+      "tier_a_pending": 0,
+      "tier_b_pending": 0,
+      "provenance": [
+        "independent_holdout"
+      ]
+    },
+    "l2/g1.jsonl": {
+      "total": 40,
+      "tier_a_hashed": 12,
+      "tier_b_hashed": 0,
+      "tier_a_pending": 10,
+      "tier_b_pending": 18,
+      "provenance": [
+        "golden",
+        "independent_holdout",
+        "new_blind"
+      ]
+    },
+    "l2/g2.jsonl": {
+      "total": 42,
+      "tier_a_hashed": 22,
+      "tier_b_hashed": 0,
+      "tier_a_pending": 0,
+      "tier_b_pending": 20,
+      "provenance": [
+        "golden",
+        "independent_holdout"
+      ]
+    },
+    "l2/g3.jsonl": {
+      "total": 36,
+      "tier_a_hashed": 22,
+      "tier_b_hashed": 0,
+      "tier_a_pending": 0,
+      "tier_b_pending": 14,
+      "provenance": [
+        "golden",
+        "independent_holdout",
+        "new_blind"
+      ]
+    },
+    "l2/g4.jsonl": {
+      "total": 19,
+      "tier_a_hashed": 15,
+      "tier_b_hashed": 4,
+      "tier_a_pending": 0,
+      "tier_b_pending": 0,
+      "provenance": [
+        "golden",
+        "independent_holdout",
+        "new_blind"
+      ]
+    }
+  },
+  "supplementary_not_wrapped": {
+    "policy": "Sampled-on-demand at bench time (plan §2). d8_holdout is the canonical T3 Tier-B set; power calc confirms n=1,438 adequate (no sub-sample needed).",
+    "t3_unseen_holdout.json": {
+      "n": 463,
+      "wrapped": false
+    },
+    "t3_fresh_holdout.json": {
+      "n": 1063,
+      "wrapped": false
+    },
+    "t3_d8_holdout.json": {
+      "n": 1438,
+      "wrapped": true,
+      "canonical": true,
+      "lock": "§1b D10 n=1,438 McNemar p=5.6e-187"
+    }
+  }
+}

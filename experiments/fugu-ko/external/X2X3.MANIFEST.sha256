@@ -1,0 +1,5 @@
+# B4 X2/X3 외부 데이터셋 매니페스트 — 해시만(데이터 행 커밋 금지)
+# X3 KorWikiTQ  LG-NLP  CC-BY-SA-4.0  github.com/LG-NLP/KorWikiTableQuestions (LFS, dev split)
+b44b1e603b1fa22e80ffd188778dd12678f63f780977b053ba55edefee5f37da  korwikitq/KorWikiTQ_ko_dev.json
+# X2 allganize/RAG-Evaluation-Dataset-KO  MIT  huggingface.co (rag_evaluation_result.csv)
+b78fd2bc6b5fd7d36d9be9e23db6fe43677de5a9f6431a7b2826c03992938049  allganize/rag_evaluation_result.csv

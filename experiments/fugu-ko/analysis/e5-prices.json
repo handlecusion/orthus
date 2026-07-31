@@ -1,0 +1,38 @@
+{
+  "_comment": "E5 원가 모델 입력 — 벤더 공시 단가 고정본. 근거/URL/불확실성은 e5-price-sources.md. 추정 단가 임의 대입 금지(미공시는 null).",
+  "as_of": "2026-07-14",
+  "fx_usd_krw": 1494.09,
+  "fx_source": "ECB 참조환율 2026-07-13 (frankfurter.dev). 감도 상한 1501.33 (open.er-api.com). 한국은행 매매기준율은 확보 실패 — e5-price-sources.md §5",
+  "question_mix_p": null,
+  "question_mix_note": "null이면 e5_cost.py가 골든 구성비(t3/(t3+t2) = 28/58 = 0.483)를 쓴다. 감도용 p=0.5 병기.",
+  "models": {
+    "solar": {
+      "billing": "token",
+      "currency": "USD",
+      "in_per_1m": 0.15,
+      "out_per_1m": 0.60,
+      "note": "Upstage pricing 페이지에 solar-pro(v1) 개별 행 없음 — Solar Pro 2/3 단가($0.15/$0.60) 적용. VAT 10% 별도(미반영)."
+    },
+    "ax": {
+      "billing": "token",
+      "currency": "KRW",
+      "in_per_1m": null,
+      "out_per_1m": null,
+      "note": "단가 미공시(B2B 견적형 추정). SK Open API 포털/뉴스룸에 A.X-K1 토큰 단가표 없음 → 토큰량만 기록하고 원가는 '미공시'."
+    },
+    "exaone": {
+      "billing": "gpu_hour",
+      "currency": "USD",
+      "hourly": 2.90,
+      "assumed_gpu": "A100 80GB",
+      "note": "Friendli dedicated endpoint = GPU-시간 과금(토큰 단가 아님). 실험 엔드포인트의 실제 GPU 종류는 미확인 → A100 $2.90/h 가정(H100이면 $3.90/h로 1.34배). 산출값은 이용률 100% 가정의 하한 원가. 참고: Friendli serverless K-EXAONE-236B-A23B는 $0.20/$0.80 per 1M(동일 모델 보장 없음)."
+    },
+    "baseline": {
+      "billing": "token",
+      "currency": "USD",
+      "in_per_1m": 0.15,
+      "out_per_1m": 0.60,
+      "note": "gpt-4o-mini. OpenAI 요금표 본문에서는 빠지고 모델 상세 페이지에만 남음(레거시 경로) — 단가는 1차 출처 확인됨."
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "seed": 20260723,
+  "domains": {
+    "email": {
+      "n_tasks": 90,
+      "n_en_control": 14,
+      "src_sha256": "be57642f3eb74bce2aba8586088e12781aa71eb6b628ba5091db20c0f86c084d",
+      "ko_sha256": "77e49e9b61912bcbb5434acef6b2d374cf3fd55d3ad213d4f0fc7801f0ecf6d8",
+      "enctl_sha256": "1bc5e64caa0bd1a01a02138b560d75fafb15e8e6bad8a268c8239d7a8f0f1746",
+      "en_control_tasks": [
+        "I need to delete my last email from leila. Can you do that?",
+        "All my emails from santiago from the last 3 days need to be deleted. Can you do that?",
+        "Send an email to lena saying 'lena,\n\nI've been assigned 'Develop prototype for report generation'. Excited to work on this and confident it will greatly improve our backend efficiency.\n\nCheers,\n\nSam' and title it 'Task Update on Create wireframe for homepage'",
+        "I need to get back to yuki's last email about 'Update on Client Appreciation Gala' with 'Thanks for the update - I will get back to you tomorrow. Can you send the reply for me?",
+        "can you forward all the emails from anaya last week about 'Update on Board of Directors Conclave' to nadia",
+        "chenwei needs all the emails from nadia last week about 'Task Update on Improve UX of feedback submission'. Can you forward them?",
+        "Forward all the emails from fatima last week about 'Task Update on Develop prototype for report generation' to anaya",
+        "santiago needs the latest email about 'Update on Client Appreciation Gala'. Can you forward it?",
+        "can you forward the latest email about 'Task Update on Design logo for blog' to carlos",
+        "Forward my most recent email from anaya to olga",
+        "can you forward my most recent email from jinsoo to chenwei",
+        "anaya needs my most recent email from akira. Can you forward it?",
+        "Reply to the latest email from sofia with 'Got it, thank you!'",
+        "I need to reply to the latest email from amir with 'Got it, thank you!'. Can you do that?"
+      ]
+    },
+    "calendar": {
+      "n_tasks": 110,
+      "n_en_control": 16,
+      "src_sha256": "0a2e31639292bc341ad17d1c4917a5becb2f1ae5b3a7109639baa2de38db2758",
+      "ko_sha256": "26537babf87bce50844c4e5ffa82d6c4d9204a084d4e9454e8120f5e4b50d726",
+      "enctl_sha256": "fd95dedcb7d5ac0427d8a3918b4b9a18807994c403d71a41a7991fcb88d72ccb",
+      "en_control_tasks": [
+        "can you cancel my first meeting on December 6",
+        "Cancel my first meeting on December 18",
+        "Delete my first meeting on December 12",
+        "Can you change the name of the last event on November 30 to brainstorming session",
+        "Change the name of the last event on December 8 to feedback discussion",
+        "Delay my first meeting with nia on December 19 by 1.5 hours",
+        "Push back my first meeting with dmitri on December 18 by 1 hours",
+        "Can you cancel the next annual summary meeting",
+        "can you rename the next process review meeting to Customer Insight Forum",
+        "Rename the next daily stand-up meeting to Diversity & Inclusion Workshop",
+        "I need to cancel my next meeting with aisha. Can you do that for me please?",
+        "something came up. Can you cancel my meetings on Tuesday before 2?",
+        "Delete all the future quarterly tech roundup meetings",
+        "Cancel future quarterly sales review meetings",
+        "I haven't met with yuki in a while. Can you schedule a 30 minute event called Digital Transformation Conference on December 20 at 10?",
+        "Create a 2 hour event called brainstorming session on December 21 at 12 with dmitri"
+      ]
+    }
+  }
+}

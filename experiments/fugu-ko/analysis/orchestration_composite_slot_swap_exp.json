@@ -1,0 +1,195 @@
+{
+  "method": "post-hoc synthetic composite (no LLM calls), same construction as orchestration_composite_9model.json. Reuses e2e/combine_stats.py + e2e/runner_lib.py (mcnemar_from_correct, bootstrap_paired_diff_ci) verbatim, no stats reimplementation.",
+  "correction_note": "2026-07-21: PR #4 merged into main and replaced the production ASSIGNMENTS with the diversified table (t3=solar, t5=exaone, t6=solar, t7=exaone, t9=ax, t10=exaone). This file's prior run compared domestic_best against a STALE pre-PR#4 baseline (all-solar-except-t10). That comparison is preserved below under 'stale_comparison_vs_pre_pr4_main' for history. The comparison that now matters — domestic_best vs the REAL, current, post-PR#4 production assignment — is under 'corrected_comparison_vs_current_main'. Note current_production here is identical to this script's long-standing KNOWN_DIVERSIFIED_ASSIGNMENT sanity-gate fixture (118/145), so the sanity gate below directly validates the current_production composite used in the corrected comparison.",
+  "measured_on": "2026-07-21",
+  "n_common_scored": 1750,
+  "sanity_gate": {
+    "known_diversified_assignment": {
+      "t3": "solar",
+      "t5": "exaone",
+      "t6": "solar",
+      "t7": "exaone",
+      "t9": "ax",
+      "t10": "exaone"
+    },
+    "reproduced_composite_passed": 1449,
+    "expected_composite_passed": 1449,
+    "reproduced_vs_baseline_mcnemar_p": 2.9809838675814455e-16,
+    "expected_vs_baseline_mcnemar_p": 2.9809838675814455e-16,
+    "reproduced_vs_baseline_ci95": [
+      0.044,
+      0.072
+    ],
+    "expected_vs_baseline_ci95": [
+      0.044,
+      0.072
+    ],
+    "overall_pass": true
+  },
+  "domestic_best": {
+    "assignment": {
+      "t3": "exaone",
+      "t5": "ax",
+      "t6": "solar",
+      "t7": "exaone",
+      "t9": "solar",
+      "t10": "exaone"
+    },
+    "passed": 1417,
+    "n": 1750,
+    "accuracy": 0.8097142857142857,
+    "per_task": {
+      "t3": {
+        "model": "exaone",
+        "pass": 284,
+        "n": 343
+      },
+      "t5": {
+        "model": "ax",
+        "pass": 491,
+        "n": 569
+      },
+      "t6": {
+        "model": "solar",
+        "pass": 102,
+        "n": 139
+      },
+      "t7": {
+        "model": "exaone",
+        "pass": 154,
+        "n": 290
+      },
+      "t9": {
+        "model": "solar",
+        "pass": 232,
+        "n": 232
+      },
+      "t10": {
+        "model": "exaone",
+        "pass": 154,
+        "n": 177
+      }
+    }
+  },
+  "stale_comparison_vs_pre_pr4_main": {
+    "description": "STALE (superseded 2026-07-21 by PR #4): domestic_best vs the pre-PR#4 main production assignment (all-solar-except-t10). This baseline is no longer what main actually runs.",
+    "true_baseline": {
+      "assignment": {
+        "t3": "solar",
+        "t5": "solar",
+        "t6": "solar",
+        "t7": "solar",
+        "t9": "solar",
+        "t10": "exaone"
+      },
+      "passed": 1466,
+      "n": 1750,
+      "accuracy": 0.8377142857142857,
+      "per_task": {
+        "t3": {
+          "model": "solar",
+          "pass": 330,
+          "n": 343
+        },
+        "t5": {
+          "model": "solar",
+          "pass": 494,
+          "n": 569
+        },
+        "t6": {
+          "model": "solar",
+          "pass": 102,
+          "n": 139
+        },
+        "t7": {
+          "model": "solar",
+          "pass": 154,
+          "n": 290
+        },
+        "t9": {
+          "model": "solar",
+          "pass": 232,
+          "n": 232
+        },
+        "t10": {
+          "model": "exaone",
+          "pass": 154,
+          "n": 177
+        }
+      }
+    },
+    "domestic_best_vs_true_baseline": {
+      "n_paired": 1750,
+      "a_only": 17,
+      "b_only": 66,
+      "discordant": 83,
+      "mcnemar_p": 5.602931385052865e-08,
+      "significant_p05": true,
+      "bootstrap_diff_ci95": [
+        -0.038285714285714284,
+        -0.017714285714285714
+      ]
+    }
+  },
+  "corrected_comparison_vs_current_main": {
+    "description": "domestic_best (121/145) vs current_production (118/145) — the REAL, current main orthus/models/orchestration.py ASSIGNMENTS as of PR #4 (merged 2026-07-21). This is the comparison that actually matters now.",
+    "current_production": {
+      "assignment": {
+        "t3": "solar",
+        "t5": "exaone",
+        "t6": "solar",
+        "t7": "exaone",
+        "t9": "ax",
+        "t10": "exaone"
+      },
+      "passed": 1449,
+      "n": 1750,
+      "accuracy": 0.828,
+      "per_task": {
+        "t3": {
+          "model": "solar",
+          "pass": 330,
+          "n": 343
+        },
+        "t5": {
+          "model": "exaone",
+          "pass": 486,
+          "n": 569
+        },
+        "t6": {
+          "model": "solar",
+          "pass": 102,
+          "n": 139
+        },
+        "t7": {
+          "model": "exaone",
+          "pass": 154,
+          "n": 290
+        },
+        "t9": {
+          "model": "ax",
+          "pass": 223,
+          "n": 232
+        },
+        "t10": {
+          "model": "exaone",
+          "pass": 154,
+          "n": 177
+        }
+      }
+    },
+    "domestic_best_vs_current_production": {
+      "n_paired": 1750,
+      "a_only": 26,
+      "b_only": 58,
+      "discordant": 84,
+      "mcnemar_p": 0.0006279472715818218,
+      "significant_p05": true,
+      "bootstrap_diff_ci95": [
+        -0.02857142857142857,
+        -0.008
+      ]
+    }
+  },
+  "new_numbers_trustworthy": true
+}

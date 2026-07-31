@@ -1,0 +1,32 @@
+# X-tier 외부 데이터셋 매니페스트 (B4 / analysis/b4-prereg.md §3 X1)
+# 데이터 행은 커밋하지 않는다 — 해시만 남긴다(§6 재배포 금지).
+# 경로는 experiments/fugu-ko/external/.cache/ 기준 상대경로.
+#
+# [kudge_human] HAERAE-HUB/KUDGE@7168dc844bb043fe0b0b0ee860da4dd20a67e5a2
+#   config=Human Annotations split=train rows=2880 read=raw-csv
+#   license=unstated redistribution=forbidden
+#   prereg=X1 (human-human κ 천장)
+f3c30c9429d8321bf784e57f791a4a4b5373be361bb40a90d0c7e69ae28d045e  raw/kudge_human/kudge-human-annotation-raw.csv
+9f3e8eec20bf2471192420961f5206ac6a1da634f4fdc3f870632e53581d6cfd  normalized/kudge_human.jsonl
+#
+# [khj] HAERAE-HUB/Korean-Human-Judgements@24dae25b0f4c0d3c0d3a10f2997f51cf6eb6cd5f
+#   config=default split=train rows=694 read=datasets-server-rows-api
+#   license=unstated redistribution=forbidden
+#   prereg=X1 (judge-human κ + 위치 스왑 flip rate)
+e7652f6e9bd42389120e3246304a5e6b9daad87d7212a42d0256b5ae1fe11dc7  raw/khj/data/train-00000-of-00001.parquet
+6c5e7ddc8e7dccce2803ff7ac15864a1a440ed763c1046aaa99779acc83cd921  normalized/khj.jsonl
+#
+# [mtbench_human] lmsys/mt_bench_human_judgments@f7d2896d2cc5d80f8b55c2bbc722613555233c25
+#   config=default split=human rows=3355 read=datasets-server-rows-api
+#   license=cc-by-4.0 redistribution=allowed-with-attribution
+#   prereg=X1 (영어 앵커 — 한국어 페널티 vs 프롬프트 노이즈 분리)
+4877bc46a40929f4082c3c79593700fb897b1d6c7f4c473032694a01322f5769  raw/mtbench_human/data/human-00000-of-00001-25f4910818759289.parquet
+128e2c1c20f9f5fba6d7277746cfdeb8c2acdcecba5f4b28a8262b056f2275f6  normalized/mtbench_human.jsonl
+#
+# [summeval] mteb/summeval@bfc121155064afa2d81b5505682ffc0d96f4334c
+#   config=default split=test rows=100 read=datasets-server-rows-api
+#   license=mit redistribution=allowed
+#   prereg=X1 (factuality 축 — consistency 1-5)
+7ff6f3f4d044223bd6922c5434d27bf28473950346fcfc2a3b7352c19163690e  raw/summeval/data/test-00000-of-00001-35901af5f6649399.parquet
+a55cd7ecfd4511c0b1331b0a2a2c0b9d05f782428a34cc93db98b8bcb2234c7e  normalized/summeval.jsonl
+#
